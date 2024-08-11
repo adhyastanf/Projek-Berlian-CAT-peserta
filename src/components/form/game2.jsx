@@ -1,11 +1,10 @@
 'use client';
-import useQuestionStore from '@/store/quiz-store';
-import CurrentQuestion from './current-question';
+import useQuestion2Store from '@/store/quiz-store';
 import Answers from './answers';
-import { useState } from 'react';
+import CurrentQuestion from './current-question';
 
-const Game = () => {
-  const { questions, currentQuestion, selectAnswer, goNextQuestion } = useQuestionStore();
+const Game2 = () => {
+  const { questions, currentQuestion, selectAnswer, goNextQuestion } = useQuestion2Store();
   const question = questions[currentQuestion];
 
   return (
@@ -19,11 +18,11 @@ const Game = () => {
 
       <div className="flex flex-col gap-4 w-full max-w-7xl px-4">
         <div className='w-full'>
-          <Answers data={question?.options} questionId={question?._id} handleAnswer={selectAnswer} goNextQuestion={goNextQuestion} jawaban={question?.jawaban} questionType={question?.type} />
+          <Answers data={question?.options} questionId={question?._id} handleAnswer={selectAnswer} goNextQuestion={goNextQuestion} jawaban={question?.jawaban} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Game;
+export default Game2;

@@ -37,48 +37,88 @@ const FormDisplay = () => {
   });
 
   return (
-    <form action={pesertaAction}>
+    <div className="flex items-center justify-center">
+      <form action={pesertaAction} className="bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4 w-full max-w-lg">
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Nomor Ujian:</label>
+          <input
+            type='text'
+            {...register('nomor_ujian')}
+            className={`input input-bordered w-full ${errors.nomor_ujian ? 'input-error' : ''}`}
+            placeholder='001'
+          />
+          {errors.nomor_ujian && <p className="text-red-500 text-xs italic">{errors.nomor_ujian.message}</p>}
+        </div>
 
-      <label>Nomor Ujian : </label>
-      <input type='text' {...register('nomor_ujian')} />
-      <br />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Nama Lengkap:</label>
+          <input
+            type='text'
+            {...register('nama_lengkap')}
+            className={`input input-bordered w-full ${errors.nama_lengkap ? 'input-error' : ''}`}
+            placeholder='James Theo'
+          />
+          {errors.nama_lengkap && <p className="text-red-500 text-xs italic">{errors.nama_lengkap.message}</p>}
+        </div>
 
-      <label>Nama Lengkap : </label>
-      <input type='text' {...register('nama_lengkap')} />
-      <br />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Jenis Kelamin:</label>
+          {jenisKelaminOptions.map((val, index) => (
+            <div key={index} className="flex items-center mb-2">
+              <input
+                id={`jenis_kelamin_${index}`}
+                type='radio'
+                value={val.value}
+                {...register('jenis_kelamin')}
+                className="radio radio-primary"
+              />
+              <label htmlFor={`jenis_kelamin_${index}`} className="ml-2">
+                {val.label}
+              </label>
+            </div>
+          ))}
+          {errors.jenis_kelamin && <p className="text-red-500 text-xs italic">{errors.jenis_kelamin.message}</p>}
+        </div>
 
-      <label>Jenis Kelamin : </label>
-      {jenisKelaminOptions.map((val, index) => {
-        return (
-          <div key={index}>
-            <input id={index} type='radio' value={val.value} {...register('jenis_kelamin')} />
-            <label>
-              <span>{val.label}</span>
-            </label>
-          </div>
-        );
-      })}
-      <br />
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Pendidikan Terakhir:</label>
+          {pendidikanOptions.map((val, index) => (
+            <div key={index} className="flex items-center mb-2">
+              <input
+                id={`pendidikan_terakhir_${index}`}
+                type='radio'
+                value={val.value}
+                {...register('pendidikan_terakhir')}
+                className="radio radio-primary"
+              />
+              <label htmlFor={`pendidikan_terakhir_${index}`} className="ml-2">
+                {val.label}
+              </label>
+            </div>
+          ))}
+          {errors.pendidikan_terakhir && <p className="text-red-500 text-xs italic">{errors.pendidikan_terakhir.message}</p>}
+        </div>
 
-      <label>Pendidikan Terakhir : </label>
-      {pendidikanOptions.map((val, index) => {
-        return (
-          <div key={index}>
-            <input type='radio' value={val.value} {...register('pendidikan_terakhir')} />
-            <label>
-              <span>{val.label}</span>
-            </label>
-          </div>
-        );
-      })}
-      <br />
+        <div className="mb-6">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor='alamat'>
+            Alamat:
+          </label>
+          <input
+            type='text'
+            {...register('alamat')}
+            className={`input input-bordered w-full ${errors.alamat ? 'input-error' : ''}`}
+            placeholder='Jl. Melati 14 No. 102'
+          />
+          {errors.alamat && <p className="text-red-500 text-xs italic">{errors.alamat.message}</p>}
+        </div>
 
-      <label htmlFor='alamat'>Alamat : </label>
-      <input type='text' {...register('alamat')} />
-      <br />
-
-      <button type='submit' className='btn btn-primary'>Submit</button>
-    </form>
+        <div className="flex items-center justify-between">
+          <button type='submit' className="btn btn-primary w-full">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

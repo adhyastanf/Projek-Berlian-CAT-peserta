@@ -77,7 +77,13 @@
             "createdAt": "2024-08-10T06:24:58.651Z",
             "updatedAt": "2024-08-10T06:24:58.655Z",
             "__v": 0,
-            "kunciJawaban": "66b707bacc55b4030f36bea4"
+            "kunciJawaban": "66b707bacc55b4030f36bea4",
+            "isAnswered":true,
+            "jawaban":{
+                "alphabet":"D",
+                "_id":"66b707bacc55b4030f36bea4",
+                "optionText": "lima"
+            }
         },
         {
             "_id": "66b707e0cc55b4030f36bea7",
@@ -207,7 +213,13 @@
             "createdAt": "2024-08-10T06:29:07.102Z",
             "updatedAt": "2024-08-10T06:29:07.105Z",
             "__v": 0,
-            "kunciJawaban": "66b708b3cc55b4030f36bec6"
+            "kunciJawaban": "66b708b3cc55b4030f36bec6",
+            "isAnswered":true,
+            "jawaban":{
+                "alphabet":"C",
+                "_id":"66b708b3cc55b4030f36bec6",
+                "optionText": "langsung"
+            }
         },
         {
             "_id": "66b709c5cc55b4030f36beca",
@@ -516,6 +528,15 @@
                     "_id": "66b70b5fcc55b4030f36bf1b"
                 }
             ],
+            "createdAt": "2024-08-10T06:40:31.700Z",
+            "updatedAt": "2024-08-10T06:40:31.703Z",
+            "__v": 0,
+            "kunciJawaban": "66b70b5fcc55b4030f36bf18"
+        },
+        {
+            "_id": "66b70b5fcc55b4030f36bf17",
+            "soalText": "Setiap tanggal 5 Oktober kita memperingati Hari...",
+            "type":"essay",
             "createdAt": "2024-08-10T06:40:31.700Z",
             "updatedAt": "2024-08-10T06:40:31.703Z",
             "__v": 0,

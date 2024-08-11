@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 // Definisikan state dan fungsi-fungsi yang akan digunakan dalam store
-const useQuestionStore = create(
+const useQuestion2Store = create(
   persist(
     (set, get) => ({
       quizzes: [],
@@ -80,9 +80,9 @@ const useQuestionStore = create(
       },
     }),
     {
-      name: 'quizz', // Nama storage untuk persist middleware
+      name: 'quizz2', // Nama storage untuk persist middleware
     }
   )
 );
 
-export default useQuestionStore;
+export default useQuestion2Store;

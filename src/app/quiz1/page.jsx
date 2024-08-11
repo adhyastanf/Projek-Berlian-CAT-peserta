@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 export default function quiz1Page() {
-  const { fetchQuizzes, quizzes, selectedQuizz, hasCompleteAll, reset } = useQuestionStore();
+  const { fetchQuizzes, hasCompleteAll, reset } = useQuestionStore();
 
   useEffect(() => {
     fetchQuizzes();
