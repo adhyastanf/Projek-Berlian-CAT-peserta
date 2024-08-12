@@ -1,8 +1,7 @@
 'use client';
 import useQuestionStore from '@/store/quiz-store';
-import CurrentQuestion from './current-question';
-import Answers from './answers';
-import { useState } from 'react';
+import Quiz1Answers from './quiz1Answers';
+import CurrentQuestion from './current-question1';
 
 const Game = () => {
   const { questions, currentQuestion, selectAnswer, goNextQuestion } = useQuestionStore();
@@ -19,7 +18,7 @@ const Game = () => {
 
       <div className="flex flex-col gap-4 w-full max-w-7xl px-4">
         <div className='w-full'>
-          <Answers data={question?.options} questionId={question?._id} handleAnswer={selectAnswer} goNextQuestion={goNextQuestion} jawaban={question?.jawaban} questionType={question?.type} />
+          <Quiz1Answers data={question?.options} questionId={question?._id} handleAnswer={selectAnswer} goNextQuestion={goNextQuestion} jawaban={question?.jawaban} questionType={question?.type} />
         </div>
       </div>
     </div>

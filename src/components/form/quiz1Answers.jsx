@@ -1,17 +1,19 @@
 'use client';
 import useQuestionStore from '@/store/quiz-store';
 import { useState, useEffect } from 'react';
-import Answer from './answer';
-import axios from 'axios'; // Impor axios untuk panggilan API
+import Answer from './answer1';
+import axios from 'axios';
+import EssayAnswer from './essayAnswer';
+import { useRouter } from 'next/navigation';
 
-const Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, questionType }) => {
+const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, questionType }) => {
   const [selectedAns, setSelectedAns] = useState(jawaban || '');
   const [submitted, setSubmitted] = useState(false);
   const { questions, onCompleteQuestions, currentQuestion, goPreviousQuestion } = useQuestionStore();
   const isCorrectUserAnswer = questions.find((q) => q._id === questionId)?.isCorrectUserAnswer;
+  const router = useRouter();
 
   useEffect(() => {
-    // Jika jawaban sudah ada dari database, setel sebagai jawaban yang dipilih
     if (jawaban) {
       setSelectedAns(jawaban);
     }
@@ -27,14 +29,11 @@ const Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, ques
     }
     setSelectedAns(answer);
 
-    // Kirim jawaban yang dipilih ke API setiap kali pengguna memilih opsi
     try {
       await axios.post('/api/submit-answer', {
         questionId,
-        selectedAnswerId: answer._id, // Kirim hanya ID opsi
+        selectedAnswerId: answer._id,
       });
-
-      // Update status lokal
       handleAnswer(questionId, answer);
     } catch (error) {
       console.error('Error submitting answer:', error);
@@ -42,31 +41,37 @@ const Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, ques
   };
 
   const submitAnswer = async () => {
-    // Kirim ID jawaban yang dipilih ke API jika ada jawaban yang dipilih
-    if (selectedAns && !submitted) {
-      try {
-        await axios.post('/api/submit-answer', {
-          questionId,
-          selectedAnswerId: selectedAns._id, // Kirim hanya ID opsi
-        });
-
-        // Update status lokal
-        handleAnswer(questionId, selectedAns);
-        setSubmitted(true);
-      } catch (error) {
-        console.error('Error submitting answer:', error);
+    if (questionType === 'multiple-choice') {
+      if (selectedAns && !submitted) {
+        try {
+          await axios.post('/api/submit-answer', {
+            questionId,
+            selectedAnswerId: selectedAns._id,
+          });
+          handleAnswer(questionId, selectedAns);
+          setSubmitted(true);
+        } catch (error) {
+          console.error('Error submitting answer:', error);
+        }
       }
     }
   };
 
   const handleNextQuestion = async () => {
     await submitAnswer();
+
+    if (questionType === 'essay') {
+      setSubmitted(false);
+    }
+
     if (isLastQuestion) {
-      onCompleteQuestions(); // Memanggil fungsi onCompleteQuestions jika ini adalah pertanyaan terakhir
+      if (confirm('Apakah mau selesai?')) {
+        onCompleteQuestions();
+        router.push('/sesi');
+      }
     } else {
       goNextQuestion();
     }
-    resetState();
   };
 
   const handlePreviousQuestion = async () => {
@@ -80,15 +85,20 @@ const Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, ques
     setSelectedAns('');
   };
 
-  // Periksa apakah soal saat ini adalah soal terakhir
   const isLastQuestion = currentQuestion === questions.length - 1;
 
   return (
     <>
       <ul className='flex flex-col gap-y-4 justify-center w-full'>
-        {data?.map((answer, index) => (
-          <Answer key={answer._id} answer={answer} selectedAns={selectedAns} isCorrectUserAnswer={isCorrectUserAnswer} handleSelectAnswer={handleSelectAnswer} index={index} answerLabels={answerLabels} />
-        ))}
+        {questionType === 'multiple-choice' ? (
+          <ul className='flex flex-col gap-y-4 justify-center w-full'>
+            {data?.map((answer, index) => (
+              <Answer key={answer._id} answer={answer} selectedAns={selectedAns} isCorrectUserAnswer={isCorrectUserAnswer} handleSelectAnswer={handleSelectAnswer} index={index} answerLabels={answerLabels} />
+            ))}
+          </ul>
+        ) : (
+          <EssayAnswer questionId={questionId} />
+        )}
       </ul>
 
       <div className='flex justify-between mt-4'>
@@ -103,4 +113,4 @@ const Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, ques
   );
 };
 
-export default Answers;
+export default Quiz1Answers;

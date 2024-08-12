@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 // Definisikan state dan fungsi-fungsi yang akan digunakan dalam store
-const useCountdownStoreuiz1 = create(
+const useCountdownStoreuiz2 = create(
   persist(
     (set, get) => ({
       timerEnd: null,
@@ -12,7 +12,7 @@ const useCountdownStoreuiz1 = create(
         startTime.setHours(12, 20, 0, 0); // Set waktu mulai ke jam 1:30 malam
 
         const endTime = new Date();
-        endTime.setHours(15, 50, 0, 0); // Set waktu berakhir ke jam 1:40 malam
+        endTime.setHours(15, 0, 0, 0); // Set waktu berakhir ke jam 1:40 malam
 
         if (now < startTime) {
           // Jika waktu saat ini sebelum jam 1:30 malam, jangan mulai timer
@@ -39,16 +39,16 @@ const useCountdownStoreuiz1 = create(
         startTime.setHours(12, 20, 0, 0); // Set waktu mulai ke jam 1:30 malam
 
         const endTime = new Date();
-        endTime.setHours(15, 50, 0, 0); // Set waktu berakhir ke jam 1:40 malam
+        endTime.setHours(15, 0, 0, 0); // Set waktu berakhir ke jam 1:40 malam
 
         return now >= startTime && now < endTime;
       },
       resetTimer: () => set({ timerEnd: null }),
     }),
     {
-      name: 'countdown1', // Nama storage untuk persist middleware
+      name: 'countdown2', // Nama storage untuk persist middleware
     }
   )
 );
 
-export default useCountdownStoreuiz1;
+export default useCountdownStoreuiz2;

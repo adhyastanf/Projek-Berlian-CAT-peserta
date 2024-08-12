@@ -1,4 +1,4 @@
-import RightBar from '@/components/form/RightBar';
+import RightBar from '@/components/form/RightBar2';
 
 const LayoutQuiz2 = ({ children }) => {
   return (

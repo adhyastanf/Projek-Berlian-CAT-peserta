@@ -9,7 +9,7 @@ const Answer = ({ answer, selectedAns, handleSelectAnswer, index, answerLabels }
       <button
         onClick={() => handleSelectAnswer(answer)}
         className={cn(
-          isSelected && 'ring ring-offset-2 ring-purple bg-blue-600 text-white',
+          isSelected && 'ring ring-offset-2 ring-purple bg-black text-white',
           'w-full flex items-center gap-x-4 bg-white dark:bg-gray-800 py-4 px-5 rounded-xl shadow-lg hover:ring-1 hover:ring-purple transition-all font-semibold text-sm text-dark-blue dark:text-white'
         )}
       >

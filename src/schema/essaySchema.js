@@ -1,7 +1,7 @@
 import { object, string } from 'yup';
 
 let essaySchema = object({
-  essayText: yup.string(),
+  essayText: string(),
 }).required();
 
 export default essaySchema;

@@ -1,9 +1,9 @@
 'use client';
-import useQuestionStore from '@/store/quiz-store';
+import useQuestion2Store from '@/store/quiz2-store';
 import Timer from '../timer';
 
 function RightBar() {
-  const { questions, goToQuestion } = useQuestionStore();
+  const { questions, goToQuestion } = useQuestion2Store();
 
   //   const handleClick = (index) => {
   //     goToQuestion(index);

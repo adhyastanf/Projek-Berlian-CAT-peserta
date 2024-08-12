@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import useQuestion2Store from './quiz2-store'; // Import useQuestion2Store
 
-// Definisikan state dan fungsi-fungsi yang akan digunakan dalam store
 const useQuestionStore = create(
   persist(
     (set, get) => ({
@@ -9,36 +9,35 @@ const useQuestionStore = create(
       questions: [],
       selectedQuizz: null,
       currentQuestion: 0,
-      hasCompleteAll: false,
+      hasCompletedSection1: false,
       score: 0,
+
       selectQuizz: (quizz) => {
         set({ questions: quizz.soal });
       },
       fetchQuizzes: async () => {
+        const { hasCompletedSection1 } = get();
+
+        if (hasCompletedSection1) {
+          return; // Do not fetch if quiz is completed
+        }
         try {
           const res = await fetch(`http://localhost:3000/data.json`);
           const json = await res.json();
-          const quizzes = json.soal; // Mengambil data soal dari json
-          set({ quizzes, questions: quizzes, hasCompleteAll: false });
+          const quizzes = json.soal;
+          set({ quizzes, questions: quizzes, hasCompletedSection1: false });
         } catch (error) {
           console.error(error);
         }
       },
+
       selectAnswer: (questionId, selectedAnswer) => {
         const { questions } = get();
         const newQuestions = [...questions];
         const questionIndex = newQuestions.findIndex((q) => q._id === questionId);
         const questionInfo = newQuestions[questionIndex];
-        console.log(newQuestions);
-        console.log(questionIndex);
-        // Memeriksa apakah jawaban sudah ada
         const isAnswered = questionInfo?.isAnswered || false;
-        const isCorrectUserAnswer = questionInfo?.kunciJawaban === selectedAnswer._id; // Menggunakan kunciJawaban
-
-        console.log(questionInfo);
-        console.log(questionInfo?.kunciJawaban);
-        console.log(selectedAnswer._id);
-        console.log(isCorrectUserAnswer);
+        const isCorrectUserAnswer = questionInfo?.kunciJawaban === selectedAnswer._id;
 
         newQuestions[questionIndex] = {
           ...questionInfo,
@@ -48,11 +47,12 @@ const useQuestionStore = create(
         };
         set({ questions: newQuestions }, false);
       },
+
       onCompleteQuestions: () => {
-        const { questions } = get();
-        const score = questions.filter((q) => q.isCorrectUserAnswer).length;
-        set({ hasCompleteAll: true, currentQuestion: 0, score });
+        set({ hasCompletedSection1: true, currentQuestion: 0, score: 100 });
+        useQuestion2Store.getState().unlockSection2(); // Unlock Section 2 when Section 1 is completed
       },
+
       goNextQuestion: () => {
         const { currentQuestion, questions } = get();
         const nextQuestion = currentQuestion + 1;
@@ -60,6 +60,7 @@ const useQuestionStore = create(
           set({ currentQuestion: nextQuestion });
         }
       },
+
       goPreviousQuestion: () => {
         const { currentQuestion } = get();
         const previousQuestion = currentQuestion - 1;
@@ -67,20 +68,20 @@ const useQuestionStore = create(
           set({ currentQuestion: previousQuestion });
         }
       },
+
       goToQuestion: (index) => {
         set({ currentQuestion: index });
       },
+
       reset: () => {
         set({
           currentQuestion: 0,
           questions: [],
-          hasCompleteAll: false,
-          // selectedQuizz: null,
         });
       },
     }),
     {
-      name: 'quizz', // Nama storage untuk persist middleware
+      name: 'quizz',
     }
   )
 );
