@@ -17,7 +17,7 @@ export default function InfoQuiz1() {
       </p>
       <p className='text-lg font-semibold mb-4'>PETUNJUK PENGERJAAN SOAL</p>
       <ol className='list-decimal list-inside space-y-2 text-lg'>
-        <li>Awali dengan berdo’a dan kerjakan soal yang mudah terlebih dahulu.</li>
+        <li>Awali dengan berdo'a dan kerjakan soal yang mudah terlebih dahulu.</li>
         <li>Tuliskan nama dan identitas Anda dengan lengkap.</li>
         <li>Pilihlah jawaban dengan memilih pada huruf jawaban yang dianggap paling benar!</li>
         <li>Jumlah soal sebanyak 50, terdiri dari 40 soal pilihan ganda dan 10 soal isian.</li>

@@ -6,53 +6,58 @@ import axios from 'axios';
 import EssayAnswer from './essayAnswer';
 import { useRouter } from 'next/navigation';
 
-const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, questionType }) => {
-  const [selectedAns, setSelectedAns] = useState(jawaban || '');
+const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, questionType, soalText }) => {
+  const [selectedAns, setSelectedAns] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const { questions, onCompleteQuestions, currentQuestion, goPreviousQuestion, reset } = useQuestionStore();
-  const isCorrectUserAnswer = questions.find((q) => q._id === questionId)?.isCorrectUserAnswer;
+  const { questions, onCompleteQuestions, currentQuestion, goPreviousQuestion } = useQuestionStore();
+  const isCorrectUserAnswer = questions.find((q) => q.soal === questionId)?.isCorrectUserAnswer;
   const router = useRouter();
 
   useEffect(() => {
-    if (jawaban) {
-      setSelectedAns(jawaban);
-    }
-  }, [jawaban]);
+    // Reset the state when the question changes
+    setSelectedAns(jawaban || '');
+    setSubmitted(false);
+  }, [jawaban, questionId]);
 
   const answerLabels = ['A', 'B', 'C', 'D'];
 
   const handleSelectAnswer = async (answer) => {
     if (submitted) return;
-    if (selectedAns._id === answer._id) {
-      setSelectedAns('');
-      return;
-    }
-    setSelectedAns(answer);
 
-    try {
-      await axios.post('/api/submit-answer', {
-        questionId,
-        selectedAnswerId: answer._id,
-      });
-      handleAnswer(questionId, answer);
-    } catch (error) {
-      console.error('Error submitting answer:', error);
+    // Toggle select/deselect logic
+    const newSelectedAns = selectedAns === answer.optionText ? '' : answer.optionText;
+    setSelectedAns(newSelectedAns);
+
+    // Only send the API request if an option is selected (not deselected)
+    if (newSelectedAns) {
+      try {
+        await axios.post('/api/submit-answer', {
+          questionId,
+          jawabanText: newSelectedAns,
+          soalText,
+        });
+        handleAnswer(questionId, { ...answer, optionText: newSelectedAns });
+      } catch (error) {
+        console.error('Error submitting answer:', error);
+      }
+    } else {
+      // Handle the deselect case without making an API request
+      handleAnswer(questionId, { ...answer, optionText: '' });
     }
   };
 
   const submitAnswer = async () => {
-    if (questionType === 'multiple-choice') {
-      if (selectedAns && !submitted) {
-        try {
-          await axios.post('/api/submit-answer', {
-            questionId,
-            selectedAnswerId: selectedAns._id,
-          });
-          handleAnswer(questionId, selectedAns);
-          setSubmitted(true);
-        } catch (error) {
-          console.error('Error submitting answer:', error);
-        }
+    if (questionType === 'soal' && selectedAns && !submitted) {
+      try {
+        await axios.post('/api/submit-answer', {
+          questionId,
+          jawabanText: selectedAns,
+          soalText,
+        });
+        handleAnswer(questionId, { optionText: selectedAns });
+        setSubmitted(true);
+      } catch (error) {
+        console.error('Error submitting answer:', error);
       }
     }
   };
@@ -60,14 +65,9 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
   const handleNextQuestion = async () => {
     await submitAnswer();
 
-    if (questionType === 'essay') {
-      setSubmitted(false);
-    }
-
     if (isLastQuestion) {
       if (confirm('Apakah mau selesai?')) {
         onCompleteQuestions();
-        // reset()
         router.push('/sesi');
       }
     } else {
@@ -78,12 +78,6 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
   const handlePreviousQuestion = async () => {
     await submitAnswer();
     goPreviousQuestion();
-    resetState();
-  };
-
-  const resetState = () => {
-    setSubmitted(false);
-    setSelectedAns('');
   };
 
   const isLastQuestion = currentQuestion === questions.length - 1;
@@ -91,10 +85,18 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
   return (
     <>
       <ul className='flex flex-col gap-y-4 justify-center w-full'>
-        {questionType === 'multiple-choice' ? (
+        {questionType === 'soal' ? (
           <ul className='flex flex-col gap-y-4 justify-center w-full'>
             {data?.map((answer, index) => (
-              <Answer key={answer._id} answer={answer} selectedAns={selectedAns} isCorrectUserAnswer={isCorrectUserAnswer} handleSelectAnswer={handleSelectAnswer} index={index} answerLabels={answerLabels} />
+              <Answer
+                key={answer.optionText}
+                answer={answer}
+                selectedAns={selectedAns}
+                isCorrectUserAnswer={isCorrectUserAnswer}
+                handleSelectAnswer={handleSelectAnswer}
+                index={index}
+                answerLabels={answerLabels}
+              />
             ))}
           </ul>
         ) : (

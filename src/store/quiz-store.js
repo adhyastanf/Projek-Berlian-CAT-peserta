@@ -13,18 +13,18 @@ const useQuestionStore = create(
       score: 0,
 
       selectQuizz: (quizz) => {
-        set({ questions: quizz.soal });
+        set({ questions: quizz.hasil });
       },
       fetchQuizzes: async () => {
         const { hasCompletedSection1 } = get();
 
-        // if (hasCompletedSection1) {
-        //   return; // Do not fetch if quiz is completed
-        // }
+        if (hasCompletedSection1) {
+          return; // Do not fetch if quiz is completed
+        }
         try {
-          const res = await fetch(`http://localhost:3000/data.json`);
+          const res = await fetch(`http://localhost:3000/data3.json`);
           const json = await res.json();
-          const quizzes = json.soal;
+          const quizzes = json.hasil;
           set({ quizzes, questions: quizzes, hasCompletedSection1: false });
         } catch (error) {
           console.error(error);
@@ -34,10 +34,10 @@ const useQuestionStore = create(
       selectAnswer: (questionId, selectedAnswer) => {
         const { questions } = get();
         const newQuestions = [...questions];
-        const questionIndex = newQuestions.findIndex((q) => q._id === questionId);
+        const questionIndex = newQuestions.findIndex((q) => q.soal === questionId);
         const questionInfo = newQuestions[questionIndex];
         const isAnswered = questionInfo?.isAnswered || false;
-        const isCorrectUserAnswer = questionInfo?.kunciJawaban === selectedAnswer._id;
+        const isCorrectUserAnswer = questionInfo?.kunciJawabanText === selectedAnswer.optionText;
 
         newQuestions[questionIndex] = {
           ...questionInfo,

@@ -15,8 +15,8 @@ export default function InfoQuiz2() {
         <br />
         <strong>Pukul:</strong> 09.30 WIB - 11.00 WIB
       </p>
-      
-      <ButtonStartQuiz />
+      {/* <ButtonStartQuiz /> */}
+      <button className="btn btn-primary">Mulai</button>
     </div>
   );
 }

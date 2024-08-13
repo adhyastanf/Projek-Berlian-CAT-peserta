@@ -18,7 +18,7 @@ const Game = () => {
 
       <div className="flex flex-col gap-4 w-full max-w-7xl px-4">
         <div className='w-full'>
-          <Quiz1Answers data={question?.options} questionId={question?._id} handleAnswer={selectAnswer} goNextQuestion={goNextQuestion} jawaban={question?.jawaban} questionType={question?.type} />
+          <Quiz1Answers data={question?.options} questionId={question?.soal} handleAnswer={selectAnswer} goNextQuestion={goNextQuestion} jawaban={question?.jawaban} questionType={question?.jenis} soalText={question?.soalText}/>
         </div>
       </div>
     </div>

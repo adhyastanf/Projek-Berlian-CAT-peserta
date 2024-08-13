@@ -38,16 +38,18 @@ const Timer = ({ section }) => {
   }, [getRemainingTime, section, startTimer, router]);
 
   const getCountdownValues = (time) => {
-    if (time === null) return { minutes: 0, seconds: 0 };
-    const minutes = Math.floor(time / 60000);
+    if (time === null) return { hours: 0, minutes: 0, seconds: 0 };
+    const hours = Math.floor(time / 3600000);
+    const minutes = Math.floor((time % 3600000) / 60000);
     const seconds = Math.floor((time % 60000) / 1000);
-    return { minutes, seconds };
+    return { hours, minutes, seconds };
   };
 
-  const { minutes, seconds } = getCountdownValues(remainingTime);
+  const { hours, minutes, seconds } = getCountdownValues(remainingTime);
 
   return (
     <div className='countdown font-mono text-2xl'>
+      <span style={{ '--value': hours }}>{hours.toString().padStart(2, '0')}</span>:
       <span style={{ '--value': minutes }}>{minutes.toString().padStart(2, '0')}</span>:
       <span style={{ '--value': seconds }}>{seconds.toString().padStart(2, '0')}</span>
     </div>

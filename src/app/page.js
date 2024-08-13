@@ -1,8 +1,6 @@
 import FormDisplay from '@/components/form/form';
-import SectionHome from '@/components/sectionHome';
 import Image from 'next/image';
-import Link from 'next/link';
-import Hero from '../../public/tugu-poci3.jpg';
+import Hero from '../../public/hero.jpg';
 
 export default function Home() {
   return (

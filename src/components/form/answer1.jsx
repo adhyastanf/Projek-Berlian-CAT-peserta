@@ -2,7 +2,9 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 const Answer = ({ answer, selectedAns, handleSelectAnswer, index, answerLabels }) => {
-  const isSelected = selectedAns?._id === answer?._id;
+  const isSelected = selectedAns === answer?.optionText;
+  console.log(answer) 
+  console.log(selectedAns) 
 
   return (
     <li className='w-full'>

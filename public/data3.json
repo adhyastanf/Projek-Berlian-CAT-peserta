@@ -1,0 +1,566 @@
+{
+    "message": "Hasil ujian untuk nomor ujian ini sudah ada.",
+    "noUjian": "123456",
+    "hasil": [
+        {
+            "jenis": "soal",
+            "soal": "66b70a1fcc55b4030f36bed8",
+            "soalText": "Berikut adalah pejabat yang dapat melantik dan mengambil sumpah Kepala desa, <i>kecuali</i>.....",
+            "options": [
+                {
+                    "optionText": "Bupati"
+                },
+                {
+                    "optionText": "Wakil Bupati"
+                },
+                {
+                    "optionText": "Camat"
+                },
+                {
+                    "optionText": "Ketua BPD"
+                }
+            ],
+            "kunciJawabanText": "Ketua BPD",
+            "kunciJawabanIndexAlfabet": "D",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b70a4bcc55b4030f36bedf",
+            "soalText": "Undang-Undang tentang Desa lahir pada era pemerintahan Presiden.....",
+            "options": [
+                {
+                    "optionText": "Abdurrahman Wahid"
+                },
+                {
+                    "optionText": "Susilo Bambang Yudhoyono"
+                },
+                {
+                    "optionText": "Megawati Sukarno Putri"
+                },
+                {
+                    "optionText": "Joko Widodo"
+                }
+            ],
+            "kunciJawabanText": "Susilo Bambang Yudhoyono",
+            "kunciJawabanIndexAlfabet": "B",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b707bacc55b4030f36bea0",
+            "soalText": "Arti kata <b><i>Panca</i></b> dalam Pancasila adalah.....",
+            "options": [
+                {
+                    "optionText": "lima "
+                },
+                {
+                    "optionText": "enam"
+                },
+                {
+                    "optionText": "tiga"
+                },
+                {
+                    "optionText": "empat"
+                }
+            ],
+            "kunciJawabanText": "lima ",
+            "kunciJawabanIndexAlfabet": "A",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b70a8ecc55b4030f36beed",
+            "soalText": "Untuk menjadi Perangkat desa sekurang-kurangnya harus berusia.....",
+            "options": [
+                {
+                    "optionText": "30 tahun"
+                },
+                {
+                    "optionText": "25 tahun"
+                },
+                {
+                    "optionText": "20 tahun"
+                },
+                {
+                    "optionText": "Tidak dibatasi"
+                }
+            ],
+            "kunciJawabanText": "20 tahun",
+            "kunciJawabanIndexAlfabet": "C",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b709e8cc55b4030f36bed1",
+            "soalText": "Nama Presiden RI ketiga adalah.....",
+            "options": [
+                {
+                    "optionText": "BJ. Habibi"
+                },
+                {
+                    "optionText": "Megawati Sukarno Putri"
+                },
+                {
+                    "optionText": "Susilo Bambang Yudhoyono"
+                },
+                {
+                    "optionText": "Abdurrahman Wahid"
+                }
+            ],
+            "kunciJawabanText": "BJ. Habibi",
+            "kunciJawabanIndexAlfabet": "A",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b70aabcc55b4030f36bef4",
+            "soalText": "Kepala Desa dengan Sekretaris Desa memiliki Hubungan kerja.....",
+            "options": [
+                {
+                    "optionText": "Koordinasi dan administratif"
+                },
+                {
+                    "optionText": "Hierarki, pembinaan dan pengawasan"
+                },
+                {
+                    "optionText": "Kemitraan, konsultatif dan pembinaan"
+                },
+                {
+                    "optionText": "Kemitraan, konsultatif dan evaluasi"
+                }
+            ],
+            "kunciJawabanText": "Hierarki, pembinaan dan pengawasan",
+            "kunciJawabanIndexAlfabet": "B",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b708b3cc55b4030f36bec3",
+            "soalText": "Salah satu asas dalam Pemilu yang menyatakan bahwa para pemilih langsung memberikan suaranya, tidak boleh diwakilkan orang lain adalah asas.....",
+            "options": [
+                {
+                    "optionText": "langsung"
+                },
+                {
+                    "optionText": "umum"
+                },
+                {
+                    "optionText": "bebas"
+                },
+                {
+                    "optionText": "rahasia"
+                }
+            ],
+            "kunciJawabanText": "langsung",
+            "kunciJawabanIndexAlfabet": "A",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b7088ecc55b4030f36bebc",
+            "soalText": "Berikut ini yang termasuk lembaga tinggi negara di Republik Indonesia adalah.....",
+            "options": [
+                {
+                    "optionText": "Jaksa Agung"
+                },
+                {
+                    "optionText": "Menteri"
+                },
+                {
+                    "optionText": "Panglima TNI"
+                },
+                {
+                    "optionText": "Mahkamah Agung"
+                }
+            ],
+            "kunciJawabanText": "Mahkamah Agung",
+            "kunciJawabanIndexAlfabet": "D",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b70a6dcc55b4030f36bee6",
+            "soalText": "Yang melantik perangkat desa adalah kepala desa, sedang yang memberhentikan perangkat desa adalah.....",
+            "options": [
+                {
+                    "optionText": "Bupati"
+                },
+                {
+                    "optionText": "Camat"
+                },
+                {
+                    "optionText": "Kepala desa"
+                },
+                {
+                    "optionText": "Ketua BPD"
+                }
+            ],
+            "kunciJawabanText": "Kepala desa",
+            "kunciJawabanIndexAlfabet": "C",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b70acacc55b4030f36befb",
+            "soalText": "Dalam melaksanakan tugas operasional Kepala desa  dibantu oleh.....",
+            "options": [
+                {
+                    "optionText": "Kepala Seksi"
+                },
+                {
+                    "optionText": "Kepala Dusun"
+                },
+                {
+                    "optionText": "Sekretaris Desa"
+                },
+                {
+                    "optionText": "Kepala Urusan"
+                }
+            ],
+            "kunciJawabanText": "Kepala Seksi",
+            "kunciJawabanIndexAlfabet": "A",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b70b5fcc55b4030f36bf17",
+            "soalText": "Jumlah anggota Dewan Perwakilan Daerah (DPD) RI setiap provinsi adalah.....",
+            "options": [
+                {
+                    "optionText": "5 (lima) orang"
+                },
+                {
+                    "optionText": "6 (enam) orang"
+                },
+                {
+                    "optionText": "7 (tujuh) orang"
+                },
+                {
+                    "optionText": "4 (empat) orang"
+                }
+            ],
+            "kunciJawabanText": "4 (empat) orang",
+            "kunciJawabanIndexAlfabet": "D",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b70179cc55b4030f36be92",
+            "soalText": "Pahlawan yang gugur akibat keganasan G 30 S/PKI dinamakan.....",
+            "options": [
+                {
+                    "optionText": "Pahlawan Bangsa"
+                },
+                {
+                    "optionText": "Pahlawan Revolusi"
+                },
+                {
+                    "optionText": "Pahlawan Nasional"
+                },
+                {
+                    "optionText": "Pahlawan Kemerdekaan"
+                }
+            ],
+            "kunciJawabanText": "Pahlawan Revolusi",
+            "kunciJawabanIndexAlfabet": "B",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b706f7cc55b4030f36be99",
+            "soalText": "Berikut yang <b><i>bukan</i></b> merupakan sumber nilai Pancasila sebagai Pandangan hidup bangsa Indonesia adalah....",
+            "options": [
+                {
+                    "optionText": "Asas Kenusantaraan"
+                },
+                {
+                    "optionText": "Asas Kekeluargaan"
+                },
+                {
+                    "optionText": "Asas Kegotongroyongan"
+                },
+                {
+                    "optionText": "Asas Musyawarah mufakat"
+                }
+            ],
+            "kunciJawabanText": "Asas Kenusantaraan",
+            "kunciJawabanIndexAlfabet": "A",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b70b3fcc55b4030f36bf10",
+            "soalText": "Berikut ini merupakan hak perangkat desa, <b><i>kecuali</i></b>.....",
+            "options": [
+                {
+                    "optionText": "Mendapatkan perlindungan hukum"
+                },
+                {
+                    "optionText": "Mendapatkan jaminan kesehatan"
+                },
+                {
+                    "optionText": "Mendapatkan uang purna tugas atau pensiun"
+                },
+                {
+                    "optionText": "Mendapatkan penghasilan tetap"
+                }
+            ],
+            "kunciJawabanText": "Mendapatkan uang purna tugas atau pensiun",
+            "kunciJawabanIndexAlfabet": "C",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b709c5cc55b4030f36beca",
+            "soalText": "Sikap mengakui keberagaman agama dapat dilakukan dengan cara.....",
+            "options": [
+                {
+                    "optionText": "Membiarkan orang lain beribadah sesuai dengan agama yang dianut"
+                },
+                {
+                    "optionText": "Mengikuti ibadah agama orang lain"
+                },
+                {
+                    "optionText": "Membangun tempat ibadah agama lain"
+                },
+                {
+                    "optionText": "Memaksa orang lain supaya beribadah sesuai dengan agama kita"
+                }
+            ],
+            "kunciJawabanText": "Membiarkan orang lain beribadah sesuai dengan agama yang dianut",
+            "kunciJawabanIndexAlfabet": "A",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b70aeecc55b4030f36bf02",
+            "soalText": "Jumlah anggota BPD Desa Warureja adalah.....",
+            "options": [
+                {
+                    "optionText": "5 orang"
+                },
+                {
+                    "optionText": "7 orang"
+                },
+                {
+                    "optionText": "9 orang"
+                },
+                {
+                    "optionText": "11 orang"
+                }
+            ],
+            "kunciJawabanText": "7 orang",
+            "kunciJawabanIndexAlfabet": "B",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b7086ccc55b4030f36beb5",
+            "soalText": "Gubernur Jawa tengah yang pertama adalah.....",
+            "options": [
+                {
+                    "optionText": "R. Panji Suroso"
+                },
+                {
+                    "optionText": "Ismail"
+                },
+                {
+                    "optionText": "Ganjar Pranowo"
+                },
+                {
+                    "optionText": "Soewardi"
+                }
+            ],
+            "kunciJawabanText": "R. Panji Suroso",
+            "kunciJawabanIndexAlfabet": "A",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b7080ecc55b4030f36beae",
+            "soalText": "UUD 1945 bersifat singkat dan.....",
+            "options": [
+                {
+                    "optionText": "kuat"
+                },
+                {
+                    "optionText": "terukur"
+                },
+                {
+                    "optionText": "aktif"
+                },
+                {
+                    "optionText": "supel"
+                }
+            ],
+            "kunciJawabanText": "supel",
+            "kunciJawabanIndexAlfabet": "D",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b70b0fcc55b4030f36bf09",
+            "soalText": "Panitia Pilkades dalam Pemilihan Kepala Desa serentak dibentuk oleh.....",
+            "options": [
+                {
+                    "optionText": "Bupati"
+                },
+                {
+                    "optionText": "Camat"
+                },
+                {
+                    "optionText": "BPD"
+                },
+                {
+                    "optionText": "Kepala Desa"
+                }
+            ],
+            "kunciJawabanText": "BPD",
+            "kunciJawabanIndexAlfabet": "C",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "soal",
+            "soal": "66b707e0cc55b4030f36bea7",
+            "soalText": "Faktor penyebab tidak dilakukannya perubahan atau amandemen dalam pembukaan UUD 1945 adalah.....",
+            "options": [
+                {
+                    "optionText": "Memuat Dasar Negara Pancasila "
+                },
+                {
+                    "optionText": "Bersifat sakral"
+                },
+                {
+                    "optionText": "Tidak dikehendaki bangsa Indonesia"
+                },
+                {
+                    "optionText": "Memang tidak boleh"
+                }
+            ],
+            "kunciJawabanText": "Memuat Dasar Negara Pancasila ",
+            "kunciJawabanIndexAlfabet": "A",
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "isian",
+            "soalText": "Setiap tanggal 5 Oktober kita memperingati Hari.....",
+            "options": [],
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "isian",
+            "soalText": "Nama Kepala Desa dan Sekretaris desa Harjasari sekarang adalah.....",
+            "options": [],
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "isian",
+            "soalText": "Peraturan Desa dibuat bersama antara Kepala Desa dan.....",
+            "options": [],
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "isian",
+            "soalText": "Nama ketua BPD Desa Harjasari adalah.....",
+            "options": [],
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "isian",
+            "soalText": "Masa jabatan kepala desa yang baru berdasarkan Undang-undang Nomor 3 Tahun 2024  adalah selama.....",
+            "options": [],
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "isian",
+            "soalText": "Tunjangan yang akan diperoleh kepala desa, perangkat desa dan BPD berdasarkan  Undang-undang Nomor 3 Tahun 2024, dan sebelumnya tidak diatur dalam undang-undang desa Nomor 6 Tahun 2014  adalah.....",
+            "options": [],
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "isian",
+            "soalText": "Istilah Pancasila diambil dari Kitab Sutasoma yang dikarang oleh.....",
+            "options": [],
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "isian",
+            "soalText": "Nama Pelaksana Tugas Camat Suradadi adalah.....",
+            "options": [],
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "isian",
+            "soalText": "Nama Penjabat (Pj) Bupati Tegal saat ini adalah.....",
+            "options": [],
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        },
+        {
+            "jenis": "isian",
+            "soalText": "Penyelenggara Pemilu di tingkat kecamatan disebut PPK. Apa kepanjangan dari PPK ?.....",
+            "options": [],
+            "jawaban": "",
+            "isAnswered": false,
+            "results": false
+        }
+    ]
+}
