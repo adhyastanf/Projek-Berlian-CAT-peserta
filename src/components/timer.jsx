@@ -1,18 +1,22 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import useCountdownStore from '@/store/countdown-quiz1';
 import useQuestionStore from '@/store/quiz-store';
-import useQuestion2Store from '@/store/quiz2-store';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const Timer = ({ section }) => {
-  const [remainingTime, setRemainingTime] = useState(0);
-  const { getRemainingTime, isQuestionPlayable, startTimer } = useCountdownStore();
-  const { hasCompletedSection1 } = useQuestionStore();
-  const { hasCompletedSection2, isSection2Locked } = useQuestion2Store();
   const router = useRouter();
+  const [remainingTime, setRemainingTime] = useState(0);
+  const { getRemainingTime, startTimer } = useCountdownStore();
+  const { onCompleteQuestions } = useQuestionStore();
 
   useEffect(() => {
+    // Optional: Check if the section is valid before starting the timer
+    if (section !== 1 && section !== 2) {
+      console.error('Invalid section:', section);
+      return;
+    }
+
     startTimer(); // Initialize timer settings
 
     const interval = setInterval(() => {
@@ -20,22 +24,18 @@ const Timer = ({ section }) => {
       setRemainingTime(time);
 
       if (time <= 0) {
-        clearInterval(interval);
-        router.push('/sesi'); // Redirect to home if time expires
+        clearInterval(interval); // Clear the interval to stop further execution
+
+        // Complete the questions for Section 1
+        if (section === 1) {
+          onCompleteQuestions();
+        }
+        router.push('/sesi'); // Redirect to /sesi if time runs out
       }
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, [getRemainingTime, isQuestionPlayable, router, section, startTimer]);
-
-  useEffect(() => {
-    if (section === 1 && hasCompletedSection1) {
-      router.push('/sesi'); // Redirect if Section 1 is completed
-    }
-    if (section === 2 && (hasCompletedSection2 || isSection2Locked)) {
-      router.push('/sesi'); // Redirect if Section 2 is completed or locked
-    }
-  }, [hasCompletedSection1, hasCompletedSection2, isSection2Locked, router, section]);
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [getRemainingTime, section, startTimer, router]);
 
   const getCountdownValues = (time) => {
     if (time === null) return { minutes: 0, seconds: 0 };

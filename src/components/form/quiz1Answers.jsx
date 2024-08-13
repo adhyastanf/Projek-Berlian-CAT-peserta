@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, questionType }) => {
   const [selectedAns, setSelectedAns] = useState(jawaban || '');
   const [submitted, setSubmitted] = useState(false);
-  const { questions, onCompleteQuestions, currentQuestion, goPreviousQuestion } = useQuestionStore();
+  const { questions, onCompleteQuestions, currentQuestion, goPreviousQuestion, reset } = useQuestionStore();
   const isCorrectUserAnswer = questions.find((q) => q._id === questionId)?.isCorrectUserAnswer;
   const router = useRouter();
 
@@ -67,6 +67,7 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
     if (isLastQuestion) {
       if (confirm('Apakah mau selesai?')) {
         onCompleteQuestions();
+        // reset()
         router.push('/sesi');
       }
     } else {

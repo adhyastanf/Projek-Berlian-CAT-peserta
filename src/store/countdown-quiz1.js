@@ -14,13 +14,13 @@ const useCountdownStore = create(
 
         // Section 1 Start and End Times
         const section1Start = new Date();
-        section1Start.setHours(14, 14, 0, 0); // Set start time to 1:20 PM
+        section1Start.setHours(10, 7, 0, 0); // Set start time to 1:20 PM
         const section1End = new Date(section1Start);
-        section1End.setHours(15, 0, 0, 0); // Set duration to 30 minutes
+        section1End.setHours(18, 48, 0, 0); // Set duration to 30 minutes
 
         // Section 2 Start and End Times
         const section2Start = new Date(section1End); // Start Section 2 right after Section 1
-        section2Start.setHours(14, 14, 0, 0); // 10 minutes break
+        section2Start.setHours(10, 7, 0, 0); // 10 minutes break
         const section2End = new Date(section2Start);
         section2End.setHours(18, 50, 0, 0); // Set duration to 45 minutes
 
@@ -49,11 +49,8 @@ const useCountdownStore = create(
 
       isQuestionPlayable: (section) => {
         const now = new Date();
-        const startTime = new Date();
-        startTime.setHours(12, 20, 0, 0); // Set waktu mulai ke jam 1:30 malam
-
-        const endTime = new Date();
-        endTime.setHours(18, 50, 0, 0); // Set waktu berakhir ke jam 1:40 malam
+        const startTime = new Date(get()[`${section === 1 ? 'section1StartTime' : 'section2StartTime'}`]);
+        const endTime = new Date(get()[`${section === 1 ? 'section1EndTime' : 'section2EndTime'}`]);
 
         return now >= startTime && now < endTime;
       },

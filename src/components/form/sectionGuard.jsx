@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useCountdownStore from '@/store/countdown-quiz1';
 import useQuestionStore from '@/store/quiz-store';
@@ -10,26 +10,48 @@ const SectionGuard = ({ section }) => {
   const { getRemainingTime, isQuestionPlayable } = useCountdownStore();
   const { hasCompletedSection1 } = useQuestionStore();
   const { hasCompletedSection2, isSection2Locked } = useQuestion2Store();
+  const [isStateReady, setIsStateReady] = useState(false);
 
   useEffect(() => {
+    // Check if all required states are available
+    if (
+      typeof getRemainingTime(section) !== 'undefined' &&
+      typeof isQuestionPlayable(section) !== 'undefined' &&
+      typeof hasCompletedSection1 !== 'undefined' &&
+      typeof hasCompletedSection2 !== 'undefined' &&
+      typeof isSection2Locked !== 'undefined'
+    ) {
+      setIsStateReady(true);
+    }
+  }, [getRemainingTime, isQuestionPlayable, hasCompletedSection1, hasCompletedSection2, isSection2Locked, section]);
+
+  useEffect(() => {
+    if (!isStateReady) return; // Wait until the state is ready
+
     const remainingTime = getRemainingTime(section);
     const isPlayable = isQuestionPlayable(section);
     const isSection1Completed = hasCompletedSection1;
     const isSection2Completed = hasCompletedSection2;
     const isSection2Locked = useQuestion2Store.getState().isSection2Locked;
 
+    console.log('Section:', section);
+    console.log('Remaining Time:', remainingTime);
+    console.log('Is Playable:', isPlayable);
+    console.log('Section 1 Completed:', isSection1Completed);
+    console.log('Section 2 Completed:', isSection2Completed);
+    console.log('Section 2 Locked:', isSection2Locked);
+
+    // Handle routing based on the latest state values
     if (section === 1) {
-      // Section 1 should be accessible only during its time window
-      if (!isPlayable || !remainingTime) {
+      if (!isPlayable || remainingTime <= 0 || isSection1Completed) {
         router.push('/sesi');
       }
     } else if (section === 2) {
-      // Section 2 should be accessible only after Section 1 is completed and during its time window
-      if (!isSection1Completed || !isPlayable || isSection2Completed || isSection2Locked) {
+      if (!isSection1Completed || !isPlayable || remainingTime <= 0 || isSection2Locked || isSection2Completed) {
         router.push('/sesi');
       }
     }
-  }, [section, getRemainingTime, isQuestionPlayable, hasCompletedSection1, hasCompletedSection2, isSection2Locked, router]);
+  }, [isStateReady, section, getRemainingTime, isQuestionPlayable, hasCompletedSection1, hasCompletedSection2, isSection2Locked, router]);
 
   return null; // This component is only for route guarding
 };

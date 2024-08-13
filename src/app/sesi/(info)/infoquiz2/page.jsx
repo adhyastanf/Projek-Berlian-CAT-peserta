@@ -1,10 +1,10 @@
 import ButtonStartQuiz from "./buttonStart";
 
-export default function InfoQuiz1() {
+export default function InfoQuiz2() {
   return (
     <div className='max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg'>
       <h1 className='text-2xl font-bold text-center mb-4'>
-        TES UJIAN TERTULIS BERBASIS CAT (COMPUTER ASSISTED TEST)
+      UJIAN PRAKTEK KOMPUTER CALON PERANGKAT DESA HARJASARI
         <br />
         CALON PERANGKAT DESA HARJASARI
       </h1>
@@ -13,16 +13,9 @@ export default function InfoQuiz1() {
         <br />
         <strong>Waktu:</strong> 90 Menit
         <br />
-        <strong>Pukul:</strong> 08.00 WIB - 09.30 WIB
+        <strong>Pukul:</strong> 09.30 WIB - 11.00 WIB
       </p>
-      <p className='text-lg font-semibold mb-4'>PETUNJUK PENGERJAAN SOAL</p>
-      <ol className='list-decimal list-inside space-y-2 text-lg'>
-        <li>Awali dengan berdo’a dan kerjakan soal yang mudah terlebih dahulu.</li>
-        <li>Tuliskan nama dan identitas Anda dengan lengkap.</li>
-        <li>Pilihlah jawaban dengan memilih pada huruf jawaban yang dianggap paling benar!</li>
-        <li>Jumlah soal sebanyak 50, terdiri dari 40 soal pilihan ganda dan 10 soal isian.</li>
-        <li>Selamat mengerjakan!</li>
-      </ol>
+      
       <ButtonStartQuiz />
     </div>
   );

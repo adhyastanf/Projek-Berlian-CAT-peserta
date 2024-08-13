@@ -18,9 +18,9 @@ const useQuestionStore = create(
       fetchQuizzes: async () => {
         const { hasCompletedSection1 } = get();
 
-        if (hasCompletedSection1) {
-          return; // Do not fetch if quiz is completed
-        }
+        // if (hasCompletedSection1) {
+        //   return; // Do not fetch if quiz is completed
+        // }
         try {
           const res = await fetch(`http://localhost:3000/data.json`);
           const json = await res.json();

@@ -11,14 +11,15 @@ import SectionGuard from '@/components/form/sectionGuard';
 import useQuestion2Store from '@/store/quiz2-store';
 
 export default function Quiz2Page() {
-  const { fetchQuizzes, hasCompleteAll, reset } = useQuestion2Store();
+  const { hasCompletedSection2, isSection2Locked} = useQuestion2Store();
 
-  useEffect(() => {
-    fetchQuizzes();
-  }, [fetchQuizzes]);
+  // useEffect(() => {
+  //   fetchQuizzes();
+  // }, [fetchQuizzes]);
 
   // Apply route guard for Section 1
-  SectionGuard({ section: 2 });
+  // SectionGuard({ section: 2 });
+  console.log(hasCompletedSection2, isSection2Locked)
 
   return (
     <div>

@@ -1,70 +1,33 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import Soal1 from '../../public/soal1.png';
+import Soal2 from '../../public/soal2.png';
 
 const useQuestion2Store = create(
   persist(
     (set, get) => ({
-      quizzes: [],
-      questions: ["A", "B"],
-      selectedQuizz: null,
+      questions: [
+        {
+          _id: '1',
+          soalText: Soal1,
+          questionType: 'file-upload',
+          uploadedFileName: null, // Store the uploaded file name
+        },
+        {
+          _id: '2',
+          soalText: Soal2,
+          questionType: 'file-upload',
+          uploadedFileName: null,
+        },
+      ],
       currentQuestion: 0,
       hasCompletedSection2: false,
       isSection2Locked: true, // Initial state for Section 2 lock
-
-      selectQuizz: (quizz) => {
-        set({ questions: quizz.soal });
-      },
-
-      fetchQuizzes: async () => {
-        const { isSection2Locked, hasCompletedSection2 } = get();
-
-        if (isSection2Locked) {
-          console.warn('Section 2 is locked. Cannot fetch quizzes.');
-          return;
-        }
-
-        if (hasCompletedSection2) {
-          console.warn('Questions already completed. No need to fetch again.');
-          return;
-        }
-
-        try {
-          const res = await fetch(`http://localhost:3000/data.json`);
-          const json = await res.json();
-          const quizzes = json.soal;
-          set({ quizzes, questions: quizzes, hasCompletedSection2: false });
-        } catch (error) {
-          console.error(error);
-        }
-      },
-
-      selectAnswer: (questionId, selectedAnswer) => {
-        const { questions } = get();
-        const newQuestions = [...questions];
-        const questionIndex = newQuestions.findIndex((q) => q._id === questionId);
-        const questionInfo = newQuestions[questionIndex];
-        const isAnswered = questionInfo?.isAnswered || false;
-        const isCorrectUserAnswer = questionInfo?.kunciJawaban === selectedAnswer._id;
-
-        newQuestions[questionIndex] = {
-          ...questionInfo,
-          isCorrectUserAnswer,
-          userSelectedAnswer: selectedAnswer,
-          isAnswered,
-        };
-        set({ questions: newQuestions }, false);
-      },
-
-      onCompleteQuestions: () => {
-        const { questions } = get();
-        const score = questions.filter((q) => q.isCorrectUserAnswer).length;
-        set({ hasCompletedSection2: true, currentQuestion: 0, score });
-      },
+      isLoading: false, // Loading state
 
       goNextQuestion: () => {
         const { currentQuestion, questions } = get();
         const nextQuestion = currentQuestion + 1;
-        console.log(`Current: ${currentQuestion}, Next: ${nextQuestion}`);
         if (nextQuestion < questions.length) {
           set({ currentQuestion: nextQuestion });
         }
@@ -82,10 +45,24 @@ const useQuestion2Store = create(
         set({ currentQuestion: index });
       },
 
+      setLoading: (loading) => {
+        set({ isLoading: loading });
+      },
+
+      saveUploadedFileName: (fileName) => {
+        const { currentQuestion, questions } = get();
+        const updatedQuestions = [...questions];
+        updatedQuestions[currentQuestion].uploadedFileName = fileName;
+        set({ questions: updatedQuestions });
+      },
+
+      onCompleteQuestions: () => {
+        set({ hasCompletedSection2: true, currentQuestion: 0 });
+      },
+
       reset: () => {
         set({
           currentQuestion: 0,
-          questions: [],
           hasCompletedSection2: false,
           isSection2Locked: true, // Reset lock state
         });
@@ -96,7 +73,7 @@ const useQuestion2Store = create(
       },
     }),
     {
-      name: 'quizz2',
+      name: 'quiz2-store',
     }
   )
 );

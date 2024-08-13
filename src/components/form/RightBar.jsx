@@ -15,7 +15,7 @@ function RightBar() {
         <p>Nama Peserta: John Doe</p>
         <p>Nomor Peserta: 001</p>
       </div> */}
-      <Timer />
+      <Timer section={1}/>
       <div className='grid grid-cols-5 gap-2 mt-4 w-full max-w-2xl'>
         {questions.map((question, index) => (
           <div

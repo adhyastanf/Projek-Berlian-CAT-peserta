@@ -1,113 +1,123 @@
 'use client';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import fileSchema from '@/schema/filesSchema';
 import useQuestion2Store from '@/store/quiz2-store';
 import axios from 'axios';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import Answer from './answer2';
-import EssayAnswer from './essayAnswer';
 
-const Quiz2Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, questionType }) => {
-  const [selectedAns, setSelectedAns] = useState(jawaban || '');
-  const [submitted, setSubmitted] = useState(false);
-  const { questions, onCompleteQuestions, currentQuestion, goPreviousQuestion } = useQuestion2Store();
-  const isCorrectUserAnswer = questions.find((q) => q._id === questionId)?.isCorrectUserAnswer;
+const Quiz2Answers = () => {
+  const { 
+    goNextQuestion, 
+    goPreviousQuestion, 
+    onCompleteQuestions, 
+    currentQuestion, 
+    questions, 
+    saveUploadedFileName, 
+    isLoading, 
+    setLoading,
+    reset: resetQ 
+  } = useQuestion2Store();
+  
   const router = useRouter();
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
+    resolver: yupResolver(fileSchema),
+  });
 
+  // Load the uploaded file from local storage or server on mount
   useEffect(() => {
-    if (jawaban) {
-      setSelectedAns(jawaban);
+    const storedFileName = localStorage.getItem(`uploadedFile-${currentQuestion}`);
+    if (storedFileName) {
+      setValue('file', { name: storedFileName }); // Set the uploaded file name on form
+      saveUploadedFileName(storedFileName); // Save it to the store as well
     }
-  }, [jawaban]);
+  }, [currentQuestion, setValue, saveUploadedFileName]);
 
-  const answerLabels = ['A', 'B', 'C', 'D'];
+  const uploadFile = async (formData) => {
+    if (formData.file.length) {
+      const fileData = new FormData();
+      fileData.append('file', formData.file[0]);
 
-  const handleSelectAnswer = async (answer) => {
-    if (submitted) return;
-    if (selectedAns._id === answer._id) {
-      setSelectedAns('');
-      return;
-    }
-    setSelectedAns(answer);
+      setLoading(true);
 
-    try {
-      await axios.post('/api/submit-answer', {
-        questionId,
-        selectedAnswerId: answer._id,
-      });
-      handleAnswer(questionId, answer);
-    } catch (error) {
-      console.error('Error submitting answer:', error);
-    }
-  };
+      try {
+        const response = await axios.post('/api/upload-file', fileData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
 
-  const submitAnswer = async () => {
-    if (questionType === 'multiple-choice') {
-      if (selectedAns && !submitted) {
-        try {
-          await axios.post('/api/submit-answer', {
-            questionId,
-            selectedAnswerId: selectedAns._id,
-          });
-          handleAnswer(questionId, selectedAns);
-          setSubmitted(true);
-        } catch (error) {
-          console.error('Error submitting answer:', error);
-        }
+        const { fileName } = response.data;
+        saveUploadedFileName(fileName);
+
+        // Save the new file name to local storage
+        localStorage.setItem(`uploadedFile-${currentQuestion}`, fileName);
+
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      } finally {
+        setLoading(false);
       }
     }
   };
 
-  const handleNextQuestion = async () => {
-    console.log('Going to next question');
-    await submitAnswer();
+  const handleFileUpload = async (formData) => {
+    await uploadFile(formData);
+  };
 
-    if (questionType === 'essay') {
-      setSubmitted(false);
-    }
-
-    if (isLastQuestion) {
+  const onSubmit = async (formData) => {
+    if (currentQuestion + 1 === 2) {
       if (confirm('Apakah mau selesai?')) {
         onCompleteQuestions();
-        router.push('/sesi');
+        resetQ();
+        router.push('/sesi');  // Redirect to the session page
       }
     } else {
       goNextQuestion();
+      reset();
     }
   };
 
-  const handlePreviousQuestion = async () => {
-    await submitAnswer();
+  const handlePreviousQuestion = () => {
     goPreviousQuestion();
-    resetState();
+    reset();
   };
-
-  const resetState = () => {
-    setSubmitted(false);
-    setSelectedAns('');
-  };
-
-  const isLastQuestion = currentQuestion === questions.length - 1;
 
   return (
     <>
-      <ul className='flex flex-col gap-y-4 justify-center w-full'>
-        {questionType === 'multiple-choice' ? (
-          <ul className='flex flex-col gap-y-4 justify-center w-full'>
-            {data?.map((answer, index) => (
-              <Answer key={answer._id} answer={answer} selectedAns={selectedAns} isCorrectUserAnswer={isCorrectUserAnswer} handleSelectAnswer={handleSelectAnswer} index={index} answerLabels={answerLabels} />
-            ))}
-          </ul>
-        ) : (
-          <EssayAnswer questionId={questionId} />
-        )}
-      </ul>
+      <form onSubmit={handleSubmit(handleFileUpload)} className='flex flex-col gap-y-4 justify-center w-full'>
+        <input
+          type="file"
+          accept=".doc,.docx,.xls,.xlsx,.csv" // Restrict file types
+          {...register('file')}
+          className={`file-input file-input-bordered w-full ${errors.file ? 'border-red-500' : ''}`}
+          disabled={isLoading}
+        />
+        {errors.file && <p className="text-red-500 text-sm">{errors.file.message}</p>}
+        <button
+          type="submit"
+          className='btn btn-primary mt-2'
+          disabled={isLoading}
+        >
+          {isLoading ? 'Uploading...' : 'Upload'}
+        </button>
+      </form>
 
       <div className='flex justify-between mt-4'>
-        <button onClick={handlePreviousQuestion} disabled={currentQuestion === 0} className='btn btn-primary'>
+        <button
+          onClick={handlePreviousQuestion}
+          disabled={currentQuestion === 0 || isLoading}
+          className='btn btn-secondary'
+        >
           Kembali
         </button>
-        <button onClick={handleNextQuestion} className='bg-purple py-2 px-4 rounded-lg shadow-lg text-black font-semibold text-sm'>
-          {isLastQuestion ? 'Selesaikan' : 'Berikutnya'}
+        <button
+          onClick={handleSubmit(onSubmit)}
+          className='bg-purple py-2 px-4 rounded-lg shadow-lg text-black font-semibold text-sm'
+          disabled={isLoading}
+        >
+          {currentQuestion + 1 === 2 ? 'Selesaikan' : 'Berikutnya'}
         </button>
       </div>
     </>

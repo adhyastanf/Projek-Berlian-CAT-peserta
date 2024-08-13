@@ -1,26 +1,38 @@
 'use client';
+import { useState, useEffect } from 'react';
 import useCountdownStore from '@/store/countdown-quiz1';
 import useQuestionStore from '@/store/quiz-store';
 import useQuestion2Store from '@/store/quiz2-store'; // Import useQuestion2Store
 import { useRouter } from 'next/navigation';
 import { HiCheckCircle } from 'react-icons/hi';
-import SectionGuard from '@/components/form/sectionGuard';
 
 export default function SectionHome() {
+  const [loading, setLoading] = useState(true); // State untuk loading
   const { isQuestionPlayable } = useCountdownStore();
   const { hasCompletedSection1 } = useQuestionStore();
   const { hasCompletedSection2, isSection2Locked } = useQuestion2Store();
   const router = useRouter();
 
-  SectionGuard({ section: 1 });
-  SectionGuard({ section: 2 });
+  useEffect(() => {
+    // Simulasi loading hingga state siap
+    const timer = setTimeout(() => {
+      setLoading(false); // Set loading menjadi false setelah waktu tertentu
+    }, 100); // Anda bisa menyesuaikan durasi ini
 
-  // Determine if Section 1 and Section 2 should be disabled
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Tentukan apakah section 1 dan 2 seharusnya dinonaktifkan
   const isQuiz1Disabled = !isQuestionPlayable(1) || hasCompletedSection1;
   const isQuiz2Disabled = isSection2Locked || !hasCompletedSection1 || !isQuestionPlayable(2) || hasCompletedSection2;
 
-  const scoreQuiz1 = 85;
-  const scoreQuiz2 = 90;
+  console.log(isQuiz2Disabled)
+
+  if (loading) {
+    return (
+      <span className="loading loading-spinner loading-lg"></span>
+    );
+  }
 
   return (
     <div className='flex items-center justify-center h-screen bg-gray-100'>
@@ -34,7 +46,7 @@ export default function SectionHome() {
             }`}
           >
             <span>Quiz 1 TES UJIAN TERTULIS CAT</span>
-            <span className='bg-white text-blue-600 font-bold py-1 px-3 rounded-full'>{scoreQuiz1 + ' / 100'}</span>
+            <span className='bg-white text-blue-600 font-bold py-1 px-3 rounded-full'>{100 + ' / 100'}</span>
             {isQuiz1Disabled && <HiCheckCircle className='text-green-500 ml-2' />}
           </button>
         </section>
@@ -47,7 +59,6 @@ export default function SectionHome() {
             }`}
           >
             <span>Quiz 2 TES UJIAN KOMPUTER</span>
-            <span className='bg-white text-blue-600 font-bold py-1 px-3 rounded-full'>{scoreQuiz2 + ' / 100'}</span>
             {isQuiz2Disabled && <HiCheckCircle className='text-green-500 ml-2' />}
           </button>
         </section>

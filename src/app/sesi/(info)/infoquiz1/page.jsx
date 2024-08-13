@@ -2,7 +2,7 @@ import ButtonStartQuiz from "./buttonStart";
 
 export default function InfoQuiz1() {
   return (
-    <div className='max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg'>
+    <div className='max-w-4xl mx-auto p-6 shadow-md rounded-lg'>
       <h1 className='text-2xl font-bold text-center mb-4'>
         TES UJIAN TERTULIS BERBASIS CAT (COMPUTER ASSISTED TEST)
         <br />
