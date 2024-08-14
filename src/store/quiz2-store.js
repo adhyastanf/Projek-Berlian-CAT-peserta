@@ -12,6 +12,7 @@ const useQuestion2Store = create(
           soalText: Soal1,
           questionType: 'file-upload',
           uploadedFileName: null, // Store the uploaded file name
+          linkFile: "https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb"
         },
         {
           _id: '2',

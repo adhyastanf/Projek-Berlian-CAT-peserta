@@ -7,9 +7,9 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-const Quiz2Answers = () => {
+const Quiz2Answers = ({ data }) => {
   const { goNextQuestion, goPreviousQuestion, onCompleteQuestions, currentQuestion, questions, saveUploadedFileName, isLoading, setLoading, reset: resetQ } = useQuestion2Store();
-
+  // console.log(data)
   const router = useRouter();
   const {
     register,
@@ -82,7 +82,11 @@ const Quiz2Answers = () => {
   return (
     <>
       <form onSubmit={handleSubmit(handleFileUpload)} className='flex flex-col gap-y-4 justify-center w-full'>
-        {currentQuestion + 1 === 1 && <button className='btn btn-primary text-white mb-14'>DOWNLOAD FILE</button>}
+        {currentQuestion + 1 === 1 && (
+          <a href={data?.linkFile} className='btn btn-primary text-white mb-14'>
+            DOWNLOAD FILE
+          </a>
+        )}
         <input
           type='file'
           accept='.doc,.docx,.xls,.xlsx,.csv' // Restrict file types

@@ -22,7 +22,7 @@
             ],
             "kunciJawabanText": "Ketua BPD",
             "kunciJawabanIndexAlfabet": "D",
-            "jawaban": "",
+            "jawaban": "Ketua BPD",
             "isAnswered": true,
             "results": false
         },
@@ -494,16 +494,16 @@
             "jenis": "isian",
             "soalText": "Nama Kepala Desa dan Sekretaris desa Harjasari sekarang adalah.....",
             "options": [],
-            "jawaban": "",
-            "isAnswered": false,
+            "jawaban": "halo",
+            "isAnswered": true,
             "results": false
         },
         {
             "jenis": "isian",
             "soalText": "Peraturan Desa dibuat bersama antara Kepala Desa dan.....",
             "options": [],
-            "jawaban": "",
-            "isAnswered": false,
+            "jawaban": "tes",
+            "isAnswered": true,
             "results": false
         },
         {

@@ -1,4 +1,5 @@
 'use client';
+import useAuth from '@/store/auth-store';
 import useCountdownStore from '@/store/countdown-quiz1';
 import useQuestionStore from '@/store/quiz-store';
 import { useRouter } from 'next/navigation';
@@ -9,6 +10,8 @@ const Timer = ({ section }) => {
   const [remainingTime, setRemainingTime] = useState(0);
   const { getRemainingTime, startTimer } = useCountdownStore();
   const { onCompleteQuestions } = useQuestionStore();
+  const {noUjian, kodeDesa} = useAuth();
+
 
   useEffect(() => {
     // Optional: Check if the section is valid before starting the timer
@@ -28,7 +31,7 @@ const Timer = ({ section }) => {
 
         // Complete the questions for Section 1
         if (section === 1) {
-          onCompleteQuestions();
+          onCompleteQuestions(noUjian, kodeDesa);
         }
         router.push('/sesi'); // Redirect to /sesi if time runs out
       }

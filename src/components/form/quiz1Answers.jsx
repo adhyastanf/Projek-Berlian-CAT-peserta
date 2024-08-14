@@ -5,65 +5,50 @@ import Answer from './answer1';
 import axios from 'axios';
 import EssayAnswer from './essayAnswer';
 import { useRouter } from 'next/navigation';
+import useAuth from '@/store/auth-store';
 
-const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, questionType, soalText }) => {
+const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban, questionType, soalText, noUjian }) => {
   const [selectedAns, setSelectedAns] = useState('');
-  const [submitted, setSubmitted] = useState(false);
   const { questions, onCompleteQuestions, currentQuestion, goPreviousQuestion } = useQuestionStore();
+  const { kodeDesa } = useAuth();
   const isCorrectUserAnswer = questions.find((q) => q.soal === questionId)?.isCorrectUserAnswer;
   const router = useRouter();
 
+
+  console.log(questions);
+  console.log(kodeDesa);
   useEffect(() => {
-    // Reset the state when the question changes
     setSelectedAns(jawaban || '');
-    setSubmitted(false);
   }, [jawaban, questionId]);
 
   const answerLabels = ['A', 'B', 'C', 'D'];
 
-  const handleSelectAnswer = async (answer) => {
-    if (submitted) return;
-
-    // Hanya mengizinkan seleksi ulang jika opsi berbeda dipilih
+  const handleSelectAnswer = (answer) => {
     if (selectedAns !== answer.optionText) {
       setSelectedAns(answer.optionText);
 
-      // Mengirim request API jika opsi dipilih
-      try {
-        await axios.post('/api/submit-answer', {
-          questionId,
+      // Immediately update the global state with the selected answer
+      handleAnswer(questionId, { ...answer, optionText: answer.optionText, jawaban: answer.optionText });
+
+      // Make an async API call to save the answer, but don't wait for it to complete
+      axios
+        .put('http://13.229.135.53:8080/submit-soal', {
+          // questionId,
           jawabanText: answer.optionText,
           soalText,
+          noUjian: noUjian,
+          kodeDesa
+        })
+        .catch((error) => {
+          console.error('Error submitting answer:', error);
         });
-        handleAnswer(questionId, { ...answer, optionText: answer.optionText });
-      } catch (error) {
-        console.error('Error submitting answer:', error);
-      }
     }
   };
 
-  const submitAnswer = async () => {
-    if (questionType === 'soal' && selectedAns && !submitted) {
-      try {
-        await axios.post('/api/submit-answer', {
-          questionId,
-          jawabanText: selectedAns,
-          soalText,
-        });
-        handleAnswer(questionId, { optionText: selectedAns });
-        setSubmitted(true);
-      } catch (error) {
-        console.error('Error submitting answer:', error);
-      }
-    }
-  };
-
-  const handleNextQuestion = async () => {
-    await submitAnswer();
-
+  const handleNextQuestion = () => {
     if (isLastQuestion) {
       if (confirm('Apakah anda sudah yakin dengan jawaban anda?')) {
-        onCompleteQuestions();
+        onCompleteQuestions(noUjian, kodeDesa);
         router.push('/sesi');
       }
     } else {
@@ -71,8 +56,7 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
     }
   };
 
-  const handlePreviousQuestion = async () => {
-    await submitAnswer();
+  const handlePreviousQuestion = () => {
     goPreviousQuestion();
   };
 
@@ -88,7 +72,7 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
             ))}
           </ul>
         )}
-        {questionType === 'isian' && <EssayAnswer questionId={questionId} />}
+        {questionType === 'isian' && <EssayAnswer questionId={soalText} soalText={soalText} noUjian={noUjian} />}
       </ul>
 
       <div className='flex justify-between mt-4'>

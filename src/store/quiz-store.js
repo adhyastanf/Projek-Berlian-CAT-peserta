@@ -1,6 +1,7 @@
+import axios from 'axios';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import useQuestion2Store from './quiz2-store'; // Import useQuestion2Store
+import useQuestion2Store from './quiz2-store';
 
 const useQuestionStore = create(
   persist(
@@ -11,46 +12,70 @@ const useQuestionStore = create(
       currentQuestion: 0,
       hasCompletedSection1: false,
       score: 0,
-      temporarySelection: null, // New state to track temporary selection
+      temporarySelection: null,
 
       selectQuizz: (quizz) => {
         set({ questions: quizz.hasil });
       },
-      
-      fetchQuizzes: async () => {
+
+      fetchQuizzes: async (noUjian, kodeDesa) => {
         const { hasCompletedSection1 } = get();
 
-        // if (hasCompletedSection1) {
-        //   return; // Do not fetch if quiz is completed
-        // }
+        if (hasCompletedSection1) {
+          return; // Do not fetch if quiz is completed
+        }
         try {
-          const res = await fetch(`http://localhost:3000/data3.json`);
-          const json = await res.json();
-          const quizzes = json.hasil;
+          const res = await axios.get(`http://13.229.135.53:8080/genSoal`, {
+            params: { noUjian, kodeDesa } // Automatically constructs the query string
+          });
+          const quizzes = res.data.hasil;
           set({ quizzes, questions: quizzes, hasCompletedSection1: false });
         } catch (error) {
           console.error(error);
         }
       },
 
-      selectAnswer: (questionId, selectedAnswer) => {
+      selectAnswer: (questionIdOrSoalText, selectedAnswer) => {
         const { questions } = get();
         const newQuestions = [...questions];
-        const questionIndex = newQuestions.findIndex((q) => q.soal === questionId);
+        const questionIndex = newQuestions.findIndex((q) =>
+          q.jenis === 'isian' ? q.soalText === questionIdOrSoalText : q.soal === questionIdOrSoalText
+        );
         const questionInfo = newQuestions[questionIndex];
-        const isCorrectUserAnswer = questionInfo?.kunciJawabanText === selectedAnswer.optionText;
-
-        newQuestions[questionIndex] = {
-          ...questionInfo,
-          isCorrectUserAnswer,
-          userSelectedAnswer: selectedAnswer,
-        };
-        set({ temporarySelection: { questionId, selectedAnswer } });
+      
+        if (questionInfo.jenis === 'soal') {
+          const isCorrectUserAnswer = questionInfo?.kunciJawabanText === selectedAnswer.optionText;
+          newQuestions[questionIndex] = {
+            ...questionInfo,
+            isCorrectUserAnswer,
+            jawaban: selectedAnswer.optionText, // Update jawaban field directly
+            userSelectedAnswer: selectedAnswer,
+            isAnswered: true,
+          };
+        } else if (questionInfo.jenis === 'isian') {
+          newQuestions[questionIndex] = {
+            ...questionInfo,
+            jawaban: selectedAnswer.jawabanText,
+            isAnswered: true,
+          };
+        }
+      
+        set({ questions: newQuestions, temporarySelection: { questionIdOrSoalText, selectedAnswer } });
       },
+      
 
-      onCompleteQuestions: () => {
-        set({ hasCompletedSection1: true, currentQuestion: 0, score: 100 });
-        useQuestion2Store.getState().unlockSection2(); // Unlock Section 2 when Section 1 is completed
+      onCompleteQuestions: async (noUjian, kodeDesa) => {
+        try {
+          const res = await axios.get(`http://13.229.135.53:8080/nilai`, {
+            params: { noUjian, kodeDesa } // Automatically constructs the query string
+          });
+          console.log(res.data)
+          const score = res.data.nilai.nilai;
+          set({ hasCompletedSection1: true, currentQuestion: 0, score });
+          useQuestion2Store.getState().unlockSection2(); // Unlock Section 2 when Section 1 is completed
+        } catch (error) {
+          console.error(error);
+        }
       },
 
       goNextQuestion: () => {
@@ -61,16 +86,18 @@ const useQuestionStore = create(
           const updatedQuestions = [...questions];
           const currentQuestionData = updatedQuestions[currentQuestion];
 
-          if (temporarySelection && temporarySelection.questionId === currentQuestionData.soal) {
+          if (temporarySelection && (temporarySelection.questionIdOrSoalText === currentQuestionData.soal || temporarySelection.questionIdOrSoalText === currentQuestionData.soalText)) {
             updatedQuestions[currentQuestion] = {
               ...currentQuestionData,
               isAnswered: true,
+              ...(currentQuestionData.jenis === 'isian' && {
+                jawaban: temporarySelection.selectedAnswer.jawabanText,
+              }),
               userSelectedAnswer: temporarySelection.selectedAnswer,
             };
-            set({ questions: updatedQuestions, currentQuestion: nextQuestion, temporarySelection: null });
-          } else {
-            set({ currentQuestion: nextQuestion });
           }
+
+          set({ questions: updatedQuestions, currentQuestion: nextQuestion, temporarySelection: null });
         }
       },
 
@@ -82,16 +109,18 @@ const useQuestionStore = create(
           const updatedQuestions = [...questions];
           const currentQuestionData = updatedQuestions[currentQuestion];
 
-          if (temporarySelection && temporarySelection.questionId === currentQuestionData.soal) {
+          if (temporarySelection && (temporarySelection.questionIdOrSoalText === currentQuestionData.soal || temporarySelection.questionIdOrSoalText === currentQuestionData.soalText)) {
             updatedQuestions[currentQuestion] = {
               ...currentQuestionData,
               isAnswered: true,
+              ...(currentQuestionData.jenis === 'isian' && {
+                jawaban: temporarySelection.selectedAnswer.jawabanText,
+              }),
               userSelectedAnswer: temporarySelection.selectedAnswer,
             };
-            set({ questions: updatedQuestions, currentQuestion: previousQuestion, temporarySelection: null });
-          } else {
-            set({ currentQuestion: previousQuestion });
           }
+
+          set({ questions: updatedQuestions, currentQuestion: previousQuestion, temporarySelection: null });
         }
       },
 
@@ -100,16 +129,18 @@ const useQuestionStore = create(
         const updatedQuestions = [...questions];
         const currentQuestionData = updatedQuestions[currentQuestion];
 
-        if (temporarySelection && temporarySelection.questionId === currentQuestionData.soal) {
+        if (temporarySelection && (temporarySelection.questionIdOrSoalText === currentQuestionData.soal || temporarySelection.questionIdOrSoalText === currentQuestionData.soalText)) {
           updatedQuestions[currentQuestion] = {
             ...currentQuestionData,
             isAnswered: true,
+            ...(currentQuestionData.jenis === 'isian' && {
+              jawaban: temporarySelection.selectedAnswer.jawabanText,
+            }),
             userSelectedAnswer: temporarySelection.selectedAnswer,
           };
-          set({ questions: updatedQuestions, currentQuestion: index, temporarySelection: null });
-        } else {
-          set({ currentQuestion: index });
         }
+
+        set({ questions: updatedQuestions, currentQuestion: index, temporarySelection: null });
       },
 
       reset: () => {

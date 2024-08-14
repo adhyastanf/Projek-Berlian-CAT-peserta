@@ -14,15 +14,15 @@ const useCountdownStore = create(
 
         // Section 1 Start and End Times
         const section1Start = new Date();
-        section1Start.setHours(15, 7, 0, 0); // Set start time to 1:20 PM
+        section1Start.setHours(0, 7, 0, 0); // Set start time to 1:20 PM
         const section1End = new Date(section1Start);
-        section1End.setHours(21, 1, 0, 0); // Set duration to 30 minutes
+        section1End.setHours(4, 22, 0, 0); // Set duration to 30 minutes
 
         // Section 2 Start and End Times
         const section2Start = new Date(section1End); // Start Section 2 right after Section 1
-        section2Start.setHours(15, 7, 0, 0); // 10 minutes break
+        section2Start.setHours(0, 7, 0, 0); // 10 minutes break
         const section2End = new Date(section2Start);
-        section2End.setHours(21, 2, 0, 0); // Set duration to 45 minutes
+        section2End.setHours(9, 59, 0, 0); // Set duration to 45 minutes
 
         // Set times based on current time
         set({ 
