@@ -24,11 +24,11 @@ const EssayAnswer = ({ questionId }) => {
   return (
     <div className='flex flex-col gap-4 w-full max-w-7xl px-4'>
       <form action={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
-        <textarea {...register('essayText')} className={`textarea textarea-bordered w-full h-40 p-4 text-sm text-gray-700 dark:text-gray-300 ${errors.essayText ? 'border-red-500' : ''}`} placeholder='Tulis jawaban esai Anda di sini...' />
-        <button type='submit' className='btn btn-primary mt-2'>
-          Kirim Jawaban Esai
+        <input {...register('essayText')} className={`textarea textarea-bordered w-full h-30 p-4 text-sm text-gray-700 dark:text-gray-300 ${errors.essayText ? 'border-red-500' : ''}`} placeholder='Tulis jawaban Anda di sini...' />
+        <button type='submit' className='btn btn-primary bg-third text-white mt-2 self-center'>
+          Kirim Jawaban
         </button>
-        <p className='text-xs'>Klik Tombol Kirim Jawaban Esai Supaya Jawaban disimpan</p>
+        <p className='text-xs'>Klik Tombol Kirim Jawaban Supaya Jawaban disimpan</p>
       </form>
     </div>
   );

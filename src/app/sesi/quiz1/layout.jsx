@@ -4,7 +4,7 @@ const LayoutQuiz1 = ({ children }) => {
   return (
     <div className='flex justify-between px-20'>
       {children}
-      <div>
+      <div className='w-[250px]'>
         <RightBar />
       </div>
     </div>

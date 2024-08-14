@@ -11,16 +11,18 @@ const useQuestionStore = create(
       currentQuestion: 0,
       hasCompletedSection1: false,
       score: 0,
+      temporarySelection: null, // New state to track temporary selection
 
       selectQuizz: (quizz) => {
         set({ questions: quizz.hasil });
       },
+      
       fetchQuizzes: async () => {
         const { hasCompletedSection1 } = get();
 
-        if (hasCompletedSection1) {
-          return; // Do not fetch if quiz is completed
-        }
+        // if (hasCompletedSection1) {
+        //   return; // Do not fetch if quiz is completed
+        // }
         try {
           const res = await fetch(`http://localhost:3000/data3.json`);
           const json = await res.json();
@@ -36,16 +38,14 @@ const useQuestionStore = create(
         const newQuestions = [...questions];
         const questionIndex = newQuestions.findIndex((q) => q.soal === questionId);
         const questionInfo = newQuestions[questionIndex];
-        const isAnswered = questionInfo?.isAnswered || false;
         const isCorrectUserAnswer = questionInfo?.kunciJawabanText === selectedAnswer.optionText;
 
         newQuestions[questionIndex] = {
           ...questionInfo,
           isCorrectUserAnswer,
           userSelectedAnswer: selectedAnswer,
-          isAnswered,
         };
-        set({ questions: newQuestions }, false);
+        set({ temporarySelection: { questionId, selectedAnswer } });
       },
 
       onCompleteQuestions: () => {
@@ -54,29 +54,69 @@ const useQuestionStore = create(
       },
 
       goNextQuestion: () => {
-        const { currentQuestion, questions } = get();
+        const { currentQuestion, questions, temporarySelection } = get();
         const nextQuestion = currentQuestion + 1;
+
         if (nextQuestion < questions.length) {
-          set({ currentQuestion: nextQuestion });
+          const updatedQuestions = [...questions];
+          const currentQuestionData = updatedQuestions[currentQuestion];
+
+          if (temporarySelection && temporarySelection.questionId === currentQuestionData.soal) {
+            updatedQuestions[currentQuestion] = {
+              ...currentQuestionData,
+              isAnswered: true,
+              userSelectedAnswer: temporarySelection.selectedAnswer,
+            };
+            set({ questions: updatedQuestions, currentQuestion: nextQuestion, temporarySelection: null });
+          } else {
+            set({ currentQuestion: nextQuestion });
+          }
         }
       },
 
       goPreviousQuestion: () => {
-        const { currentQuestion } = get();
+        const { currentQuestion, questions, temporarySelection } = get();
         const previousQuestion = currentQuestion - 1;
+
         if (previousQuestion >= 0) {
-          set({ currentQuestion: previousQuestion });
+          const updatedQuestions = [...questions];
+          const currentQuestionData = updatedQuestions[currentQuestion];
+
+          if (temporarySelection && temporarySelection.questionId === currentQuestionData.soal) {
+            updatedQuestions[currentQuestion] = {
+              ...currentQuestionData,
+              isAnswered: true,
+              userSelectedAnswer: temporarySelection.selectedAnswer,
+            };
+            set({ questions: updatedQuestions, currentQuestion: previousQuestion, temporarySelection: null });
+          } else {
+            set({ currentQuestion: previousQuestion });
+          }
         }
       },
 
       goToQuestion: (index) => {
-        set({ currentQuestion: index });
+        const { currentQuestion, questions, temporarySelection } = get();
+        const updatedQuestions = [...questions];
+        const currentQuestionData = updatedQuestions[currentQuestion];
+
+        if (temporarySelection && temporarySelection.questionId === currentQuestionData.soal) {
+          updatedQuestions[currentQuestion] = {
+            ...currentQuestionData,
+            isAnswered: true,
+            userSelectedAnswer: temporarySelection.selectedAnswer,
+          };
+          set({ questions: updatedQuestions, currentQuestion: index, temporarySelection: null });
+        } else {
+          set({ currentQuestion: index });
+        }
       },
 
       reset: () => {
         set({
           currentQuestion: 0,
           questions: [],
+          temporarySelection: null,
         });
       },
     }),

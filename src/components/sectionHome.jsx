@@ -5,6 +5,7 @@ import useQuestionStore from '@/store/quiz-store';
 import useQuestion2Store from '@/store/quiz2-store'; // Import useQuestion2Store
 import { useRouter } from 'next/navigation';
 import { HiCheckCircle } from 'react-icons/hi';
+import useAuth from '@/store/auth-store';
 
 export default function SectionHome() {
   const [loading, setLoading] = useState(true); // State untuk loading
@@ -12,15 +13,16 @@ export default function SectionHome() {
   const { hasCompletedSection1 } = useQuestionStore();
   const { hasCompletedSection2, isSection2Locked } = useQuestion2Store();
   const router = useRouter();
+  const {isAuth} = useAuth();
 
-  useEffect(() => {
-    // Simulasi loading hingga state siap
-    const timer = setTimeout(() => {
-      setLoading(false); // Set loading menjadi false setelah waktu tertentu
-    }, 100); // Anda bisa menyesuaikan durasi ini
+  // useEffect(() => {
+  //   // Simulasi loading hingga state siap
+  //   const timer = setTimeout(() => {
+  //     setLoading(false); // Set loading menjadi false setelah waktu tertentu
+  //   }, 100); // Anda bisa menyesuaikan durasi ini
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   // Tentukan apakah section 1 dan 2 seharusnya dinonaktifkan
   const isQuiz1Disabled = !isQuestionPlayable(1) || hasCompletedSection1;
@@ -28,11 +30,11 @@ export default function SectionHome() {
 
   console.log(isQuiz2Disabled)
 
-  if (loading) {
-    return (
-      <span className="loading loading-spinner loading-lg"></span>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <span className="loading loading-spinner loading-lg"></span>
+  //   );
+  // }
 
   return (
     <div className='flex items-center justify-center h-screen bg-gray-100'>
@@ -45,9 +47,9 @@ export default function SectionHome() {
               !isQuiz1Disabled ? 'bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl' : 'bg-gray-400 cursor-not-allowed flex items-center justify-between gap-2'
             }`}
           >
-            <span>Quiz 1 TES UJIAN TERTULIS CAT</span>
+            <span>TES UJIAN TERTULIS CAT</span>
             <span className='bg-white text-blue-600 font-bold py-1 px-3 rounded-full'>{100 + ' / 100'}</span>
-            {isQuiz1Disabled && <HiCheckCircle className='text-green-500 ml-2' />}
+            {/* {isQuiz1Disabled && <HiCheckCircle className='text-green-500 ml-2' />} */}
           </button>
         </section>
         <section>
@@ -55,16 +57,16 @@ export default function SectionHome() {
             disabled={isQuiz2Disabled}
             onClick={() => router.push('/sesi/quiz2')}
             className={`w-full py-3 px-5 rounded-lg font-semibold text-white transition-all duration-300 ${
-              !isQuiz2Disabled ? 'bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl' : 'bg-gray-400 cursor-not-allowed flex items-center justify-between gap-2'
+              !isQuiz2Disabled ? 'bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl' : 'bg-gray-400 cursor-not-allowed'
             }`}
           >
-            <span>Quiz 2 TES UJIAN KOMPUTER</span>
-            {isQuiz2Disabled && <HiCheckCircle className='text-green-500 ml-2' />}
+            <span>TES UJIAN KOMPUTER</span>
+            {/* {isQuiz2Disabled && <HiCheckCircle className='text-green-500 ml-2' />} */}
           </button>
         </section>
         <section>
           <button onClick={() => router.push('/sesi/infoquiz3')} className={'w-full py-3 px-5 rounded-lg font-semibold text-white transition-all duration-300 bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl'}>
-            <span>Quiz 3 WAWANCARA</span>
+            <span>TES WAWANCARA</span>
           </button>
         </section>
       </div>

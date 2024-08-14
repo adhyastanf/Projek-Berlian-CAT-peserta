@@ -24,25 +24,21 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
   const handleSelectAnswer = async (answer) => {
     if (submitted) return;
 
-    // Toggle select/deselect logic
-    const newSelectedAns = selectedAns === answer.optionText ? '' : answer.optionText;
-    setSelectedAns(newSelectedAns);
+    // Hanya mengizinkan seleksi ulang jika opsi berbeda dipilih
+    if (selectedAns !== answer.optionText) {
+      setSelectedAns(answer.optionText);
 
-    // Only send the API request if an option is selected (not deselected)
-    if (newSelectedAns) {
+      // Mengirim request API jika opsi dipilih
       try {
         await axios.post('/api/submit-answer', {
           questionId,
-          jawabanText: newSelectedAns,
+          jawabanText: answer.optionText,
           soalText,
         });
-        handleAnswer(questionId, { ...answer, optionText: newSelectedAns });
+        handleAnswer(questionId, { ...answer, optionText: answer.optionText });
       } catch (error) {
         console.error('Error submitting answer:', error);
       }
-    } else {
-      // Handle the deselect case without making an API request
-      handleAnswer(questionId, { ...answer, optionText: '' });
     }
   };
 
@@ -66,7 +62,7 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
     await submitAnswer();
 
     if (isLastQuestion) {
-      if (confirm('Apakah mau selesai?')) {
+      if (confirm('Apakah anda sudah yakin dengan jawaban anda?')) {
         onCompleteQuestions();
         router.push('/sesi');
       }
@@ -85,30 +81,21 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
   return (
     <>
       <ul className='flex flex-col gap-y-4 justify-center w-full'>
-        {questionType === 'soal' ? (
+        {questionType === 'soal' && (
           <ul className='flex flex-col gap-y-4 justify-center w-full'>
             {data?.map((answer, index) => (
-              <Answer
-                key={answer.optionText}
-                answer={answer}
-                selectedAns={selectedAns}
-                isCorrectUserAnswer={isCorrectUserAnswer}
-                handleSelectAnswer={handleSelectAnswer}
-                index={index}
-                answerLabels={answerLabels}
-              />
+              <Answer key={answer.optionText} answer={answer} selectedAns={selectedAns} isCorrectUserAnswer={isCorrectUserAnswer} handleSelectAnswer={handleSelectAnswer} index={index} answerLabels={answerLabels} />
             ))}
           </ul>
-        ) : (
-          <EssayAnswer questionId={questionId} />
         )}
+        {questionType === 'isian' && <EssayAnswer questionId={questionId} />}
       </ul>
 
       <div className='flex justify-between mt-4'>
-        <button onClick={handlePreviousQuestion} disabled={currentQuestion === 0} className='btn btn-primary'>
+        <button onClick={handlePreviousQuestion} disabled={currentQuestion === 0} className='btn bg-gray-400 text-white'>
           Kembali
         </button>
-        <button onClick={handleNextQuestion} className='bg-purple py-2 px-4 rounded-lg shadow-lg text-black font-semibold text-sm'>
+        <button onClick={handleNextQuestion} className='btn btn-primary bg-third text-white '>
           {isLastQuestion ? 'Selesaikan' : 'Berikutnya'}
         </button>
       </div>
