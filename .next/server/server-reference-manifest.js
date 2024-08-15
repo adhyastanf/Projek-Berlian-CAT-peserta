@@ -1,1 +1,0 @@
-self.__RSC_SERVER_MANIFEST="{\"node\":{\"e183d36fdeda205ebef1b6722cd1b2db1ec927db\":{\"workers\":{\"app/biodata/page\":\"3661\",\"app/page\":\"3661\"},\"layer\":{\"app/biodata/page\":\"action-browser\",\"app/page\":\"action-browser\"}}},\"edge\":{},\"encryptionKey\":\"XEpQ7Jep+aWbz3V/4vkDR+AbJ0bcldptUfpVgezNtT4=\"}"
