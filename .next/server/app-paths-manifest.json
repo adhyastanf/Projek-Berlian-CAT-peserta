@@ -1,12 +1,1 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/biodata/page": "app/biodata/page.js",
-  "/page": "app/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/admin/login/page": "app/admin/login/page.js",
-  "/admin/page": "app/admin/page.js",
-  "/sesi/page": "app/sesi/page.js",
-  "/sesi/quiz2/page": "app/sesi/quiz2/page.js",
-  "/sesi/(info)/infoquiz3/page": "app/sesi/(info)/infoquiz3/page.js",
-  "/sesi/quiz1/page": "app/sesi/quiz1/page.js"
-}
+{}

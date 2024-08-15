@@ -37,44 +37,38 @@ export default function DataDesaTable() {
     fetchData();
   }, [kodeDesa]);
 
-  const downloadFile = (filename) => {
-    axios
-      .get(`http://3.0.20.136:8080/download/${filename}`, {
-        responseType: 'blob',
-      })
-      .then((response) => {
-        // Extract the filename from the Content-Disposition header
-        const contentDisposition = response.headers['content-disposition'];
-        let downloadFilename = filename; // Default filename if not provided in header
+  async function downloadExcelFile() {
+  try {
+    const response = await fetch(`http://3.0.20.136:8080/export-nilai?kodeDesa=${kodeDesa}`, {
+      method: 'GET',
+    });
 
-        if (contentDisposition) {
-          const fileNameMatch = contentDisposition.match(/filename="?(.+)"?/);
-          if (fileNameMatch.length > 1) {
-            downloadFilename = fileNameMatch[1];
-          }
-        }
-
-        // Create a link element, trigger a click, and remove it
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', downloadFilename);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      })
-      .catch((error) => {
-        console.error('Error downloading the file:', error);
-      });
-  };
-
-  const handleDownload = (filename) => {
-    if (filename) {
-      downloadFile(filename);
-    } else {
-      console.error('Filename is missing');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-  };
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    
+    // Tentukan nama file dari response header
+    const contentDisposition = response.headers.get('Content-Disposition');
+    let filename = `data_desa_${kodeDesa === 1 ? 'harjasari' : 'suradadi'}.xlsx`; // default filename
+    if (contentDisposition) {
+      const match = contentDisposition.match(/filename="(.+)"/);
+      if (match[1]) filename = match[1];
+    }
+    
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+  } catch (error) {
+    console.error('Error downloading the file:', error);
+    alert('Gagal Mendownload Data');
+  }
+}
 
   const handleLogout = () => {
     logout(); // Clear authentication details
@@ -96,6 +90,12 @@ export default function DataDesaTable() {
         </button>
         <button onClick={() => setKodeDesa(2)} className={`px-4 py-2 rounded ${kodeDesa === 2 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
           Desa Suradadi
+        </button>
+      </div>
+
+      <div className='mb-4'>
+        <button onClick={downloadExcelFile} className='bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700'>
+          Download Data Excel
         </button>
       </div>
 

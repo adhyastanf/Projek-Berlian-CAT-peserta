@@ -13,7 +13,7 @@ export const metadata = {
   title: 'Selamat Datang di Tes CAT Kecamatan Surajadi',
   description: 'Website tes CAT',
   icons: {
-    icon: '/Logo_Kabupaten_Tegal.png', // This should be placed in public/favicon.ico
+    icon: './favicon.ico', // This should be placed in public/favicon.ico
   },
 };
 
