@@ -13,6 +13,8 @@ const useQuestionStore = create(
       hasCompletedSection1: false,
       score: 0,
       temporarySelection: null,
+      isQuiz1Finished: false,
+      isQuiz1Restricted: false,
 
       selectQuizz: (quizz) => {
         set({ questions: quizz.hasil });
@@ -25,30 +27,52 @@ const useQuestionStore = create(
           return; // Do not fetch if quiz is completed
         }
         try {
-          const res = await axios.get(`http://13.229.135.53:8080/genSoal`, {
-            params: { noUjian, kodeDesa } // Automatically constructs the query string
+          const res = await axios.get(`http://54.251.29.86:8080/genSoal`, {
+            params: { noUjian, kodeDesa },
           });
           const quizzes = res.data.hasil;
-          set({ quizzes, questions: quizzes, hasCompletedSection1: false });
+
+          set({
+            quizzes,
+            questions: quizzes,
+          });
         } catch (error) {
           console.error(error);
+        }
+      },
+      fetchStatusQuiz: async (noUjian, kodeDesa) => {
+        try {
+          const statusUpdate = {
+            noUjian,
+            kodeDesa,
+          };
+
+          const statusRes = await axios.get('http://54.251.29.86:8080/status', {
+            params: statusUpdate,
+          });
+
+          set({
+            hasCompletedSection1: statusRes?.data?.status?.quiz1?.isFinished,
+            isQuiz1Finished: statusRes?.data?.status?.quiz1?.isFinished,
+            isQuiz1Restricted: statusRes?.data?.status?.quiz1?.isRestricted,
+          });
+        } catch (error) {
+          console.error('Failed to update quiz1 status:', error);
         }
       },
 
       selectAnswer: (questionIdOrSoalText, selectedAnswer) => {
         const { questions } = get();
         const newQuestions = [...questions];
-        const questionIndex = newQuestions.findIndex((q) =>
-          q.jenis === 'isian' ? q.soalText === questionIdOrSoalText : q.soal === questionIdOrSoalText
-        );
+        const questionIndex = newQuestions.findIndex((q) => (q.jenis === 'isian' ? q.soalText === questionIdOrSoalText : q.soal === questionIdOrSoalText));
         const questionInfo = newQuestions[questionIndex];
-      
+
         if (questionInfo.jenis === 'soal') {
           const isCorrectUserAnswer = questionInfo?.kunciJawabanText === selectedAnswer.optionText;
           newQuestions[questionIndex] = {
             ...questionInfo,
             isCorrectUserAnswer,
-            jawaban: selectedAnswer.optionText, // Update jawaban field directly
+            jawaban: selectedAnswer.optionText,
             userSelectedAnswer: selectedAnswer,
             isAnswered: true,
           };
@@ -59,20 +83,39 @@ const useQuestionStore = create(
             isAnswered: true,
           };
         }
-      
+
         set({ questions: newQuestions, temporarySelection: { questionIdOrSoalText, selectedAnswer } });
       },
-      
 
       onCompleteQuestions: async (noUjian, kodeDesa) => {
         try {
-          const res = await axios.get(`http://13.229.135.53:8080/nilai`, {
-            params: { noUjian, kodeDesa } // Automatically constructs the query string
+          const res = await axios.get(`http://54.251.29.86:8080/nilai`, {
+            params: { noUjian, kodeDesa },
           });
-          console.log(res.data)
           const score = res.data.nilai.nilai;
           set({ hasCompletedSection1: true, currentQuestion: 0, score });
-          useQuestion2Store.getState().unlockSection2(); // Unlock Section 2 when Section 1 is completed
+
+          // Update the quiz status on the server
+          const statusUpdate = await axios.put('http://54.251.29.86:8080/status', {
+            quiz: 'quiz1',
+            noUjian,
+            kodeDesa,
+            statusUpdate: {
+              onProgress: false,
+              isFinished: true,
+              isRestricted: true,
+            },
+          });
+
+          // Update store with the new status
+          set({
+            hasCompletedSection1: statusUpdate?.data?.status?.quiz1?.isFinished,
+            isQuiz1Finished: statusUpdate?.data?.status?.quiz1?.isFinished,
+            isQuiz1Restricted: statusUpdate?.data?.status?.quiz1?.isRestricted,
+          });
+
+          // Unlock Section 2 when Section 1 is completed
+          useQuestion2Store.getState().unlockSection2();
         } catch (error) {
           console.error(error);
         }

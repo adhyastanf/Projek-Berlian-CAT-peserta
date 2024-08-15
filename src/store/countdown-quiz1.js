@@ -12,18 +12,18 @@ const useCountdownStore = create(
 
       fetchRemainingTime: async (section) => {
         try {
-          const response = await axios.get('http://13.229.135.53:8080/time', { params: { ujian: section } });
+          const response = await axios.get('http://54.251.29.86:8080/time', { params: { ujian: section } });
 
           const remainingTimeInSeconds = response.data.remainingTime;
           const now = new Date().toISOString();
           if (section === 1) {
-            set({ 
-              section1RemainingTime: remainingTimeInSeconds, // Store remaining time in seconds
+            set({
+              section1RemainingTime: remainingTimeInSeconds * 1000, // Store remaining time in milliseconds
               section1StartTime: now,
             });
           } else if (section === 2) {
-            set({ 
-              section2RemainingTime: remainingTimeInSeconds, // Store remaining time in seconds
+            set({
+              section2RemainingTime: remainingTimeInSeconds * 1000, // Store remaining time in milliseconds
               section2StartTime: now,
             });
           }
@@ -34,22 +34,32 @@ const useCountdownStore = create(
 
       getRemainingTime: (section) => {
         const remainingTime = section === 1 ? get().section1RemainingTime : get().section2RemainingTime;
-        if (!remainingTime) return null;
-        return remainingTime * 1000; // Convert seconds to milliseconds
+        return remainingTime || null;
       },
 
       isQuestionPlayable: (section) => {
-        const now = new Date();
-        const startTime = new Date(get()[`section${section}StartTime`]);
-        const remainingTime = get().getRemainingTime(section); // This is in milliseconds
-        const endTime = new Date(startTime.getTime() + remainingTime);
+        const now = new Date().getTime();
+        const startTime = new Date(get()[`section${section}StartTime`]).getTime();
+        const remainingTime = get().getRemainingTime(section);
+        const endTime = startTime + remainingTime;
+
         return now >= startTime && now < endTime;
       },
 
-      resetTimer: (section) => set({ 
-        [`section${section}RemainingTime`]: null,
-        [`section${section}StartTime`]: null,
-      }),
+      decrementRemainingTime: (section) => {
+        set((state) => {
+          const timeKey = section === 1 ? 'section1RemainingTime' : 'section2RemainingTime';
+          return {
+            [timeKey]: state[timeKey] - 1000, // Decrease the remaining time by 1 second
+          };
+        });
+      },
+
+      resetTimer: (section) =>
+        set({
+          [`section${section}RemainingTime`]: null,
+          [`section${section}StartTime`]: null,
+        }),
     }),
     {
       name: 'countdown', // Name for persist middleware storage

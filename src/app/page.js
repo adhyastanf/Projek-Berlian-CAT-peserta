@@ -10,9 +10,6 @@ export default function Home() {
         <div className='text-center space-y-8 text-white max-w-[1500px] relative'>
           <h1 className='text-7xl font-bold text-stroke'>Selamat Datang Peserta Tes CAT Desa Kecamatan Suradadi Kabupaten Tegal</h1>
           <h1 className='text-2xl font-medium text-stroke'>Silahkan Isi Biodata Diri Dibawah Ini Sebelum Memulai Tes</h1>
-          {/* <Link href={'/biodata'}>
-            <button className='btn btn-primary btn-base mt-4 text-white'>Isi Biodata</button>
-          </Link> */}
         </div>
       </section>
       <section className='grid place-items-center mt-8 relative'>
@@ -21,7 +18,6 @@ export default function Home() {
           <FormDisplay />
         </div>
       </section>
-      {/* <SectionHome /> */}
     </div>
   );
 }

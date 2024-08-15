@@ -16,7 +16,6 @@ const useAuthAdminStore = create(
     }),
     {
       name: 'auth-admin-storage', // Name of the storage (localStorage key)
-    //   getStorage: () => localStorage, // Use localStorage to persist the state
     }
   )
 );

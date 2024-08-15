@@ -1,17 +1,19 @@
-import useAuth from '@/store/auth-store';
+'use client';
+
+import { useState, useEffect } from 'react';
 import useCountdownStore from '@/store/countdown-quiz1';
 import useQuestionStore from '@/store/quiz-store';
 import useQuestion2Store from '@/store/quiz2-store';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import useAuth from '@/store/auth-store';
 
 const Timer = ({ section }) => {
   const router = useRouter();
-  const [remainingTime, setRemainingTime] = useState(0);
-  const { fetchRemainingTime, getRemainingTime } = useCountdownStore();
+  const { fetchRemainingTime, getRemainingTime, decrementRemainingTime } = useCountdownStore();
   const { onCompleteQuestions } = useQuestionStore();
-  const { onCompleteQuestions:onCompleteQuestions2 } = useQuestion2Store();
+  const { onCompleteQuestions: onCompleteQuestions2 } = useQuestion2Store();
   const { noUjian, kodeDesa } = useAuth();
+  const [remainingTime, setRemainingTime] = useState(0);
 
   useEffect(() => {
     if (section !== 1 && section !== 2) {
@@ -20,7 +22,7 @@ const Timer = ({ section }) => {
     }
 
     const initializeTimer = async () => {
-      await fetchRemainingTime(section); // Fetch remaining time from API
+      await fetchRemainingTime(section); // Fetch remaining time from API when page is loaded
       const time = getRemainingTime(section);
       setRemainingTime(time);
     };
@@ -28,21 +30,23 @@ const Timer = ({ section }) => {
     initializeTimer();
 
     const interval = setInterval(() => {
-      setRemainingTime((prevTime) => prevTime - 1000); // Decrease by 1 second (1000 ms) every interval
+      decrementRemainingTime(section); // Decrease remaining time in global state
+      setRemainingTime(getRemainingTime(section)); // Get the updated remaining time from global state
 
-      if (remainingTime <= 0) {
+      if (getRemainingTime(section) <= 0) {
         clearInterval(interval); // Clear the interval to stop further execution
 
-        // Complete the questions for Section 1
         if (section === 1) {
           onCompleteQuestions(noUjian, kodeDesa);
+        } else if (section === 2) {
+          onCompleteQuestions2(noUjian, kodeDesa);
         }
         router.push('/sesi'); // Redirect to /sesi if time runs out
       }
     }, 1000);
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [fetchRemainingTime, getRemainingTime, section, onCompleteQuestions, noUjian, kodeDesa, router, remainingTime]);
+  }, [fetchRemainingTime, getRemainingTime, section, onCompleteQuestions, onCompleteQuestions2, noUjian, kodeDesa, router]);
 
   const getCountdownValues = (time) => {
     if (time === null) return { days: 0, hours: 0, minutes: 0, seconds: 0 };

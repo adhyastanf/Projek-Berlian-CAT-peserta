@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Hero from '../../../../public/hero.jpg'
 
 export default function LayoutInfoQuiz({ children }) {
   return (

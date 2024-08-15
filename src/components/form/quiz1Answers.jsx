@@ -29,12 +29,12 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
 
       // Make an async API call to save the answer, but don't wait for it to complete
       axios
-        .put('http://13.229.135.53:8080/submit-soal', {
+        .put('http://54.251.29.86:8080/submit-soal', {
           // questionId,
           jawabanText: answer.optionText,
           soalText,
           noUjian: noUjian,
-          kodeDesa
+          kodeDesa,
         })
         .catch((error) => {
           console.error('Error submitting answer:', error);

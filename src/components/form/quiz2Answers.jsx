@@ -42,7 +42,7 @@ const Quiz2Answers = ({ data }) => {
       setLoading(true);
 
       try {
-        const response = await axios.post('http://13.229.135.53:8080/upload', fileData, {
+        const response = await axios.post('http://54.251.29.86:8080/upload', fileData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -72,7 +72,7 @@ const Quiz2Answers = ({ data }) => {
       // If this is the last question, prompt confirmation
       const confirmComplete = confirm('Apakah anda sudah yakin dengan jawaban anda?');
       if (confirmComplete) {
-        onCompleteQuestions();
+        onCompleteQuestions(noUjian, kodeDesa);
         router.push('/sesi'); // Redirect after completing the quiz
       }
     } else {
@@ -94,13 +94,7 @@ const Quiz2Answers = ({ data }) => {
             DOWNLOAD FILE
           </a>
         )}
-        <input
-          type='file'
-          accept='.doc,.docx,.xls,.xlsx,.csv'
-          {...register('file')}
-          className={`file-input file-input-bordered w-full ${errors.file ? 'border-red-500' : ''}`}
-          disabled={isLoading}
-        />
+        <input type='file' accept='.doc,.docx,.xls,.xlsx,.csv' {...register('file')} className={`file-input file-input-bordered w-full ${errors.file ? 'border-red-500' : ''}`} disabled={isLoading} />
         {errors.file && <p className='text-red-500 text-sm'>{errors.file.message}</p>}
         <button type='submit' className='btn btn-primary bg-third text-white mt-2 self-center' disabled={isLoading}>
           {isLoading ? 'Mengirim Jawaban...' : 'Kirim Jawaban'}

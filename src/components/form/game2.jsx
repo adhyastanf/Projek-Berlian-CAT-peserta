@@ -4,7 +4,7 @@ import Quiz2Answers from './quiz2Answers';
 import CurrentQuestion from './current-question2';
 
 const Game2 = () => {
-  const { questions, currentQuestion, selectAnswer, goNextQuestion } = useQuestion2Store();
+  const { questions, currentQuestion } = useQuestion2Store();
   const question = questions[currentQuestion];
 
   return (

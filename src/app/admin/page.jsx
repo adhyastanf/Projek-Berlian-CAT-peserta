@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation'; // Assuming you're using Next.js
 import useAuthAdminStore from '@/store/auth-store-admin';
 
-
 export default function DataDesaTable() {
   const [kodeDesa, setKodeDesa] = useState(1);
   const [data, setData] = useState([]);
@@ -19,7 +18,7 @@ export default function DataDesaTable() {
       setLoading(true);
       setErrorMessage(null);
       try {
-        const response = await axios.get('http://13.229.135.53:8080/data-desa', {
+        const response = await axios.get('http://54.251.29.86:8080/data-desa', {
           params: { kodeDesa },
         });
 
@@ -40,7 +39,7 @@ export default function DataDesaTable() {
 
   const downloadFile = (filename) => {
     axios
-      .get(`http://13.229.135.53:8080/download/${filename}`, {
+      .get(`http://54.251.29.86:8080/download/${filename}`, {
         responseType: 'blob',
       })
       .then((response) => {
@@ -85,7 +84,7 @@ export default function DataDesaTable() {
   return (
     <div className='container mx-auto p-4'>
       <div className='flex justify-between items-center mb-4'>
-        <h2 className='text-2xl font-bold'>Data Desa</h2>
+        <h2 className='text-2xl font-bold'>Data Nilai Peserta Tiap Desa</h2>
         <button onClick={handleLogout} className='bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700'>
           Logout
         </button>
@@ -101,7 +100,7 @@ export default function DataDesaTable() {
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <p></p>
       ) : errorMessage ? (
         <p className='text-red-500'>{errorMessage}</p>
       ) : (

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import Soal1 from '../../public/soal1.png';
@@ -11,8 +12,7 @@ const useQuestion2Store = create(
           _id: '1',
           soalText: Soal1,
           questionType: 'file-upload',
-          uploadedFileName: null, // Store the uploaded file name
-          linkFile: "https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb"
+          uploadedFileName: null,
         },
         {
           _id: '2',
@@ -24,7 +24,9 @@ const useQuestion2Store = create(
       currentQuestion: 0,
       hasCompletedSection2: false,
       isSection2Locked: true, // Initial state for Section 2 lock
-      isLoading: false, // Loading state
+      isLoading: false,
+      isQuiz2Finished: false,
+      isQuiz2Restricted: true,
 
       goNextQuestion: () => {
         const { currentQuestion, questions } = get();
@@ -64,8 +66,34 @@ const useQuestion2Store = create(
         set({ questions: updatedQuestions });
       },
 
-      onCompleteQuestions: () => {
-        set({ hasCompletedSection2: true, currentQuestion: 0 });
+      onCompleteQuestions: async (noUjian, kodeDesa) => {
+        try {
+          set({ currentQuestion: 0 });
+
+          // Update the quiz status on the server
+          const statusUpdate = {
+            quiz: 'quiz2',
+            noUjian,
+            kodeDesa,
+            statusUpdate: {
+              onProgress: false,
+              isFinished: true,
+              isRestricted: true,
+            },
+          };
+
+          const statusRes = await axios.put('http://54.251.29.86:8080/status', statusUpdate);
+
+          // Update store with the new status
+          set({
+            hasCompletedSection2: statusRes?.data?.status?.quiz2?.isFinished,
+            isQuiz2Finished: statusRes?.data?.status?.quiz2?.isFinished,
+            isQuiz2Restricted: statusRes?.data?.status?.quiz2?.isRestricted,
+            isSection2Locked: statusRes?.data?.status?.quiz2?.isRestricted, // Update isSection2Locked accordingly
+          });
+        } catch (error) {
+          console.error('Failed to update quiz2 status:', error);
+        }
       },
 
       reset: () => {
@@ -73,11 +101,38 @@ const useQuestion2Store = create(
           currentQuestion: 0,
           hasCompletedSection2: false,
           isSection2Locked: true, // Reset lock state
+          isQuiz2Finished: false,
+          isQuiz2Restricted: true,
         });
       },
 
       unlockSection2: () => {
-        set({ isSection2Locked: false });
+        set({
+          isSection2Locked: false, // Unlock Section 2
+          isQuiz2Restricted: false, // Ensure that the restricted state is false
+        });
+      },
+
+      fetchStatusQuiz2: async (noUjian, kodeDesa) => {
+        try {
+          const statusUpdate = {
+            noUjian,
+            kodeDesa,
+          };
+
+          const statusRes = await axios.get('http://54.251.29.86:8080/status', {
+            params: statusUpdate,
+          });
+
+          set({
+            hasCompletedSection2: statusRes?.data?.status?.quiz2?.isFinished,
+            isQuiz2Finished: statusRes?.data?.status?.quiz2?.isFinished,
+            isQuiz2Restricted: statusRes?.data?.status?.quiz2?.isRestricted,
+            isSection2Locked: statusRes?.data?.status?.quiz2?.isRestricted,
+          });
+        } catch (error) {
+          console.error('Failed to update quiz2 status:', error);
+        }
       },
     }),
     {

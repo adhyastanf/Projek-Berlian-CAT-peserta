@@ -27,7 +27,7 @@ export default function LoginPage() {
     setLoading(true);
     setErrorMessage(null);
     try {
-      const response = await axios.post('http://13.229.135.53:8080/admin', {
+      const response = await axios.post('http://54.251.29.86:8080/admin', {
         username,
         password,
       });
