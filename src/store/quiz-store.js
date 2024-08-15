@@ -27,7 +27,7 @@ const useQuestionStore = create(
           return; // Do not fetch if quiz is completed
         }
         try {
-          const res = await axios.get(`http://3.0.20.136:8080/genSoal`, {
+          const res = await axios.get(`http://18.141.142.63:8080/genSoal`, {
             params: { noUjian, kodeDesa },
           });
           const quizzes = res.data.hasil;
@@ -47,7 +47,7 @@ const useQuestionStore = create(
             kodeDesa,
           };
 
-          const statusRes = await axios.get('http://3.0.20.136:8080/status', {
+          const statusRes = await axios.get('http://18.141.142.63:8080/status', {
             params: statusUpdate,
           });
 
@@ -89,14 +89,14 @@ const useQuestionStore = create(
 
       onCompleteQuestions: async (noUjian, kodeDesa) => {
         try {
-          const res = await axios.get(`http://3.0.20.136:8080/nilai`, {
+          const res = await axios.get(`http://18.141.142.63:8080/nilai`, {
             params: { noUjian, kodeDesa },
           });
           const score = res.data.nilai.nilai;
           set({ hasCompletedSection1: true, currentQuestion: 0, score });
 
           // Update the quiz status on the server
-          const statusUpdate = await axios.put('http://3.0.20.136:8080/status', {
+          const statusUpdate = await axios.put('http://18.141.142.63:8080/status', {
             quiz: 'quiz1',
             noUjian,
             kodeDesa,

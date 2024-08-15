@@ -12,7 +12,7 @@ const useCountdownStore = create(
 
       fetchRemainingTime: async (section) => {
         try {
-          const response = await axios.get('http://3.0.20.136:8080/time', { params: { ujian: section } });
+          const response = await axios.get('http://18.141.142.63:8080/time', { params: { ujian: section } });
 
           const remainingTimeInSeconds = response.data.remainingTime;
           const now = new Date().toISOString();

@@ -26,7 +26,7 @@ const EssayAnswer = ({ questionId, soalText, noUjian }) => {
 
   const onSubmit = async (data) => {
     try {
-      await axios.put('http://3.0.20.136:8080/submit-soal', {
+      await axios.put('http://18.141.142.63:8080/submit-soal', {
         soalText: questionId,
         jawabanText: data.essayText,
         noUjian,

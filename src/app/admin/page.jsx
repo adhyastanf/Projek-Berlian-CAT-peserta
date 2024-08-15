@@ -18,7 +18,7 @@ export default function DataDesaTable() {
       setLoading(true);
       setErrorMessage(null);
       try {
-        const response = await axios.get('http://3.0.20.136:8080/data-desa', {
+        const response = await axios.get('http://18.141.142.63:8080/data-desa', {
           params: { kodeDesa },
         });
 
@@ -39,7 +39,7 @@ export default function DataDesaTable() {
 
   async function downloadExcelFile() {
   try {
-    const response = await fetch(`http://3.0.20.136:8080/export-nilai?kodeDesa=${kodeDesa}`, {
+    const response = await fetch(`http://18.141.142.63:8080/export-nilai?kodeDesa=${kodeDesa}`, {
       method: 'GET',
     });
 
