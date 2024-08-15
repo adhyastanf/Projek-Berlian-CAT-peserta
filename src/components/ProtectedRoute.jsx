@@ -6,6 +6,7 @@ import useAuth from '@/store/auth-store';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuth } = useAuth();
+
   const [isHydrated, setIsHydrated] = useState(false);
   const router = useRouter();
 

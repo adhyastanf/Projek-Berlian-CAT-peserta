@@ -4,18 +4,9 @@ import Timer from '../timer';
 
 function RightBar() {
   const { questions, goToQuestion } = useQuestion2Store();
-  // console.log(questions)
-
-  //   const handleClick = (index) => {
-  //     goToQuestion(index);
-  //   };
 
   return (
     <div className='flex flex-col items-center p-4'>
-      {/* <div className='text-xl font-semibold mb-4 w-full max-w-xs'>
-        <p>Nama Peserta: John Doe</p>
-        <p>Nomor Peserta: 001</p>
-      </div> */}
       <Timer section={2} />
       <div className='grid grid-cols-5 gap-2 mt-4 w-full max-w-2xl'>
         {questions.map((question, index) => (

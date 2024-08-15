@@ -17,26 +17,31 @@ export default function SectionHome() {
   const router = useRouter();
   const { isAuth } = useAuth();
 
-  // useEffect(() => {
-  //   // Simulasi loading hingga state siap
-  //   const timer = setTimeout(() => {
-  //     setLoading(false); // Set loading menjadi false setelah waktu tertentu
-  //   }, 100); // Anda bisa menyesuaikan durasi ini
+  useEffect(() => {
+    // Simulasi loading hingga state siap
+    const timer = setTimeout(() => {
+      setLoading(false); // Set loading menjadi false setelah waktu tertentu
+    }, 100); // Anda bisa menyesuaikan durasi ini
 
-  //   return () => clearTimeout(timer);
-  // }, []);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Tentukan apakah section 1 dan 2 seharusnya dinonaktifkan
   const isQuiz1Disabled = !isQuestionPlayable(1) || hasCompletedSection1;
   const isQuiz2Disabled = isSection2Locked || !hasCompletedSection1 || !isQuestionPlayable(2) || hasCompletedSection2;
 
   console.log(isQuiz2Disabled);
+  console.log(isSection2Locked);
+  console.log(!hasCompletedSection1);
+  console.log(!isQuestionPlayable(2));
+  console.log(!isQuestionPlayable(1));
+  console.log(hasCompletedSection2);
 
-  // if (loading) {
-  //   return (
-  //     <span className="loading loading-spinner loading-lg"></span>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <span className="loading loading-spinner loading-lg"></span>
+    );
+  }
 
   return (
     <div>

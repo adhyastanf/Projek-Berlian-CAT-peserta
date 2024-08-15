@@ -57,6 +57,13 @@ const useQuestion2Store = create(
         set({ questions: updatedQuestions });
       },
 
+      markQuestionAsAnswered: (questionIndex) => {
+        const { questions } = get();
+        const updatedQuestions = [...questions];
+        updatedQuestions[questionIndex].isAnswered = true;
+        set({ questions: updatedQuestions });
+      },
+
       onCompleteQuestions: () => {
         set({ hasCompletedSection2: true, currentQuestion: 0 });
       },

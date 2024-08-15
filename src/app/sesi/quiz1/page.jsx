@@ -6,16 +6,14 @@ import SectionGuard from '@/components/form/sectionGuard';
 import useAuth from '@/store/auth-store';
 
 export default function Quiz1Page() {
-  const { fetchQuizzes, hasCompleteAll, reset } = useQuestionStore();
+  const { fetchQuizzes } = useQuestionStore();
   const { noUjian, kodeDesa } = useAuth();
-  console.log(noUjian);
-  console.log(kodeDesa);
 
   useEffect(() => {
     const fetchData = async () => {
-      // if (noUjian && kodeDesa) {
+      if (noUjian && kodeDesa) {
         await fetchQuizzes(noUjian, kodeDesa);
-      // }
+      }
     };
 
     fetchData();

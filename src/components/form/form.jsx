@@ -1,12 +1,12 @@
 'use client';
 
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import pesertaSchema from '@/schema/pesertaSchema';
 import createPeserta from '@/actions/createPeserta';
+import pesertaSchema from '@/schema/pesertaSchema';
 import useAuth from '@/store/auth-store';
-import { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const FormDisplay = () => {
   const { login } = useAuth();
@@ -104,7 +104,7 @@ const FormDisplay = () => {
 
         <div className='mb-4'>
           <label className='block text-gray-700 text-sm font-bold mb-2'>Desa:</label>
-          <select {...register('kode_desa')} className={`select select-bordered w-full ${errors.kode_desa ? 'select-error' : ''}`}>
+          <select {...register('kode_desa')} defaultValue={1} className={`select select-bordered w-full ${errors.kode_desa ? 'select-error' : ''}`}>
             <option value=''>Pilih Nama Desa</option>
             {kodeDesaOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -116,8 +116,8 @@ const FormDisplay = () => {
         </div>
 
         <div className='flex items-center justify-between'>
-          <button type='submit' className='btn btn-primary w-full' disabled={isLoading}>
-            {isLoading ? 'Loading...' : 'Submit'}
+          <button type='submit' className='btn btn-primary bg-third text-white w-full' disabled={isLoading}>
+            {isLoading ? 'Loading...' : 'Kirim'}
           </button>
         </div>
         {formError && <p className='text-red-500 text-xs italic mb-4'>{formError}</p>}

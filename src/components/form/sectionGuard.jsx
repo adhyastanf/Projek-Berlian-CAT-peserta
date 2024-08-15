@@ -34,13 +34,6 @@ const SectionGuard = ({ section }) => {
     const isSection2Completed = hasCompletedSection2;
     const isSection2Locked = useQuestion2Store.getState().isSection2Locked;
 
-    console.log('Section:', section);
-    console.log('Remaining Time:', remainingTime);
-    console.log('Is Playable:', isPlayable);
-    console.log('Section 1 Completed:', isSection1Completed);
-    console.log('Section 2 Completed:', isSection2Completed);
-    console.log('Section 2 Locked:', isSection2Locked);
-
     // Handle routing based on the latest state values
     if (section === 1) {
       if (!isPlayable || remainingTime <= 0 || isSection1Completed) {

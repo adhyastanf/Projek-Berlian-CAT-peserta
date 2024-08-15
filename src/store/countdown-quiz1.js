@@ -1,61 +1,55 @@
+import axios from 'axios';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 const useCountdownStore = create(
   persist(
     (set, get) => ({
+      section1RemainingTime: null,
+      section2RemainingTime: null,
       section1StartTime: null,
-      section1EndTime: null,
       section2StartTime: null,
-      section2EndTime: null,
 
-      startTimer: () => {
-        const now = new Date();
+      fetchRemainingTime: async (section) => {
+        try {
+          const response = await axios.get('http://13.229.135.53:8080/time', { params: { ujian: section } });
 
-        // Section 1 Start and End Times
-        const section1Start = new Date();
-        section1Start.setHours(0, 7, 0, 0); // Set start time to 1:20 PM
-        const section1End = new Date(section1Start);
-        section1End.setHours(4, 22, 0, 0); // Set duration to 30 minutes
-
-        // Section 2 Start and End Times
-        const section2Start = new Date(section1End); // Start Section 2 right after Section 1
-        section2Start.setHours(0, 7, 0, 0); // 10 minutes break
-        const section2End = new Date(section2Start);
-        section2End.setHours(9, 59, 0, 0); // Set duration to 45 minutes
-
-        // Set times based on current time
-        set({ 
-          section1StartTime: now < section1Start ? section1Start.toISOString() : null,
-          section1EndTime: now < section1End ? section1End.toISOString() : null,
-          section2StartTime: now < section2Start ? section2Start.toISOString() : null,
-          section2EndTime: now < section2End ? section2End.toISOString() : null
-        });
-
-        console.log('Section 1 Start Time:', section1Start);
-        console.log('Section 1 End Time:', section1End);
-        console.log('Section 2 Start Time:', section2Start);
-        console.log('Section 2 End Time:', section2End);
+          const remainingTimeInSeconds = response.data.remainingTime;
+          const now = new Date().toISOString();
+          if (section === 1) {
+            set({ 
+              section1RemainingTime: remainingTimeInSeconds, // Store remaining time in seconds
+              section1StartTime: now,
+            });
+          } else if (section === 2) {
+            set({ 
+              section2RemainingTime: remainingTimeInSeconds, // Store remaining time in seconds
+              section2StartTime: now,
+            });
+          }
+        } catch (error) {
+          console.error('Failed to fetch remaining time:', error);
+        }
       },
 
       getRemainingTime: (section) => {
-        const endTime = section === 1 ? get().section1EndTime : get().section2EndTime;
-        if (!endTime) return null;
-        const now = new Date();
-        const end = new Date(endTime);
-        const remainingTime = end - now; // Difference in milliseconds
-        return remainingTime > 0 ? remainingTime : 0; // Return remaining time or 0
+        const remainingTime = section === 1 ? get().section1RemainingTime : get().section2RemainingTime;
+        if (!remainingTime) return null;
+        return remainingTime * 1000; // Convert seconds to milliseconds
       },
 
       isQuestionPlayable: (section) => {
         const now = new Date();
-        const startTime = new Date(get()[`${section === 1 ? 'section1StartTime' : 'section2StartTime'}`]);
-        const endTime = new Date(get()[`${section === 1 ? 'section1EndTime' : 'section2EndTime'}`]);
-
+        const startTime = new Date(get()[`section${section}StartTime`]);
+        const remainingTime = get().getRemainingTime(section); // This is in milliseconds
+        const endTime = new Date(startTime.getTime() + remainingTime);
         return now >= startTime && now < endTime;
       },
 
-      resetTimer: (section) => set({ [`section${section}StartTime`]: null, [`section${section}EndTime`]: null }),
+      resetTimer: (section) => set({ 
+        [`section${section}RemainingTime`]: null,
+        [`section${section}StartTime`]: null,
+      }),
     }),
     {
       name: 'countdown', // Name for persist middleware storage

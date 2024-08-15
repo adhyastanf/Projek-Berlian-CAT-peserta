@@ -18,7 +18,7 @@ export default function Quiz2Page() {
   // }, [fetchQuizzes]);
 
   // Apply route guard for Section 1
-  // SectionGuard({ section: 2 });
+  SectionGuard({ section: 2 });
   console.log(hasCompletedSection2, isSection2Locked)
 
   return (

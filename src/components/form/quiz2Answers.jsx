@@ -6,39 +6,43 @@ import useQuestion2Store from '@/store/quiz2-store';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import useAuth from '@/store/auth-store';
 
 const Quiz2Answers = ({ data }) => {
-  const { goNextQuestion, goPreviousQuestion, onCompleteQuestions, currentQuestion, questions, saveUploadedFileName, isLoading, setLoading, reset: resetQ } = useQuestion2Store();
-  // console.log(data)
+  const { goNextQuestion, goPreviousQuestion, onCompleteQuestions, currentQuestion, questions, saveUploadedFileName, isLoading, setLoading, markQuestionAsAnswered } = useQuestion2Store();
+  const { noUjian, kodeDesa } = useAuth();
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(fileSchema),
   });
 
-  // Load the uploaded file from local storage or server on mount
   useEffect(() => {
     const storedFileName = localStorage.getItem(`uploadedFile-${currentQuestion}`);
     if (storedFileName) {
-      setValue('file', { name: storedFileName }); // Set the uploaded file name on form
-      saveUploadedFileName(storedFileName); // Save it to the store as well
+      setValue('file', { name: storedFileName });
+      saveUploadedFileName(storedFileName);
     }
   }, [currentQuestion, setValue, saveUploadedFileName]);
 
   const uploadFile = async (formData) => {
     if (formData.file.length) {
       const fileData = new FormData();
-      fileData.append('file', formData.file[0]);
+      fileData.append('file', formData.file[0]); // Append the file itself
+      fileData.append('noUjian', noUjian);
+      fileData.append('kodeDesa', kodeDesa);
+      fileData.append('tipeSoal', formData.file[0].name.split('.').pop()); // Extract the file extension
 
       setLoading(true);
 
       try {
-        const response = await axios.post('/api/upload-file', fileData, {
+        const response = await axios.post('http://13.229.135.53:8080/upload', fileData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -47,7 +51,9 @@ const Quiz2Answers = ({ data }) => {
         const { fileName } = response.data;
         saveUploadedFileName(fileName);
 
-        // Save the new file name to local storage
+        // Mark the question as answered only after successful upload
+        markQuestionAsAnswered(currentQuestion);
+
         localStorage.setItem(`uploadedFile-${currentQuestion}`, fileName);
       } catch (error) {
         console.error('Error uploading file:', error);
@@ -57,16 +63,17 @@ const Quiz2Answers = ({ data }) => {
     }
   };
 
-  const handleFileUpload = async (formData) => {
+  const onSubmit = async (formData) => {
     await uploadFile(formData);
   };
 
-  const onSubmit = async (formData) => {
-    if (currentQuestion + 1 === 2) {
-      if (confirm('Apakah anda sudah yakin dengan jawaban anda?')) {
+  const handleNextQuestion = () => {
+    if (currentQuestion + 1 === questions.length) {
+      // If this is the last question, prompt confirmation
+      const confirmComplete = confirm('Apakah anda sudah yakin dengan jawaban anda?');
+      if (confirmComplete) {
         onCompleteQuestions();
-        resetQ();
-        router.push('/sesi'); // Redirect to the session page
+        router.push('/sesi'); // Redirect after completing the quiz
       }
     } else {
       goNextQuestion();
@@ -81,7 +88,7 @@ const Quiz2Answers = ({ data }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleFileUpload)} className='flex flex-col gap-y-4 justify-center w-full'>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-y-4 justify-center w-full'>
         {currentQuestion + 1 === 1 && (
           <a href={data?.linkFile} className='btn btn-primary text-white mb-14'>
             DOWNLOAD FILE
@@ -89,7 +96,7 @@ const Quiz2Answers = ({ data }) => {
         )}
         <input
           type='file'
-          accept='.doc,.docx,.xls,.xlsx,.csv' // Restrict file types
+          accept='.doc,.docx,.xls,.xlsx,.csv'
           {...register('file')}
           className={`file-input file-input-bordered w-full ${errors.file ? 'border-red-500' : ''}`}
           disabled={isLoading}
@@ -105,8 +112,8 @@ const Quiz2Answers = ({ data }) => {
         <button onClick={handlePreviousQuestion} disabled={currentQuestion === 0 || isLoading} className='btn bg-gray-400 text-white'>
           Kembali
         </button>
-        <button onClick={handleSubmit(onSubmit)} className='bg-purple py-2 px-4 rounded-lg shadow-lg btn-primary bg-third text-white font-semibold text-sm' disabled={isLoading}>
-          {currentQuestion + 1 === 2 ? 'Selesaikan' : 'Berikutnya'}
+        <button onClick={handleNextQuestion} className='bg-purple py-2 px-4 rounded-lg shadow-lg btn-primary bg-third text-white font-semibold text-sm' disabled={isLoading}>
+          {currentQuestion + 1 === questions.length ? 'Selesaikan' : 'Berikutnya'}
         </button>
       </div>
     </>

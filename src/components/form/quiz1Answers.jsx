@@ -14,9 +14,6 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
   const isCorrectUserAnswer = questions.find((q) => q.soal === questionId)?.isCorrectUserAnswer;
   const router = useRouter();
 
-
-  console.log(questions);
-  console.log(kodeDesa);
   useEffect(() => {
     setSelectedAns(jawaban || '');
   }, [jawaban, questionId]);
