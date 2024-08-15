@@ -82,7 +82,7 @@ const useQuestion2Store = create(
             },
           };
 
-          const statusRes = await axios.put('http://47.128.238.240:8080/status', statusUpdate);
+          const statusRes = await axios.put('http://3.0.20.136:8080/status', statusUpdate);
 
           // Update store with the new status
           set({
@@ -120,7 +120,7 @@ const useQuestion2Store = create(
             kodeDesa,
           };
 
-          const statusRes = await axios.get('http://47.128.238.240:8080/status', {
+          const statusRes = await axios.get('http://3.0.20.136:8080/status', {
             params: statusUpdate,
           });
 

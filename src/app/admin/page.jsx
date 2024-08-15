@@ -18,7 +18,7 @@ export default function DataDesaTable() {
       setLoading(true);
       setErrorMessage(null);
       try {
-        const response = await axios.get('http://47.128.238.240:8080/data-desa', {
+        const response = await axios.get('http://3.0.20.136:8080/data-desa', {
           params: { kodeDesa },
         });
 
@@ -39,7 +39,7 @@ export default function DataDesaTable() {
 
   const downloadFile = (filename) => {
     axios
-      .get(`http://47.128.238.240:8080/download/${filename}`, {
+      .get(`http://3.0.20.136:8080/download/${filename}`, {
         responseType: 'blob',
       })
       .then((response) => {
