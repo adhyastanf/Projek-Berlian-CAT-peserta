@@ -29,7 +29,7 @@ const Quiz1Answers = ({ data, handleAnswer, questionId, goNextQuestion, jawaban,
 
       // Make an async API call to save the answer, but don't wait for it to complete
       axios
-        .put('http://54.251.29.86:8080/submit-soal', {
+        .put('http://47.128.238.240:8080/submit-soal', {
           // questionId,
           jawabanText: answer.optionText,
           soalText,

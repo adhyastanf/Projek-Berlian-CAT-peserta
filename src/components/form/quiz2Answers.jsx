@@ -42,7 +42,7 @@ const Quiz2Answers = ({ data }) => {
       setLoading(true);
 
       try {
-        const response = await axios.post('http://54.251.29.86:8080/upload', fileData, {
+        const response = await axios.post('http://47.128.238.240:8080/upload', fileData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const createPeserta = async (data) => {
   try {
-    const response = await axios.post('http://54.251.29.86:8080/biodata', {
+    const response = await axios.post('http://47.128.238.240:8080/biodata', {
       noUjian: data.nomor_ujian,
       namaLengkap: data.nama_lengkap,
       gender: data.jenis_kelamin,
