@@ -42,7 +42,7 @@ const EssayAnswer = ({ questionId, soalText, noUjian }) => {
   return (
     <div className='flex flex-col gap-4 w-full max-w-7xl px-4'>
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
-        <input {...register('essayText')} className={`textarea textarea-bordered w-full h-30 p-4 text-sm text-gray-700 dark:text-gray-300 ${errors.essayText ? 'border-red-500' : ''}`} placeholder='Tulis jawaban Anda di sini...' />
+        <input {...register('essayText')} className={`textarea textarea-bordered w-full h-30 p-4 text-sm text-gray-700  ${errors.essayText ? 'border-red-500' : ''}`} placeholder='Tulis jawaban Anda di sini...' />
         <button type='submit' className='btn btn-primary bg-third text-white mt-2 self-center'>
           Kirim Jawaban
         </button>

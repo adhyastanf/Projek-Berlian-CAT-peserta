@@ -8,10 +8,10 @@ module.exports = {
       },
     },
   },
-  darkMode:false,
+  darkMode: false, // Ensure Tailwind CSS does not generate dark mode variants
   daisyui: {
-    themes: true,
-    darkMode:false
+    themes: ['light'], // Enable DaisyUI themes
+    darkTheme: null, // Explicitly disable dark mode by setting darkTheme to null
   },
   plugins: [require('daisyui')],
 };

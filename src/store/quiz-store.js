@@ -51,6 +51,8 @@ const useQuestionStore = create(
             params: statusUpdate,
           });
 
+          console.log(statusRes?.data?.status?.quiz1?.isRestricted)
+
           set({
             hasCompletedSection1: statusRes?.data?.status?.quiz1?.isFinished,
             isQuiz1Finished: statusRes?.data?.status?.quiz1?.isFinished,

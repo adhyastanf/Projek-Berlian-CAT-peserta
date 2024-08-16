@@ -15,7 +15,9 @@ const useCountdownStore = create(
           const response = await axios.get('http://18.141.142.63:8080/time', { params: { ujian: section } });
 
           const remainingTimeInSeconds = response.data.remainingTime;
-          const now = new Date().toISOString();
+          const nowDate = new Date();
+          const utc7Date = new Date(nowDate.getTime() + 7 * 60 * 60 * 1000);
+          const now = utc7Date.toISOString();
           if (section === 1) {
             set({
               section1RemainingTime: remainingTimeInSeconds * 1000, // Store remaining time in milliseconds
@@ -34,11 +36,14 @@ const useCountdownStore = create(
 
       getRemainingTime: (section) => {
         const remainingTime = section === 1 ? get().section1RemainingTime : get().section2RemainingTime;
+        console.log(remainingTime)
         return remainingTime || null;
       },
 
       isQuestionPlayable: (section) => {
-        const now = new Date().getTime();
+        const nowDate = new Date();
+        const utc7Date = new Date(nowDate.getTime() + 7 * 60 * 60 * 1000);
+        const now = utc7Date.getTime()
         const startTime = new Date(get()[`section${section}StartTime`]).getTime();
         const remainingTime = get().getRemainingTime(section);
         const endTime = startTime + remainingTime;

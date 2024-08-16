@@ -10,7 +10,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: 'Selamat Datang di Tes CAT Kecamatan Surajadi',
+  title: 'Selamat Datang di Tes CAT Kecamatan Suradadi',
   description: 'Website tes CAT',
   icons: {
     icon: './favicon.ico', // This should be placed in public/favicon.ico

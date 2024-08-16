@@ -70,9 +70,48 @@ export default function DataDesaTable() {
   }
 }
 
+const downloadFile = (filename) => {
+  axios
+    .get(`http://18.141.142.63:8080/download/${filename}`, {
+      responseType: 'blob',
+    })
+    .then((response) => {
+      // Extract the filename from the Content-Disposition header
+      const contentDisposition = response.headers['content-disposition'];
+      let downloadFilename = filename; // Default filename if not provided in header
+
+      if (contentDisposition) {
+        const fileNameMatch = contentDisposition.match(/filename="?(.+)"?/);
+        if (fileNameMatch.length > 1) {
+          downloadFilename = fileNameMatch[1];
+        }
+      }
+
+      // Create a link element, trigger a click, and remove it
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', downloadFilename);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    })
+    .catch((error) => {
+      console.error('Error downloading the file:', error);
+    });
+};
+
   const handleLogout = () => {
     logout(); // Clear authentication details
     router.push('/'); // Redirect to the login page
+  };
+
+  const handleDownload = (filename) => {
+    if (filename) {
+      downloadFile(filename);
+    } else {
+      console.error('Filename is missing');
+    }
   };
 
   return (

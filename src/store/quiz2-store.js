@@ -12,6 +12,7 @@ const useQuestion2Store = create(
           _id: '1',
           soalText: Soal1,
           questionType: 'file-upload',
+          linkFile:'https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb',
           uploadedFileName: null,
         },
         {

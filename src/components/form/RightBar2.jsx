@@ -15,7 +15,7 @@ function RightBar() {
             onClick={() => goToQuestion(index)}
             className={`flex items-center justify-center w-8 h-8 rounded-md text-xs font-semibold cursor-pointer
             ${question.isAnswered ? 'bg-green-400' : 'bg-zinc-300'} // Change color if answered
-              dark:bg-slate-700 text-dark-blue dark:text-white`}
+               text-dark-blue `}
           >
             {index + 1}
           </div>

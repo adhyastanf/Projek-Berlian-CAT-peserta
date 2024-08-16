@@ -1,4 +1,4 @@
-// File: D:\Proj\ProjectCAT\fe\Projek-Berlian-CAT-peserta\src\app\sesi\quiz2\layout.jsx
+// File: C:\Users\Adhyasta\Desktop\CAT Peserta\cat-peserta\src\app\sesi\quiz2\layout.jsx
 import * as entry from '../../../../../src/app/sesi/quiz2/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

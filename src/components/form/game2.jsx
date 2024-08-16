@@ -10,7 +10,7 @@ const Game2 = () => {
   return (
     <div className='flex flex-col items-center gap-4 lg:px-6 lg:py-4 w-full'>
       <div className='flex flex-col gap-4 w-full max-w-7xl px-4'>
-        <p className='italic text-sm md:text-base lg:text-lg text-gray-700 dark:text-gray-300'>
+        <p className='italic text-sm md:text-base lg:text-lg text-gray-700 '>
           Pertanyaan {currentQuestion + 1} dari {questions.length}
         </p>
         <CurrentQuestion data={question} />

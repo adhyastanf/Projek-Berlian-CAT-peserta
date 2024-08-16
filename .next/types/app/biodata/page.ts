@@ -1,4 +1,4 @@
-// File: D:\Proj\ProjectCAT\fe\Projek-Berlian-CAT-peserta\src\app\biodata\page.jsx
+// File: C:\Users\Adhyasta\Desktop\CAT Peserta\cat-peserta\src\app\biodata\page.jsx
 import * as entry from '../../../../src/app/biodata/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
