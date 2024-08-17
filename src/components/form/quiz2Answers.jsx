@@ -31,13 +31,15 @@ const Quiz2Answers = ({ data }) => {
     }
   }, [currentQuestion, setValue, saveUploadedFileName]);
 
-  const uploadFile = async (formData) => {
+  const uploadFile = async (formData, currQuestion) => {
+    console.log(currQuestion)
+    let tipeSoal = currQuestion === 0 ? 'docx' : 'xlsx'
     if (formData.file.length) {
       const fileData = new FormData();
       fileData.append('file', formData.file[0]); // Append the file itself
       fileData.append('noUjian', noUjian);
       fileData.append('kodeDesa', kodeDesa);
-      fileData.append('tipeSoal', formData.file[0].name.split('.').pop()); // Extract the file extension
+      fileData.append('tipeSoal', tipeSoal); // Extract the file extension
 
       setLoading(true);
 
@@ -64,7 +66,8 @@ const Quiz2Answers = ({ data }) => {
   };
 
   const onSubmit = async (formData) => {
-    await uploadFile(formData);
+    console.log(currentQuestion)
+    await uploadFile(formData, currentQuestion);
   };
 
   const handleNextQuestion = () => {
@@ -86,13 +89,46 @@ const Quiz2Answers = ({ data }) => {
     reset();
   };
 
+  async function downloadSoalDocx() {
+    try {
+      const response = await fetch(`http://18.141.142.63:8080/download/NAMA.docx`, {
+        method: 'GET',
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      
+      // Tentukan nama file dari response header
+      const contentDisposition = response.headers.get('Content-Disposition');
+      let filename = `NAMA.docx`; // default filename
+      if (contentDisposition) {
+        const match = contentDisposition.match(/filename="(.+)"/);
+        if (match[1]) filename = match[1];
+      }
+      
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+      alert('Gagal Mendownload Data');
+    }
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-y-4 justify-center w-full'>
         {currentQuestion + 1 === 1 && (
-          <a href={data?.linkFile} className='btn btn-primary text-white mb-14'>
+          <button onClick={downloadSoalDocx} className='btn btn-primary text-white mb-14'>
             DOWNLOAD FILE
-          </a>
+          </button>
         )}
         <input type='file' accept='.doc,.docx,.xls,.xlsx,.csv' {...register('file')} className={`file-input file-input-bordered w-full ${errors.file ? 'border-red-500' : ''}`} disabled={isLoading} />
         {errors.file && <p className='text-red-500 text-sm'>{errors.file.message}</p>}

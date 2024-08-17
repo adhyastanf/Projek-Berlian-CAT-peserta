@@ -56,15 +56,6 @@
       "static/chunks/461-d17e187a6afb3f2b.js",
       "static/chunks/app/admin/layout-c1e9b71e4d73592d.js"
     ],
-    "/admin/page": [
-      "static/chunks/webpack-d67f6ec4b73812a9.js",
-      "static/chunks/fd9d1056-eccf0ef85408d012.js",
-      "static/chunks/23-68e7a951a9f9fb2c.js",
-      "static/chunks/main-app-da4005c8a676d2a0.js",
-      "static/chunks/461-d17e187a6afb3f2b.js",
-      "static/chunks/472-61913167e274c096.js",
-      "static/chunks/app/admin/page-c074c2a4c7501c70.js"
-    ],
     "/sesi/page": [
       "static/chunks/webpack-d67f6ec4b73812a9.js",
       "static/chunks/fd9d1056-eccf0ef85408d012.js",
@@ -84,6 +75,15 @@
       "static/chunks/461-d17e187a6afb3f2b.js",
       "static/chunks/app/sesi/layout-412f0cddea06a293.js"
     ],
+    "/admin/page": [
+      "static/chunks/webpack-d67f6ec4b73812a9.js",
+      "static/chunks/fd9d1056-eccf0ef85408d012.js",
+      "static/chunks/23-68e7a951a9f9fb2c.js",
+      "static/chunks/main-app-da4005c8a676d2a0.js",
+      "static/chunks/461-d17e187a6afb3f2b.js",
+      "static/chunks/472-61913167e274c096.js",
+      "static/chunks/app/admin/page-c074c2a4c7501c70.js"
+    ],
     "/sesi/(info)/infoquiz3/page": [
       "static/chunks/webpack-d67f6ec4b73812a9.js",
       "static/chunks/fd9d1056-eccf0ef85408d012.js",
@@ -97,6 +97,29 @@
       "static/chunks/23-68e7a951a9f9fb2c.js",
       "static/chunks/main-app-da4005c8a676d2a0.js",
       "static/chunks/app/sesi/(info)/layout-a060b6a8cefe1aab.js"
+    ],
+    "/sesi/quiz2/page": [
+      "static/chunks/webpack-d67f6ec4b73812a9.js",
+      "static/chunks/fd9d1056-eccf0ef85408d012.js",
+      "static/chunks/23-68e7a951a9f9fb2c.js",
+      "static/chunks/main-app-da4005c8a676d2a0.js",
+      "static/chunks/461-d17e187a6afb3f2b.js",
+      "static/chunks/472-61913167e274c096.js",
+      "static/chunks/343-244229b832589c05.js",
+      "static/chunks/173-4f3582e5c3047bca.js",
+      "static/chunks/280-3fb46f892a8c581e.js",
+      "static/chunks/897-de04b44f3689a9b6.js",
+      "static/chunks/app/sesi/quiz2/page-d521ba05836ccdb5.js"
+    ],
+    "/sesi/quiz2/layout": [
+      "static/chunks/webpack-d67f6ec4b73812a9.js",
+      "static/chunks/fd9d1056-eccf0ef85408d012.js",
+      "static/chunks/23-68e7a951a9f9fb2c.js",
+      "static/chunks/main-app-da4005c8a676d2a0.js",
+      "static/chunks/461-d17e187a6afb3f2b.js",
+      "static/chunks/472-61913167e274c096.js",
+      "static/chunks/897-de04b44f3689a9b6.js",
+      "static/chunks/app/sesi/quiz2/layout-dfbc92236525a12b.js"
     ],
     "/sesi/quiz1/page": [
       "static/chunks/webpack-d67f6ec4b73812a9.js",
@@ -119,29 +142,6 @@
       "static/chunks/472-61913167e274c096.js",
       "static/chunks/897-de04b44f3689a9b6.js",
       "static/chunks/app/sesi/quiz1/layout-38f9c913c23fbb5a.js"
-    ],
-    "/sesi/quiz2/page": [
-      "static/chunks/webpack-d67f6ec4b73812a9.js",
-      "static/chunks/fd9d1056-eccf0ef85408d012.js",
-      "static/chunks/23-68e7a951a9f9fb2c.js",
-      "static/chunks/main-app-da4005c8a676d2a0.js",
-      "static/chunks/461-d17e187a6afb3f2b.js",
-      "static/chunks/472-61913167e274c096.js",
-      "static/chunks/343-244229b832589c05.js",
-      "static/chunks/173-4f3582e5c3047bca.js",
-      "static/chunks/280-3fb46f892a8c581e.js",
-      "static/chunks/897-de04b44f3689a9b6.js",
-      "static/chunks/app/sesi/quiz2/page-4a8a3787417d3c5d.js"
-    ],
-    "/sesi/quiz2/layout": [
-      "static/chunks/webpack-d67f6ec4b73812a9.js",
-      "static/chunks/fd9d1056-eccf0ef85408d012.js",
-      "static/chunks/23-68e7a951a9f9fb2c.js",
-      "static/chunks/main-app-da4005c8a676d2a0.js",
-      "static/chunks/461-d17e187a6afb3f2b.js",
-      "static/chunks/472-61913167e274c096.js",
-      "static/chunks/897-de04b44f3689a9b6.js",
-      "static/chunks/app/sesi/quiz2/layout-dfbc92236525a12b.js"
     ]
   }
 }
