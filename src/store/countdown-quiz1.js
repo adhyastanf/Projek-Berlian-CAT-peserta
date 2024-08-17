@@ -36,7 +36,7 @@ const useCountdownStore = create(
 
       getRemainingTime: (section) => {
         const remainingTime = section === 1 ? get().section1RemainingTime : get().section2RemainingTime;
-        console.log(remainingTime)
+
         return remainingTime || null;
       },
 

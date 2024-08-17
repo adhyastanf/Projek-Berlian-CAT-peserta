@@ -107,10 +107,21 @@ const useQuestion2Store = create(
         });
       },
 
-      unlockSection2: () => {
+      unlockSection2: async (noUjian, kodeDesa) => {
+        const statusUpdate = await axios.put('http://18.141.142.63:8080/status', {
+            quiz: 'quiz2',
+            noUjian,
+            kodeDesa,
+            statusUpdate: {
+              onProgress: true,
+              isFinished: false,
+              isRestricted: false,
+            },
+          });
+
         set({
-          isSection2Locked: false, // Unlock Section 2
-          isQuiz2Restricted: false, // Ensure that the restricted state is false
+          isSection2Locked: statusUpdate?.data?.status?.quiz2?.isRestricted, // Unlock Section 2
+          isQuiz2Restricted: statusUpdate?.data?.status?.quiz2?.isRestricted, // Ensure that the restricted state is false
         });
       },
 

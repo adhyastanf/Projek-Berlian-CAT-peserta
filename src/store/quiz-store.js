@@ -51,12 +51,16 @@ const useQuestionStore = create(
             params: statusUpdate,
           });
 
-          console.log(statusRes?.data?.status?.quiz1?.isRestricted)
+          const res = await axios.get(`http://18.141.142.63:8080/nilai`, {
+            params: { noUjian, kodeDesa },
+          });
+          const score = res.data.nilai.nilai;
 
           set({
             hasCompletedSection1: statusRes?.data?.status?.quiz1?.isFinished,
             isQuiz1Finished: statusRes?.data?.status?.quiz1?.isFinished,
             isQuiz1Restricted: statusRes?.data?.status?.quiz1?.isRestricted,
+            score,
           });
         } catch (error) {
           console.error('Failed to update quiz1 status:', error);
@@ -91,11 +95,8 @@ const useQuestionStore = create(
 
       onCompleteQuestions: async (noUjian, kodeDesa) => {
         try {
-          const res = await axios.get(`http://18.141.142.63:8080/nilai`, {
-            params: { noUjian, kodeDesa },
-          });
+          const res = await axios.post(`http://18.141.142.63:8080/nilai`, {noUjian, kodeDesa});
           const score = res.data.nilai.nilai;
-          set({ hasCompletedSection1: true, currentQuestion: 0, score });
 
           // Update the quiz status on the server
           const statusUpdate = await axios.put('http://18.141.142.63:8080/status', {
@@ -108,16 +109,16 @@ const useQuestionStore = create(
               isRestricted: true,
             },
           });
-
           // Update store with the new status
           set({
             hasCompletedSection1: statusUpdate?.data?.status?.quiz1?.isFinished,
             isQuiz1Finished: statusUpdate?.data?.status?.quiz1?.isFinished,
             isQuiz1Restricted: statusUpdate?.data?.status?.quiz1?.isRestricted,
+            currentQuestion: 0, score
           });
 
           // Unlock Section 2 when Section 1 is completed
-          useQuestion2Store.getState().unlockSection2();
+          useQuestion2Store.getState().unlockSection2(noUjian, kodeDesa);
         } catch (error) {
           console.error(error);
         }

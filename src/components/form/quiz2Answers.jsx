@@ -32,7 +32,7 @@ const Quiz2Answers = ({ data }) => {
   }, [currentQuestion, setValue, saveUploadedFileName]);
 
   const uploadFile = async (formData, currQuestion) => {
-    console.log(currQuestion)
+
     let tipeSoal = currQuestion === 0 ? 'docx' : 'xlsx'
     if (formData.file.length) {
       const fileData = new FormData();
@@ -66,7 +66,7 @@ const Quiz2Answers = ({ data }) => {
   };
 
   const onSubmit = async (formData) => {
-    console.log(currentQuestion)
+
     await uploadFile(formData, currentQuestion);
   };
 

@@ -9,7 +9,7 @@ const PageLoader = ({ children }) => {
     // Simulasikan proses pemuatan atau state initialization
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); // Gantilah durasi sesuai kebutuhan Anda
+    }, 2000); // Gantilah durasi sesuai kebutuhan Anda
 
     return () => clearTimeout(timer);
   }, []);
