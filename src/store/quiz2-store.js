@@ -28,7 +28,7 @@ const useQuestion2Store = create(
           questionType: 'file-upload',
           // linkFile:'https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb',
           uploadedFileName: null,
-        }
+        },
       ],
       currentQuestion: 0,
       hasCompletedSection2: false,
@@ -91,7 +91,7 @@ const useQuestion2Store = create(
             },
           };
 
-          const statusRes = await axios.put('http://18.141.142.63:8080/status', statusUpdate);
+          const statusRes = await axios.put('http://54.251.182.133:8080/status', statusUpdate);
 
           // Update store with the new status
           set({
@@ -116,17 +116,17 @@ const useQuestion2Store = create(
       },
 
       unlockSection2: async (noUjian, kodeDesa) => {
-        const statusUpdate = await axios.put('http://18.141.142.63:8080/status', {
-            quiz: 'quiz2',
-            noUjian,
-            kodeDesa,
-            statusUpdate: {
-              onProgress: true,
-              isFinished: false,
-              isRestricted: false,
-            },
-          });
-          console.log(statusUpdate?.data?.status?.quiz2?.isFinished)
+        const statusUpdate = await axios.put('http://54.251.182.133:8080/status', {
+          quiz: 'quiz2',
+          noUjian,
+          kodeDesa,
+          statusUpdate: {
+            onProgress: true,
+            isFinished: false,
+            isRestricted: false,
+          },
+        });
+        console.log(statusUpdate?.data?.status?.quiz2?.isFinished);
 
         set({
           isSection2Locked: statusUpdate?.data?.status?.quiz2?.isRestricted, // Unlock Section 2
@@ -141,7 +141,7 @@ const useQuestion2Store = create(
             kodeDesa,
           };
 
-          const statusRes = await axios.get('http://18.141.142.63:8080/status', {
+          const statusRes = await axios.get('http://54.251.182.133:8080/status', {
             params: statusUpdate,
           });
 

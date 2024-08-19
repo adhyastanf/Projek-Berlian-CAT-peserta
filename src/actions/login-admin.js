@@ -1,6 +1,6 @@
 const loginAction = async (username, password) => {
   try {
-    const response = await axios.post('http://18.141.142.63:8080/admin', {
+    const response = await axios.post('http://54.251.182.133:8080/admin', {
       username,
       password,
     });

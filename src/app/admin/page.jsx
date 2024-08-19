@@ -18,7 +18,7 @@ export default function DataDesaTable() {
       setLoading(true);
       setErrorMessage(null);
       try {
-        const response = await axios.get('http://18.141.142.63:8080/data-desa', {
+        const response = await axios.get('http://54.251.182.133:8080/data-desa', {
           params: { kodeDesa },
         });
 
@@ -38,68 +38,68 @@ export default function DataDesaTable() {
   }, [kodeDesa]);
 
   async function downloadExcelFile() {
-  try {
-    const response = await fetch(`http://18.141.142.63:8080/export-nilai?kodeDesa=${kodeDesa}`, {
-      method: 'GET',
-    });
+    try {
+      const response = await fetch(`http://54.251.182.133:8080/export-nilai?kodeDesa=${kodeDesa}`, {
+        method: 'GET',
+      });
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    
-    // Tentukan nama file dari response header
-    const contentDisposition = response.headers.get('Content-Disposition');
-    let filename = `data_desa_${kodeDesa === 1 ? 'harjasari' : 'suradadi'}.xlsx`; // default filename
-    if (contentDisposition) {
-      const match = contentDisposition.match(/filename="(.+)"/);
-      if (match[1]) filename = match[1];
-    }
-    
-    link.setAttribute('download', filename);
-    document.body.appendChild(link);
-    link.click();
-    link.parentNode.removeChild(link);
-  } catch (error) {
-    console.error('Error downloading the file:', error);
-    alert('Gagal Mendownload Data');
-  }
-}
-
-const downloadFile = (filename) => {
-  axios
-    .get(`http://18.141.142.63:8080/download/${filename}`, {
-      responseType: 'blob',
-    })
-    .then((response) => {
-      // Extract the filename from the Content-Disposition header
-      const contentDisposition = response.headers['content-disposition'];
-      let downloadFilename = filename; // Default filename if not provided in header
-
-      if (contentDisposition) {
-        const fileNameMatch = contentDisposition.match(/filename="?(.+)"?/);
-        if (fileNameMatch.length > 1) {
-          downloadFilename = fileNameMatch[1];
-        }
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
 
-      // Create a link element, trigger a click, and remove it
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', downloadFilename);
+
+      // Tentukan nama file dari response header
+      const contentDisposition = response.headers.get('Content-Disposition');
+      let filename = `data_desa_${kodeDesa === 1 ? 'harjasari' : 'suradadi'}.xlsx`; // default filename
+      if (contentDisposition) {
+        const match = contentDisposition.match(/filename="(.+)"/);
+        if (match[1]) filename = match[1];
+      }
+
+      link.setAttribute('download', filename);
       document.body.appendChild(link);
       link.click();
-      link.remove();
-    })
-    .catch((error) => {
+      link.parentNode.removeChild(link);
+    } catch (error) {
       console.error('Error downloading the file:', error);
-    });
-};
+      alert('Gagal Mendownload Data');
+    }
+  }
+
+  const downloadFile = (filename) => {
+    axios
+      .get(`http://54.251.182.133:8080/download/${filename}`, {
+        responseType: 'blob',
+      })
+      .then((response) => {
+        // Extract the filename from the Content-Disposition header
+        const contentDisposition = response.headers['content-disposition'];
+        let downloadFilename = filename; // Default filename if not provided in header
+
+        if (contentDisposition) {
+          const fileNameMatch = contentDisposition.match(/filename="?(.+)"?/);
+          if (fileNameMatch.length > 1) {
+            downloadFilename = fileNameMatch[1];
+          }
+        }
+
+        // Create a link element, trigger a click, and remove it
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', downloadFilename);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      })
+      .catch((error) => {
+        console.error('Error downloading the file:', error);
+      });
+  };
 
   const handleLogout = () => {
     logout(); // Clear authentication details

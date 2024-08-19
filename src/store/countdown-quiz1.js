@@ -12,7 +12,7 @@ const useCountdownStore = create(
 
       fetchRemainingTime: async (section) => {
         try {
-          const response = await axios.get('http://18.141.142.63:8080/time', { params: { ujian: section } });
+          const response = await axios.get('http://54.251.182.133:8080/time', { params: { ujian: section } });
 
           const remainingTimeInSeconds = response.data.remainingTime;
           const nowDate = new Date();
@@ -43,7 +43,7 @@ const useCountdownStore = create(
       isQuestionPlayable: (section) => {
         const nowDate = new Date();
         const utc7Date = new Date(nowDate.getTime() + 7 * 60 * 60 * 1000);
-        const now = utc7Date.getTime()
+        const now = utc7Date.getTime();
         const startTime = new Date(get()[`section${section}StartTime`]).getTime();
         const remainingTime = get().getRemainingTime(section);
         const endTime = startTime + remainingTime;

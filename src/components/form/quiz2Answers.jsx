@@ -32,8 +32,7 @@ const Quiz2Answers = ({ data }) => {
   }, [currentQuestion, setValue, saveUploadedFileName]);
 
   const uploadFile = async (formData, currQuestion) => {
-
-    let tipeSoal = currQuestion === 0 ? 'docx' : 'xlsx'
+    let tipeSoal = currQuestion === 0 ? 'docx' : 'xlsx';
     if (formData.file.length) {
       const fileData = new FormData();
       fileData.append('file', formData.file[0]); // Append the file itself
@@ -44,7 +43,7 @@ const Quiz2Answers = ({ data }) => {
       setLoading(true);
 
       try {
-        const response = await axios.post('http://18.141.142.63:8080/upload', fileData, {
+        const response = await axios.post('http://54.251.182.133:8080/upload', fileData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -66,7 +65,6 @@ const Quiz2Answers = ({ data }) => {
   };
 
   const onSubmit = async (formData) => {
-
     await uploadFile(formData, currentQuestion);
   };
 
@@ -91,22 +89,22 @@ const Quiz2Answers = ({ data }) => {
 
   async function downloadSoalDocx() {
     try {
-      // const response = await fetch(`http://18.141.142.63:8080/download/NAMA.docx`, {
+      // const response = await fetch(`http://54.251.182.133:8080/download/NAMA.docx`, {
       //   method: 'GET',
       // });
-      const response = await fetch(`http://18.141.142.63:8080/download/NAMA_Simulasi.docx`, {
+      const response = await fetch(`http://54.251.182.133:8080/download/NAMA_Simulasi.docx`, {
         method: 'GET',
       });
-  
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      
+
       // Tentukan nama file dari response header
       const contentDisposition = response.headers.get('Content-Disposition');
       let filename = `NAMA.docx`; // default filename
@@ -114,7 +112,7 @@ const Quiz2Answers = ({ data }) => {
         const match = contentDisposition.match(/filename="(.+)"/);
         if (match[1]) filename = match[1];
       }
-      
+
       link.setAttribute('download', filename);
       document.body.appendChild(link);
       link.click();
