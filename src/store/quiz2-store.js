@@ -3,24 +3,32 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import Soal1 from '../../public/soal1.png';
 import Soal2 from '../../public/soal2.png';
+import SoalSimulasi from '../../public/SoalSimulasi.png';
 
 const useQuestion2Store = create(
   persist(
     (set, get) => ({
       questions: [
+        // {
+        //   _id: '1',
+        //   soalText: Soal1,
+        //   questionType: 'file-upload',
+        //   linkFile:'https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb',
+        //   uploadedFileName: null,
+        // },
+        // {
+        //   _id: '2',
+        //   soalText: Soal2,
+        //   questionType: 'file-upload',
+        //   uploadedFileName: null,
+        // },
         {
-          _id: '1',
-          soalText: Soal1,
+          _id: '3',
+          soalText: SoalSimulasi,
           questionType: 'file-upload',
-          linkFile:'https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb',
+          // linkFile:'https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb',
           uploadedFileName: null,
-        },
-        {
-          _id: '2',
-          soalText: Soal2,
-          questionType: 'file-upload',
-          uploadedFileName: null,
-        },
+        }
       ],
       currentQuestion: 0,
       hasCompletedSection2: false,
