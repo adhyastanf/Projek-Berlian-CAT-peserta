@@ -118,6 +118,7 @@ const useQuestion2Store = create(
               isRestricted: false,
             },
           });
+          console.log(statusUpdate?.data?.status?.quiz2?.isFinished)
 
         set({
           isSection2Locked: statusUpdate?.data?.status?.quiz2?.isRestricted, // Unlock Section 2

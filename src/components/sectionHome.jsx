@@ -15,7 +15,7 @@ export default function SectionHome() {
 
   // State management for Quiz 1
   const { fetchRemainingTime, isQuestionPlayable } = useCountdownStore();
-  const { hasCompletedSection1, isQuiz1Finished, isQuiz1Restricted, score, updateQuizStatus, fetchStatusQuiz } = useQuestionStore();
+  const { hasCompletedSection1, isQuiz1Finished, isQuiz1Restricted, score, isLoadingSection, fetchStatusQuiz } = useQuestionStore();
 
   // State management for Quiz 2
   const { hasCompletedSection2, isQuiz2Finished, isQuiz2Restricted, isSection2Locked, updateQuizStatus: updateQuiz2Status, fetchStatusQuiz2 } = useQuestion2Store();
@@ -42,7 +42,7 @@ export default function SectionHome() {
   const isQuiz1Disabled = isQuiz1Finished || isQuiz1Restricted || !isQuestionPlayable(1);
   const isQuiz2Disabled = !hasCompletedSection1 || isSection2Locked || isQuiz2Finished || isQuiz2Restricted || !isQuestionPlayable(2);
 
-  if (loading) {
+  if (loading || isLoadingSection) {
     return <div></div>; // Display loading indicator
   }
 

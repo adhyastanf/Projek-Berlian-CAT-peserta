@@ -14,7 +14,7 @@ const Answer = ({ answer, selectedAns, handleSelectAnswer, index, answerLabels }
         )}
       >
         <span className={cn(isSelected ? 'bg-third text-white' : 'bg-gray-200  group-hover:bg-purple group-hover:text-black', 'text-lg rounded-lg py-2 px-4')}>{answerLabels[index]}</span>
-        <span className='xl:text-lg'>{answer.optionText}</span>
+        <span className='xl:text-lg text-left'>{answer.optionText}</span>
       </button>
     </li>
   );

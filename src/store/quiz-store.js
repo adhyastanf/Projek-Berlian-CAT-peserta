@@ -15,6 +15,7 @@ const useQuestionStore = create(
       temporarySelection: null,
       isQuiz1Finished: false,
       isQuiz1Restricted: false,
+      isLoadingSection:false,
 
       selectQuizz: (quizz) => {
         set({ questions: quizz.hasil });
@@ -61,9 +62,14 @@ const useQuestionStore = create(
             isQuiz1Finished: statusRes?.data?.status?.quiz1?.isFinished,
             isQuiz1Restricted: statusRes?.data?.status?.quiz1?.isRestricted,
             score,
+            isLoadingSection:true
           });
+          
         } catch (error) {
           console.error('Failed to update quiz1 status:', error);
+          set({isLoadingSection:false})
+        } finally {
+          set({isLoadingSection:false})
         }
       },
 
