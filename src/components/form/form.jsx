@@ -26,8 +26,10 @@ const FormDisplay = () => {
   ];
 
   const kodeDesaOptions = [
-    { label: 'Desa Harjasari', value: 1 },
-    { label: 'Desa Suradadi', value: 2 },
+    // { label: 'Desa Harjasari', value: 1 },
+    // { label: 'Desa Suradadi', value: 2 },
+    { label: 'Desa Simulasi', value: 3 },
+    
   ];
 
   const {
@@ -104,7 +106,8 @@ const FormDisplay = () => {
 
         <div className='mb-4'>
           <label className='block text-gray-700 text-sm font-bold mb-2'>Desa:</label>
-          <select {...register('kode_desa')} defaultValue={1} className={`select select-bordered w-full ${errors.kode_desa ? 'select-error' : ''}`}>
+          {/* <select {...register('kode_desa')} defaultValue={1} className={`select select-bordered w-full ${errors.kode_desa ? 'select-error' : ''}`}> */}
+          <select {...register('kode_desa')} defaultValue={3} className={`select select-bordered w-full ${errors.kode_desa ? 'select-error' : ''}`}>
             <option value=''>Pilih Nama Desa</option>
             {kodeDesaOptions.map((option) => (
               <option key={option.value} value={option.value}>

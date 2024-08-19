@@ -91,7 +91,10 @@ const Quiz2Answers = ({ data }) => {
 
   async function downloadSoalDocx() {
     try {
-      const response = await fetch(`http://18.141.142.63:8080/download/NAMA.docx`, {
+      // const response = await fetch(`http://18.141.142.63:8080/download/NAMA.docx`, {
+      //   method: 'GET',
+      // });
+      const response = await fetch(`http://18.141.142.63:8080/download/NAMA_Simulasi.docx`, {
         method: 'GET',
       });
   
