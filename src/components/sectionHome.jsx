@@ -42,7 +42,7 @@ export default function SectionHome() {
   const isQuiz1Disabled = isQuiz1Finished || isQuiz1Restricted || !isQuestionPlayable(1);
   const isQuiz2Disabled = !hasCompletedSection1 || isSection2Locked || isQuiz2Finished || isQuiz2Restricted || !isQuestionPlayable(2);
 
-  if (loading || isLoadingSection) {
+  if (loading) {
     return <div></div>; // Display loading indicator
   }
 

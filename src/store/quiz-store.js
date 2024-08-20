@@ -52,15 +52,18 @@ const useQuestionStore = create(
             params: statusUpdate,
           });
 
+          set({
+            hasCompletedSection1: statusRes?.data?.status?.quiz1?.isFinished,
+            isQuiz1Finished: statusRes?.data?.status?.quiz1?.isFinished,
+            isQuiz1Restricted: statusRes?.data?.status?.quiz1?.isRestricted,
+          });
+          
           const res = await axios.get(`http://54.251.182.133:8080/nilai`, {
             params: { noUjian, kodeDesa },
           });
           const score = res.data.nilai.nilai;
 
           set({
-            hasCompletedSection1: statusRes?.data?.status?.quiz1?.isFinished,
-            isQuiz1Finished: statusRes?.data?.status?.quiz1?.isFinished,
-            isQuiz1Restricted: statusRes?.data?.status?.quiz1?.isRestricted,
             score,
             isLoadingSection: true,
           });
