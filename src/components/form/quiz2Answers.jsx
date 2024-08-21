@@ -89,10 +89,7 @@ const Quiz2Answers = ({ data }) => {
 
   async function downloadSoalDocx() {
     try {
-      // const response = await fetch(`http://54.251.182.133:8080/download/NAMA.docx`, {
-      //   method: 'GET',
-      // });
-      const response = await fetch(`http://54.251.182.133:8080/download/NAMA_Simulasi.docx`, {
+      const response = await fetch(`http://54.251.182.133:8080/download/NAMA.pdf`, {
         method: 'GET',
       });
 
@@ -107,7 +104,7 @@ const Quiz2Answers = ({ data }) => {
 
       // Tentukan nama file dari response header
       const contentDisposition = response.headers.get('Content-Disposition');
-      let filename = `NAMA.docx`; // default filename
+      let filename = `NAMA.pdf`; // default filename
       if (contentDisposition) {
         const match = contentDisposition.match(/filename="(.+)"/);
         if (match[1]) filename = match[1];

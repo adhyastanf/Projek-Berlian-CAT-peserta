@@ -9,24 +9,17 @@ const useQuestion2Store = create(
   persist(
     (set, get) => ({
       questions: [
-        // {
-        //   _id: '1',
-        //   soalText: Soal1,
-        //   questionType: 'file-upload',
-        //   linkFile:'https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb',
-        //   uploadedFileName: null,
-        // },
-        // {
-        //   _id: '2',
-        //   soalText: Soal2,
-        //   questionType: 'file-upload',
-        //   uploadedFileName: null,
-        // },
         {
-          _id: '3',
-          soalText: SoalSimulasi,
+          _id: '1',
+          soalText: Soal1,
           questionType: 'file-upload',
-          // linkFile:'https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb',
+          linkFile:'https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb',
+          uploadedFileName: null,
+        },
+        {
+          _id: '2',
+          soalText: Soal2,
+          questionType: 'file-upload',
           uploadedFileName: null,
         },
       ],

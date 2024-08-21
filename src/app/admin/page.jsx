@@ -130,9 +130,7 @@ export default function DataDesaTable() {
         <button onClick={() => setKodeDesa(2)} className={`px-4 py-2 mr-2 rounded ${kodeDesa === 2 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
           Desa Suradadi
         </button>
-        <button onClick={() => setKodeDesa(3)} className={`px-4 py-2 mr-2 rounded ${kodeDesa === 3 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
-          Desa Simulasi
-        </button>
+
       </div>
 
       <div className='mb-4'>
