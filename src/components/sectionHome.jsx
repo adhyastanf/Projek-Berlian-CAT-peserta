@@ -15,12 +15,12 @@ export default function SectionHome() {
 
   // State management for Quiz 1
   const { fetchRemainingTime, isQuestionPlayable } = useCountdownStore();
-  const { hasCompletedSection1, isQuiz1Finished, isQuiz1Restricted, score, isLoadingSection, fetchStatusQuiz } = useQuestionStore();
+  const { hasCompletedSection1, isQuiz1Finished, isQuiz1Restricted, score, fetchStatusQuiz } = useQuestionStore();
 
   // State management for Quiz 2
-  const { hasCompletedSection2, isQuiz2Finished, isQuiz2Restricted, isSection2Locked, updateQuizStatus: updateQuiz2Status, fetchStatusQuiz2 } = useQuestion2Store();
+  const { isQuiz2Finished, isQuiz2Restricted, isSection2Locked, fetchStatusQuiz2 } = useQuestion2Store();
 
-  const { isAuth, noUjian, kodeDesa } = useAuth();
+  const { noUjian, kodeDesa } = useAuth();
 
   useEffect(() => {
     const loadStatus = async () => {

@@ -1,34 +1,38 @@
-import axios from 'axios';
+import { fetchGetQuiz2, fetchGetStatus, fetchUpdateStatus } from '@/helpers/service';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import Soal1 from '../../public/soal1.png';
-import Soal2 from '../../public/soal2.png';
-import SoalSimulasi from '../../public/SoalSimulasi.png';
 
 const useQuestion2Store = create(
   persist(
     (set, get) => ({
-      questions: [
-        {
-          _id: '1',
-          soalText: Soal1,
-          questionType: 'file-upload',
-          linkFile:'https://drive.google.com/uc?export=download&id=1ztG0NKdyd6sbHHIWouSp7XB9Iip5h8zb',
-          uploadedFileName: null,
-        },
-        {
-          _id: '2',
-          soalText: Soal2,
-          questionType: 'file-upload',
-          uploadedFileName: null,
-        },
-      ],
+      quizzes: [],
+      questions: [],
       currentQuestion: 0,
       hasCompletedSection2: false,
-      isSection2Locked: true, // Initial state for Section 2 lock
+      isSection2Locked: true, 
       isLoading: false,
       isQuiz2Finished: false,
       isQuiz2Restricted: true,
+
+      fetchQuizzes: async (kodeDesa) => {
+        const { hasCompletedSection2 } = get();
+
+        if (hasCompletedSection2) {
+          return;
+        }
+        try {
+          const params = kodeDesa
+          const res = await fetchGetQuiz2(params)
+          const quizzes = res.data.data
+
+          set({
+            quizzes:quizzes || [],
+            questions: quizzes || [],
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      },
 
       goNextQuestion: () => {
         const { currentQuestion, questions } = get();
@@ -72,8 +76,7 @@ const useQuestion2Store = create(
         try {
           set({ currentQuestion: 0 });
 
-          // Update the quiz status on the server
-          const statusUpdate = {
+          const body = {
             quiz: 'quiz2',
             noUjian,
             kodeDesa,
@@ -84,14 +87,13 @@ const useQuestion2Store = create(
             },
           };
 
-          const statusRes = await axios.put('http://54.251.182.133:8080/status', statusUpdate);
+          const statusRes = await fetchUpdateStatus(body)
 
-          // Update store with the new status
           set({
             hasCompletedSection2: statusRes?.data?.status?.quiz2?.isFinished,
             isQuiz2Finished: statusRes?.data?.status?.quiz2?.isFinished,
             isQuiz2Restricted: statusRes?.data?.status?.quiz2?.isRestricted,
-            isSection2Locked: statusRes?.data?.status?.quiz2?.isRestricted, // Update isSection2Locked accordingly
+            isSection2Locked: statusRes?.data?.status?.quiz2?.isRestricted, 
           });
         } catch (error) {
           console.error('Failed to update quiz2 status:', error);
@@ -102,14 +104,14 @@ const useQuestion2Store = create(
         set({
           currentQuestion: 0,
           hasCompletedSection2: false,
-          isSection2Locked: true, // Reset lock state
+          isSection2Locked: true, 
           isQuiz2Finished: false,
           isQuiz2Restricted: true,
         });
       },
 
       unlockSection2: async (noUjian, kodeDesa) => {
-        const statusUpdate = await axios.put('http://54.251.182.133:8080/status', {
+        const body = {
           quiz: 'quiz2',
           noUjian,
           kodeDesa,
@@ -118,8 +120,9 @@ const useQuestion2Store = create(
             isFinished: false,
             isRestricted: false,
           },
-        });
-        console.log(statusUpdate?.data?.status?.quiz2?.isFinished);
+        }
+
+        const statusUpdate = await fetchUpdateStatus(body)
 
         set({
           isSection2Locked: statusUpdate?.data?.status?.quiz2?.isRestricted, // Unlock Section 2
@@ -129,14 +132,12 @@ const useQuestion2Store = create(
 
       fetchStatusQuiz2: async (noUjian, kodeDesa) => {
         try {
-          const statusUpdate = {
+          const params = {
             noUjian,
             kodeDesa,
           };
 
-          const statusRes = await axios.get('http://54.251.182.133:8080/status', {
-            params: statusUpdate,
-          });
+          const statusRes = await fetchGetStatus(params)
 
           set({
             hasCompletedSection2: statusRes?.data?.status?.quiz2?.isFinished,

@@ -1,17 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import loginAdminSchema from '@/schema/loginAdminSchema';
+import loginAdminSchema from '@/helpers/schema/loginAdminSchema';
+import { fetchLoginAdmin } from '@/helpers/service';
 import useAuthAdminStore from '@/store/auth-store-admin';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const login = useAuthAdminStore((state) => state.login); // Get the login action from the store
+  const login = useAuthAdminStore((state) => state.login);
   const router = useRouter();
 
   const {
@@ -26,20 +26,22 @@ export default function LoginPage() {
   const onSubmit = async ({ username, password }) => {
     setLoading(true);
     setErrorMessage(null);
+    
     try {
-      const response = await axios.post('http://54.251.182.133:8080/admin', {
+      const body = {
         username,
         password,
-      });
+      }
+      const response = await fetchLoginAdmin(body)
 
-      // Validate and extract the response data
+
       if (response.data && response.data.result && response.data.result.admin) {
-        // Store the username and password in the Zustand store
+
         login(response.data.result.admin.username, response.data.result.admin.password);
 
-        // Redirect to the admin page
+
         router.push('/admin');
-        reset(); // Optionally reset the form after successful login
+        reset();
       } else {
         throw new Error('Invalid response from server');
       }

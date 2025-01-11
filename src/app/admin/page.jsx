@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'; // Assuming you're using Next.js
 import useAuthAdminStore from '@/store/auth-store-admin';
+import { fetchDownloadFile, fetchGetDataDesa } from '@/helpers/service';
 
 export default function DataDesaTable() {
   const [kodeDesa, setKodeDesa] = useState(1);
@@ -18,9 +19,8 @@ export default function DataDesaTable() {
       setLoading(true);
       setErrorMessage(null);
       try {
-        const response = await axios.get('http://54.251.182.133:8080/data-desa', {
-          params: { kodeDesa },
-        });
+        const params = { kodeDesa };
+        const response = await fetchGetDataDesa(params);
 
         if (response.data && response.data.data) {
           setData(response.data.data);
@@ -71,10 +71,7 @@ export default function DataDesaTable() {
   }
 
   const downloadFile = (filename) => {
-    axios
-      .get(`http://54.251.182.133:8080/download/${filename}`, {
-        responseType: 'blob',
-      })
+    fetchDownloadFile(filename)
       .then((response) => {
         // Extract the filename from the Content-Disposition header
         const contentDisposition = response.headers['content-disposition'];
@@ -130,7 +127,6 @@ export default function DataDesaTable() {
         <button onClick={() => setKodeDesa(2)} className={`px-4 py-2 mr-2 rounded ${kodeDesa === 2 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
           Desa Suradadi
         </button>
-
       </div>
 
       <div className='mb-4'>
