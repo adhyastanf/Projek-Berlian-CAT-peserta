@@ -4,7 +4,7 @@ import Quiz1Answers from '../Answer/quiz1Answers';
 import useAuth from '@/store/auth-store';
 import CurrentQuestion from '../Question/current-question1';
 
-const Game = () => {
+export default function Game(){
   const { questions, currentQuestion, selectAnswer, goNextQuestion } = useQuestionStore();
   const { noUjian } = useAuth();
   const question = questions[currentQuestion];
@@ -35,5 +35,3 @@ const Game = () => {
     </div>
   );
 };
-
-export default Game;

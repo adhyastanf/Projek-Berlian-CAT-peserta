@@ -3,7 +3,7 @@ import useQuestion2Store from '@/store/quiz2-store';
 import Quiz2Answers from '../Answer/quiz2Answers';
 import CurrentQuestion from '../Question/current-question2';
 
-const Game2 = () => {
+export default function Game2(){
   const { questions, currentQuestion } = useQuestion2Store();
 
   const question = questions[currentQuestion];
@@ -25,5 +25,3 @@ const Game2 = () => {
     </div>
   );
 };
-
-export default Game2;

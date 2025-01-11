@@ -2,7 +2,7 @@
 import { useQuestionStore } from '@/store/quiz-store';
 import Image from 'next/image';
 
-const Subjects = ({ data }) => {
+export default function Subjects({ data }){
   const subjects = data.map((q) => ({ title: q.title, icon: q.icon }));
 
   const selectQuizz = useQuestionStore((state) => state.selectQuizz);
@@ -32,5 +32,3 @@ const Subjects = ({ data }) => {
     </>
   );
 };
-
-export default Subjects;

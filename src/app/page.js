@@ -2,7 +2,6 @@
 
 import getListDesa from '@/actions/getListDesa';
 import FormDisplay from '@/components/Form/FormPeserta';
-import { fetchGetListDesa } from '@/helpers/service';
 import Image from 'next/image';
 import Hero from '../../public/hero.jpg';
 

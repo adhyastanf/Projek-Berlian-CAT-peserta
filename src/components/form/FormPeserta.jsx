@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const FormDisplay = ({ desaList }) => {
+export default function FormDisplay({ desaList }){
   const { login } = useAuth();
   const router = useRouter();
   const [formError, setFormError] = useState('');
@@ -119,5 +119,3 @@ const FormDisplay = ({ desaList }) => {
     </div>
   );
 };
-
-export default FormDisplay;
