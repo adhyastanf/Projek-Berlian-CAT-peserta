@@ -1,7 +1,7 @@
 'use server';
 
 import getListDesa from '@/actions/getListDesa';
-import FormDisplay from '@/components/Form/FormPeserta';
+import FormDisplay from '@/components/Form/formPeserta';
 import Image from 'next/image';
 import Hero from '../../public/hero.jpg';
 

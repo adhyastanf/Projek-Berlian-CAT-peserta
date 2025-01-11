@@ -1,4 +1,4 @@
-import BioPeserta from '@/components/Form/DetailPeserta';
+import BioPeserta from '@/components/Form/detailPeserta';
 import PageLoader from '@/components/Loader/pageLoader';
 import ProtectedRoute from '@/components/Protected/ProtectedRoute';
 
