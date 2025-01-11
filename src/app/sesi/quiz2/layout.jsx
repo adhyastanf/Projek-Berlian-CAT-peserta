@@ -1,4 +1,4 @@
-import RightBar from "@/components/RightBar/rightBar2";
+import RightBar from "@/components/RightBar/RightBar2";
 
 const LayoutQuiz2 = ({ children }) => {
   return (
