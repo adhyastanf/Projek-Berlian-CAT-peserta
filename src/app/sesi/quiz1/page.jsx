@@ -1,9 +1,10 @@
 'use client';
-import Game from '@/components/form/game';
+
 import useQuestionStore from '@/store/quiz-store';
 import { useEffect } from 'react';
-import SectionGuard from '@/components/form/sectionGuard';
+import SectionGuard from '@/components/Protected/SectionGuard';
 import useAuth from '@/store/auth-store';
+import Game from '@/components/Game/game';
 
 export default function Quiz1Page() {
   const { fetchQuizzes } = useQuestionStore();
@@ -19,7 +20,6 @@ export default function Quiz1Page() {
     fetchData();
   }, [noUjian, kodeDesa, fetchQuizzes]);
 
-  // Apply route guard for Section 1
   SectionGuard({ section: 1 });
 
   return (

@@ -1,5 +1,5 @@
-import AdminProtectedRoute from '@/components/adminProtectedRoute';
-import PageLoader from '@/components/pageLoader';
+import AdminProtectedRoute from '@/components/Protected/adminProtectedRoute';
+import PageLoader from '@/components/Loader/pageLoader';
 
 export default function LayoutAdmin({ children }) {
   return (

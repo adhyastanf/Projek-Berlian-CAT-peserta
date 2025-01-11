@@ -1,21 +1,29 @@
-import FormDisplay from '@/components/form/form';
+'use server';
+
+import getListDesa from '@/actions/getListDesa';
+import FormDisplay from '@/components/Form/FormPeserta';
+import { fetchGetListDesa } from '@/helpers/service';
 import Image from 'next/image';
 import Hero from '../../public/hero.jpg';
 
-export default function Home() {
+export default async function Home() {
+  const data = await getListDesa();
+
   return (
     <div>
       <section className='flex flex-col items-center justify-center h-screen'>
         <Image src={Hero} className='absolute w-screen h-full object-cover' alt='hero-home' />
         <div className='text-center space-y-8 text-white max-w-[1800px] relative'>
-          <h1 className='text-5xl font-bold text-stroke'>Selamat Datang <br/> Peserta Tes CAT Seleksi Calon Perangkat Desa <br/> Kecamatan Suradadi Kabupaten Tegal</h1>
+          <h1 className='text-5xl font-bold text-stroke'>
+            Selamat Datang <br /> Peserta Tes CAT Seleksi Calon Perangkat Desa <br /> Kecamatan Suradadi Kabupaten Tegal
+          </h1>
           <h1 className='text-2xl font-medium text-stroke'>Silahkan Isi Biodata Diri Dibawah Ini Sebelum Memulai Tes</h1>
         </div>
       </section>
       <section className='grid place-items-center mt-8 relative'>
         <h1 className='text-2xl font-bold'>Isi Biodata Diri Peserta</h1>
         <div className='w-full max-w-md'>
-          <FormDisplay />
+          <FormDisplay desaList={data} />
         </div>
       </section>
     </div>

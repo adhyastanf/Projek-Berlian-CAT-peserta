@@ -1,3 +1,4 @@
+import { fetchGetTime } from '@/helpers/service';
 import axios from 'axios';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -12,7 +13,7 @@ const useCountdownStore = create(
 
       fetchRemainingTime: async (section) => {
         try {
-          const response = await axios.get('http://54.251.182.133:8080/time', { params: { ujian: section } });
+          const response = await fetchGetTime(section)
 
           const remainingTimeInSeconds = response.data.remainingTime;
           const nowDate = new Date();
@@ -20,7 +21,7 @@ const useCountdownStore = create(
           const now = utc7Date.toISOString();
           if (section === 1) {
             set({
-              section1RemainingTime: remainingTimeInSeconds * 1000, // Store remaining time in milliseconds
+              section1RemainingTime: remainingTimeInSeconds * 1000,
               section1StartTime: now,
             });
           } else if (section === 2) {
@@ -55,7 +56,7 @@ const useCountdownStore = create(
         set((state) => {
           const timeKey = section === 1 ? 'section1RemainingTime' : 'section2RemainingTime';
           return {
-            [timeKey]: state[timeKey] - 1000, // Decrease the remaining time by 1 second
+            [timeKey]: state[timeKey] - 1000,
           };
         });
       },

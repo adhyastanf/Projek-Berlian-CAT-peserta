@@ -37,8 +37,7 @@ const useAuth = create(
       },
     }),
     {
-      name: 'auth-store',
-    //   storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+      name: 'auth-store'
     }
   )
 );

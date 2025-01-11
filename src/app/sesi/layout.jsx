@@ -1,6 +1,6 @@
-import BioPeserta from '@/components/form/bioPerserta';
-import PageLoader from '@/components/pageLoader';
-import ProtectedRoute from '@/components/ProtectedRoute';
+import BioPeserta from '@/components/Form/DetailPeserta';
+import PageLoader from '@/components/Loader/pageLoader';
+import ProtectedRoute from '@/components/Protected/ProtectedRoute';
 
 export default function LayoutSesi({ children }) {
   return (

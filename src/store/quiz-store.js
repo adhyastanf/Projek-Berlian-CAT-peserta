@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { fetchCreateNilai, fetchGetNilai, fetchGetQuiz1, fetchGetStatus, fetchUpdateStatus } from '@/helpers/service';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import useQuestion2Store from './quiz2-store';
@@ -25,12 +25,14 @@ const useQuestionStore = create(
         const { hasCompletedSection1 } = get();
 
         if (hasCompletedSection1) {
-          return; // Do not fetch if quiz is completed
+          return;
         }
         try {
-          const res = await axios.get(`http://54.251.182.133:8080/genSoal`, {
-            params: { noUjian, kodeDesa },
-          });
+          const params = {
+            noUjian,
+            kodeDesa,
+          };
+          const res = await fetchGetQuiz1(params);
           const quizzes = res.data.hasil;
 
           set({
@@ -43,25 +45,21 @@ const useQuestionStore = create(
       },
       fetchStatusQuiz: async (noUjian, kodeDesa) => {
         try {
-          const statusUpdate = {
+          const params = {
             noUjian,
             kodeDesa,
           };
 
-          const statusRes = await axios.get('http://54.251.182.133:8080/status', {
-            params: statusUpdate,
-          });
+          const statusRes = await fetchGetStatus(params);
 
           set({
             hasCompletedSection1: statusRes?.data?.status?.quiz1?.isFinished,
             isQuiz1Finished: statusRes?.data?.status?.quiz1?.isFinished,
             isQuiz1Restricted: statusRes?.data?.status?.quiz1?.isRestricted,
           });
-          
-          const res = await axios.get(`http://54.251.182.133:8080/nilai`, {
-            params: { noUjian, kodeDesa },
-          });
-          const score = res.data.nilai.nilai;
+
+          const res = await fetchGetNilai(params)
+          const score = res.data.nilai?.nilai;
 
           set({
             score,
@@ -103,11 +101,11 @@ const useQuestionStore = create(
 
       onCompleteQuestions: async (noUjian, kodeDesa) => {
         try {
-          const res = await axios.post(`http://54.251.182.133:8080/nilai`, { noUjian, kodeDesa });
+          const bodyNilai = { noUjian, kodeDesa };
+          const res = await fetchCreateNilai(bodyNilai);
           const score = res.data.nilai.nilai;
 
-          // Update the quiz status on the server
-          const statusUpdate = await axios.put('http://54.251.182.133:8080/status', {
+          const body = {
             quiz: 'quiz1',
             noUjian,
             kodeDesa,
@@ -116,17 +114,18 @@ const useQuestionStore = create(
               isFinished: true,
               isRestricted: true,
             },
-          });
-          // Update store with the new status
+          };
+
+          const statusUpdateRes = await fetchUpdateStatus(body);
+
           set({
-            hasCompletedSection1: statusUpdate?.data?.status?.quiz1?.isFinished,
-            isQuiz1Finished: statusUpdate?.data?.status?.quiz1?.isFinished,
-            isQuiz1Restricted: statusUpdate?.data?.status?.quiz1?.isRestricted,
+            hasCompletedSection1: statusUpdateRes?.data?.status?.quiz1?.isFinished,
+            isQuiz1Finished: statusUpdateRes?.data?.status?.quiz1?.isFinished,
+            isQuiz1Restricted: statusUpdateRes?.data?.status?.quiz1?.isRestricted,
             currentQuestion: 0,
             score,
           });
 
-          // Unlock Section 2 when Section 1 is completed
           useQuestion2Store.getState().unlockSection2(noUjian, kodeDesa);
         } catch (error) {
           console.error(error);
