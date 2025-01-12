@@ -80,7 +80,7 @@ export async function fetchLoginAdmin({ username, password }) {
 }
 
 export async function fetchDownloadDocX() {
-  const response = await fetch(`http://147.93.31.30:8080/download/NAMA.pdf`, {
+  const response = await fetch(`http://147.93.31.30:8080/download/NAMA_Simulasi.docx`, {
     method: 'GET',
   });
   return response;
