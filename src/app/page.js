@@ -1,9 +1,18 @@
 'use server';
 
-import getListDesa from '@/actions/getListDesa';
 import FormDisplay from '@/components/FormPeserta/FormPeserta';
+import { fetchGetListDesa } from '@/helpers/service';
 import Image from 'next/image';
 import Hero from '../../public/hero.jpg';
+
+async function getListDesa() {
+  try{
+    const res = await fetchGetListDesa()
+    return res.data.data
+  }catch(err){
+    console.error(err);
+  }
+}
 
 export default async function Home() {
   const data = await getListDesa();
