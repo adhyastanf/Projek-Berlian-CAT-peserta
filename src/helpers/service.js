@@ -4,6 +4,8 @@ const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export async function fetchGetQuiz1({ noUjian, kodeDesa }) {
   const response = await api.get(`/genSoal`, {
     params: { noUjian, kodeDesa },
@@ -80,7 +82,7 @@ export async function fetchLoginAdmin({ username, password }) {
 }
 
 export async function fetchDownloadDocX() {
-  const response = await fetch(`http://147.93.31.30:8080/download/NAMA_Simulasi.docx`, {
+  const response = await fetch(BASE_URL.concat(`/download/NAMA_Simulasi.docx`), {
     method: 'GET',
   });
   return response;
