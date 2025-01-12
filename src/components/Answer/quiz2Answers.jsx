@@ -94,9 +94,8 @@ const Quiz2Answers = () => {
       const link = document.createElement('a');
       link.href = url;
 
-      // Tentukan nama file dari response header
       const contentDisposition = response.headers.get('Content-Disposition');
-      let filename = `NAMA.pdf`; // default filename
+      let filename = `NAMA.docx`; //ubah pdf ke docx buat simulasi dulu
       if (contentDisposition) {
         const match = contentDisposition.match(/filename="(.+)"/);
         if (match[1]) filename = match[1];
