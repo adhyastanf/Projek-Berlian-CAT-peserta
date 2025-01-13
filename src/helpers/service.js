@@ -82,7 +82,7 @@ export async function fetchLoginAdmin({ username, password }) {
 }
 
 export async function fetchDownloadDocX() {
-  const response = await fetch(BASE_URL.concat(`/download/NAMA_Simulasi.docx`), {
+  const response = await fetch(BASE_URL.concat(`/download/NAMA.docx`), {
     method: 'GET',
   });
   return response;
