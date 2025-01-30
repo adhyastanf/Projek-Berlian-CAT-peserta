@@ -1,5 +1,6 @@
 import { Inter, Poppins } from 'next/font/google';
 import Image from 'next/image';
+import Link from 'next/link';
 import './globals.css';
 
 const poppins = Poppins({
@@ -22,7 +23,9 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={poppins.className}>
         <nav className='navbar bg-third text-white justify-between flex px-10 py-6'>
-          <Image src='/Logo_Kabupaten_Tegal.png' width={150} height={150} alt='Logo Kabupaten Tegal' />
+          <Link href='/'>
+            <Image src='/Logo_Kabupaten_Tegal.png' width={150} height={150} alt='Logo Kabupaten Tegal' />
+          </Link>
           <a className='text-2xl font-bold text-stroke'>
             PANITIA PENGANGKATAN PERANGKAT DESA <br /> KECAMATAN SURADADI KABUPATEN TEGAL
           </a>

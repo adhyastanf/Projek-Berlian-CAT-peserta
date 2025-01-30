@@ -114,11 +114,11 @@ const Quiz2Answers = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-y-4 justify-center w-full'>
-        {currentQuestion + 1 === 1 && (
+        {/* {currentQuestion + 1 === 1 && (
           <button onClick={downloadSoalDocx} className='btn btn-primary text-white mb-14'>
             DOWNLOAD FILE
           </button>
-        )}
+        )} */}
         <input type='file' accept='.doc,.docx,.xls,.xlsx,.csv' {...register('file')} className={`file-input file-input-bordered w-full ${errors.file ? 'border-red-500' : ''}`} disabled={isLoading} />
         {errors.file && <p className='text-red-500 text-sm'>{errors.file.message}</p>}
         <button type='submit' className='btn btn-primary bg-third text-white mt-2 self-center' disabled={isLoading}>

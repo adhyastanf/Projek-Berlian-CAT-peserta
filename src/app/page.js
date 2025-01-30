@@ -22,8 +22,11 @@ export default async function Home() {
       <section className='flex flex-col items-center justify-center h-screen'>
         <Image src={Hero} className='absolute w-screen h-full object-cover' alt='hero-home' />
         <div className='text-center space-y-8 text-white max-w-[1800px] relative'>
+          <h1 className='text-8xl font-bold text-stroke'>
+            Selamat Datang
+          </h1>
           <h1 className='text-5xl font-bold text-stroke'>
-            Selamat Datang <br /> Peserta Tes CAT Seleksi Calon Perangkat Desa <br /> Kecamatan Suradadi Kabupaten Tegal
+            Peserta Tes CAT Seleksi Calon Perangkat Desa <br /> Kecamatan Suradadi Kabupaten Tegal
           </h1>
           <h1 className='text-2xl font-medium text-stroke'>Silahkan Isi Biodata Diri Dibawah Ini Sebelum Memulai Tes</h1>
         </div>

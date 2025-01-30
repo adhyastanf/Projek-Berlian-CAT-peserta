@@ -54,7 +54,7 @@ export default function DataDesaTable() {
 
       // Tentukan nama file dari response header
       const contentDisposition = response.headers.get('Content-Disposition');
-      let filename = `data_desa_${kodeDesa === 4 ? 'gembongdadi' : 'harjasari'}.xlsx`; // default filename
+      let filename = `data_desa_${kodeDesa === 4 ? 'gembongdadi' : 'suradadi'}.xlsx`; // default filename
       if (contentDisposition) {
         const match = contentDisposition.match(/filename="(.+)"/);
         if (match[1]) filename = match[1];
@@ -124,8 +124,8 @@ export default function DataDesaTable() {
         <button onClick={() => setKodeDesa(4)} className={`px-4 py-2 mr-2 rounded ${kodeDesa === 4 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
           Desa Gembongdadi
         </button>
-        <button onClick={() => setKodeDesa(1)} className={`px-4 py-2 mr-2 rounded ${kodeDesa === 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
-          Desa Harjasari
+        <button onClick={() => setKodeDesa(2)} className={`px-4 py-2 mr-2 rounded ${kodeDesa === 2 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
+          Desa Suradadi
         </button>
       </div>
 

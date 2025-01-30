@@ -16,7 +16,8 @@ export default function FormDisplay({ desaList }){
 
   const pendidikanOptions = [
     { label: 'SMA/Sederajat', value: 'SMA/Sederajat' },
-    { label: 'S1', value: 'S1' },
+    { label: 'D3', value: 'D3' },
+    { label: 'S1/D4', value: 'S1/D4' },
     { label: 'S2', value: 'S2' },
   ];
 
