@@ -7,7 +7,7 @@ import useAuthAdminStore from '@/store/auth-store-admin';
 import { fetchDownloadFile, fetchGetDataDesa } from '@/helpers/service';
 
 export default function DataDesaTable() {
-  const [kodeDesa, setKodeDesa] = useState(5); //sesuaikan 
+  const [kodeDesa, setKodeDesa] = useState(6); //sesuaikan 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -54,7 +54,7 @@ export default function DataDesaTable() {
 
       // Tentukan nama file dari response header
       const contentDisposition = response.headers.get('Content-Disposition');
-      let filename = `data_desa_${kodeDesa === 5 ? 'jatimulya' : 'default'}.xlsx`; // default filename
+      let filename = `data_desa_${kodeDesa === 6 ? 'jatibogor' : 'default'}.xlsx`; // default filename
       if (contentDisposition) {
         const match = contentDisposition.match(/filename="(.+)"/);
         if (match[1]) filename = match[1];
@@ -121,12 +121,12 @@ export default function DataDesaTable() {
       </div>
 
       <div className='mb-4'>
-        <button onClick={() => setKodeDesa(5)} className={`px-5 py-2 mr-2 rounded ${kodeDesa === 5 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}> 
-          Desa Jatimulya
+        <button onClick={() => setKodeDesa(6)} className={`px-5 py-2 mr-2 rounded ${kodeDesa === 6 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}> 
+          Desa Jatibogor
         </button>
-        {/* <button onClick={() => setKodeDesa(2)} className={`px-4 py-2 mr-2 rounded ${kodeDesa === 2 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
-          Desa Suradadi
-        </button> */}
+        {/* // <button onClick={() => setKodeDesa(7)} className={`px-4 py-2 mr-2 rounded ${kodeDesa === 7 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
+        //   Desa Purwahamba
+        // </button> */}
       </div>
 
       <div className='mb-4'>
